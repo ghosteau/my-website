@@ -484,9 +484,23 @@ const MANNY_PALETTE: Palette = {
   p: "#16b8a6", q: "#3fd9c7", r: "#0c8074", k: "#cab488", j: "#a4895d", b: "#5b3a26", w: "#e9e9e9",
   m: "#9aa6ab", n: "#e8e2d0",
 };
+/* ── custom-sprite swap seam ──────────────────────────────────────────
+   To use a real sprite later (e.g. a hyo-oppa template): drop the PNG in
+   /public/sprites/ and set the path below. When set, the image is used
+   instead of the hand-drawn pixel art. See public/sprites/README.md.
+   Remember to credit the artist if the pack requires it. */
+const MANNY_SPRITE_SRC = "";      // e.g. "/sprites/manny-walk.png"
+const MANNY_HELM_SPRITE_SRC = ""; // e.g. "/sprites/manny-helm.png"
+
 export function PixelManny({ className = "" }: { className?: string }) {
+  if (MANNY_SPRITE_SRC)
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={MANNY_SPRITE_SRC} alt="Manny" className={`pixelated h-auto ${className}`} />;
   return <AnimatedCharacter frames={[MANNY.A, MANNY.B]} palette={MANNY_PALETTE} fps={4} className={className} title="Manny" />;
 }
 export function PixelMannyHelm({ className = "" }: { className?: string }) {
+  if (MANNY_HELM_SPRITE_SRC)
+    // eslint-disable-next-line @next/next/no-img-element
+    return <img src={MANNY_HELM_SPRITE_SRC} alt="Manny — Dragonborn mode" className={`pixelated h-auto ${className}`} />;
   return <GridSvg grid={MANNY.helm} palette={MANNY_PALETTE} className={className} title="Manny — Dragonborn mode" />;
 }
