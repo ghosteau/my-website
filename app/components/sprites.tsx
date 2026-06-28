@@ -49,10 +49,17 @@ function GridSvg({
   );
 }
 
+/* wrap a solid (gapless) grid in a 1px dark outline frame */
+function bordered(grid: string[]): string[] {
+  const cols = Math.max(...grid.map((r) => r.length));
+  const top = "o".repeat(cols + 2);
+  return [top, ...grid.map((r) => "o" + r.padEnd(cols, " ") + "o"), top];
+}
+
 /* ═══════════════ FLAGS ═══════════════ */
 
-const FR_PALETTE: Palette = { B: "#0055A4", W: "#F4F4F4", R: "#EF4135" };
-const FR_GRID = Array.from({ length: 8 }, () => "BBBBWWWWRRRR");
+const FR_PALETTE: Palette = { B: "#0055A4", W: "#F4F4F4", R: "#EF4135", o: "#15110d" };
+const FR_GRID = bordered(Array.from({ length: 8 }, () => "BBBBWWWWRRRR"));
 
 function buildUSA(): string[] {
   const cols = 15, rows = 10;
@@ -67,8 +74,8 @@ function buildUSA(): string[] {
   }
   return grid;
 }
-const USA_PALETTE: Palette = { N: "#3C3B6E", S: "#FFFFFF", R: "#B22234", W: "#F4F4F4" };
-const USA_GRID = buildUSA();
+const USA_PALETTE: Palette = { N: "#3C3B6E", S: "#FFFFFF", R: "#B22234", W: "#F4F4F4", o: "#15110d" };
+const USA_GRID = bordered(buildUSA());
 
 function buildQuebec(): string[] {
   const cols = 13, rows = 9;
@@ -85,8 +92,8 @@ function buildQuebec(): string[] {
   }
   return grid;
 }
-const QC_PALETTE: Palette = { B: "#003DA5", W: "#F4F4F4" };
-const QC_GRID = buildQuebec();
+const QC_PALETTE: Palette = { B: "#003DA5", W: "#F4F4F4", o: "#15110d" };
+const QC_GRID = bordered(buildQuebec());
 
 export function Flag({
   kind, label, delay = 0,
@@ -387,65 +394,98 @@ function AnimatedCharacter({
   return <GridSvg grid={frames[i]} palette={palette} className={className} title={title} />;
 }
 
-/* Manny — a little BW-overworld-style trainer of the man himself:
-   brown hair, teal polo, khaki dress shorts. Built by placing pixels
-   so the figure stays correct; "helm" swaps the hair for a generic
-   horned Nordic helmet (Dragonborn energy, original art). */
+/* Manny — a detailed GBA/DS-style trainer of the man himself: brown
+   side-swept hair (no hat), teal polo, khaki dress shorts. Drawn by
+   placing colored pixels, shaded with light/dark tones, then framed by
+   an automatic dark outline pass for that crafted-sprite look. "helm"
+   swaps the hair for a generic horned Nordic helmet (Dragonborn energy,
+   original art — no copyrighted likeness). */
 function blankGrid(w: number, h: number): string[][] {
   return Array.from({ length: h }, () => Array(w).fill(" "));
 }
+const TW = 16, THh = 23;
 function buildManny() {
-  const W = 12, H = 16;
   const place = (g: string[][]) => {
-    const set = (x: number, y: number, c: string) => { if (x >= 0 && x < W && y >= 0 && y < H) g[y][x] = c; };
+    const set = (x: number, y: number, c: string) => { if (x >= 0 && x < TW && y >= 0 && y < THh) g[y][x] = c; };
     const row = (y: number, a: number, b: number, c: string) => { for (let x = a; x <= b; x++) set(x, y, c); };
     return { set, row };
   };
-  const head = (g: string[][]) => {
+  const face = (g: string[][]) => {
     const { set, row } = place(g);
-    // tousled, side-swept trainer hair (Steven Stone x Blue) — brown, no afro
-    set(3, 0, "H"); set(4, 0, "H"); set(6, 0, "H"); set(8, 0, "H");   // spiky tips with gaps
-    row(1, 2, 9, "H");
-    row(2, 2, 9, "H");
-    set(3, 1, "i"); set(4, 1, "i"); set(3, 2, "h"); set(7, 1, "h");   // swept sheen
-    // forehead: thin sideburns + a fringe sweeping across (asymmetric)
-    row(3, 3, 8, "s");
-    set(2, 3, "H"); set(9, 3, "H"); set(3, 3, "H"); set(4, 3, "H"); set(8, 3, "H");
-    // eyes
-    row(4, 3, 8, "s"); set(2, 4, "H"); set(9, 4, "H"); set(4, 4, "e"); set(7, 4, "e");
-    // lower face
-    row(5, 3, 8, "s"); set(5, 5, "S"); set(6, 5, "S");
+    row(4, 5, 10, "s");
+    row(5, 5, 10, "s"); set(6, 5, "e"); set(9, 5, "e");                 // eyes
+    row(6, 5, 10, "s"); set(6, 6, "e"); set(9, 6, "e"); set(10, 6, "d");
+    row(7, 5, 10, "s"); set(8, 7, "d");                                 // nose
+    row(8, 6, 9, "s"); set(6, 8, "d");                                  // chin
+    row(9, 7, 8, "s");                                                  // neck
   };
-  const headHelm = (g: string[][]) => {
+  const hair = (g: string[][]) => {
     const { set, row } = place(g);
-    set(2, 0, "n"); set(9, 0, "n");                                   // horn tips
-    set(1, 1, "n"); set(2, 1, "n"); set(9, 1, "n"); set(10, 1, "n");  // horn bases
-    row(1, 3, 8, "m"); row(2, 2, 9, "m");                             // helmet dome
-    row(3, 3, 8, "s"); set(2, 3, "m"); set(9, 3, "m"); set(5, 3, "m"); set(6, 3, "m");
-    row(4, 3, 8, "s"); set(4, 4, "e"); set(7, 4, "e"); set(5, 4, "m"); set(6, 4, "m"); // noseguard
-    row(5, 3, 8, "s"); set(5, 5, "m"); set(6, 5, "m");
+    row(0, 5, 10, "H");
+    row(1, 4, 11, "H");
+    row(2, 4, 11, "H"); set(5, 2, "L"); set(6, 2, "L"); set(7, 2, "L"); // light sweep
+    row(3, 4, 11, "H"); set(8, 3, "L");
+    set(4, 4, "H"); set(5, 4, "H"); set(7, 4, "H"); set(10, 4, "H"); set(11, 4, "H"); // bangs
+    set(8, 4, "D");                                                     // part strand
+    set(4, 5, "H"); set(11, 5, "H");                                    // sideburns
+  };
+  const helm = (g: string[][]) => {
+    const { set, row } = place(g);
+    row(0, 6, 9, "m"); row(1, 4, 11, "m"); row(2, 4, 11, "m"); row(3, 4, 11, "m");
+    set(5, 1, "w"); set(6, 1, "w");                                     // shine
+    set(2, 0, "n"); set(2, 1, "n"); set(3, 1, "n");                     // left horn
+    set(13, 0, "n"); set(13, 1, "n"); set(12, 1, "n");                  // right horn
+    set(4, 4, "m"); set(11, 4, "m"); set(7, 4, "m"); set(8, 4, "m");    // brow + noseguard
+    set(7, 5, "m"); set(8, 5, "m"); set(7, 6, "m"); set(8, 6, "m");     // noseguard
   };
   const body = (g: string[][], step: "A" | "B" | "stand") => {
     const { set, row } = place(g);
-    row(6, 4, 7, "s");                                                // neck
-    row(7, 3, 8, "p"); set(5, 7, "O"); set(6, 7, "O");                // collar V
-    row(8, 2, 9, "p"); row(9, 2, 9, "p"); row(10, 2, 9, "p");         // torso
-    set(2, 8, "s"); set(9, 8, "s"); set(2, 9, "s"); set(9, 9, "s"); set(2, 10, "s"); set(9, 10, "s"); // arms
-    row(11, 3, 8, "k"); row(12, 3, 8, "k"); set(5, 12, "K"); set(6, 12, "K"); // shorts
-    if (step === "A") { row(13, 3, 4, "s"); row(13, 7, 8, "s"); row(14, 3, 4, "s"); row(14, 7, 8, "s"); row(15, 2, 4, "b"); row(15, 7, 9, "b"); }
-    else if (step === "B") { row(13, 4, 5, "s"); row(13, 6, 7, "s"); row(14, 4, 5, "s"); row(14, 6, 7, "s"); row(15, 3, 5, "b"); row(15, 6, 8, "b"); }
-    else { row(13, 3, 4, "s"); row(13, 7, 8, "s"); row(14, 3, 4, "s"); row(14, 7, 8, "s"); row(15, 3, 4, "b"); row(15, 7, 8, "b"); }
+    // polo
+    row(10, 4, 11, "p"); set(5, 10, "q"); set(10, 10, "r");
+    row(11, 4, 11, "p"); set(7, 11, "r"); set(8, 11, "r"); set(5, 11, "q"); set(10, 11, "r"); // collar V
+    row(12, 4, 11, "p"); set(5, 12, "q"); set(10, 12, "r");
+    row(13, 3, 12, "p"); set(4, 13, "q"); set(11, 13, "r");             // sleeves
+    row(14, 4, 11, "p"); set(5, 14, "q"); set(10, 14, "r");
+    row(15, 4, 11, "p"); set(4, 15, "r"); set(11, 15, "r");
+    set(3, 14, "s"); set(12, 14, "s"); set(3, 15, "s"); set(12, 15, "s"); // forearms / hands
+    // belt + shorts
+    row(16, 4, 11, "b");
+    row(17, 4, 11, "k"); set(7, 17, "j"); set(8, 17, "j"); set(10, 17, "j"); set(11, 17, "j");
+    row(18, 4, 11, "k"); set(7, 18, "j"); set(8, 18, "j"); set(10, 18, "j"); set(11, 18, "j");
+    // bare legs
+    row(19, 5, 6, "s"); row(19, 10, 11, "s");
+    row(20, 5, 6, "s"); row(20, 10, 11, "s");
+    // shoes + soles (stance shifts per walk frame)
+    if (step === "A") { row(21, 3, 6, "b"); row(21, 10, 12, "b"); row(22, 3, 6, "w"); row(22, 10, 12, "w"); }
+    else if (step === "B") { row(21, 5, 7, "b"); row(21, 9, 11, "b"); row(22, 5, 7, "w"); row(22, 9, 11, "w"); }
+    else { row(21, 4, 6, "b"); row(21, 10, 12, "b"); row(22, 4, 6, "w"); row(22, 10, 12, "w"); }
   };
-  const A = blankGrid(W, H); head(A); body(A, "A");
-  const B = blankGrid(W, H); head(B); body(B, "B");
-  const helm = blankGrid(W, H); headHelm(helm); body(helm, "stand");
-  const join = (g: string[][]) => g.map((r) => r.join(""));
-  return { A: join(A), B: join(B), helm: join(helm) };
+  const outline = (g: string[][]) => {
+    const dirs = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+    const todo: [number, number][] = [];
+    for (let y = 0; y < THh; y++) for (let x = 0; x < TW; x++) {
+      if (g[y][x] !== " ") continue;
+      for (const [dx, dy] of dirs) {
+        const nx = x + dx, ny = y + dy;
+        if (nx >= 0 && nx < TW && ny >= 0 && ny < THh && g[ny][nx] !== " ") { todo.push([x, y]); break; }
+      }
+    }
+    todo.forEach(([x, y]) => { g[y][x] = "o"; });
+  };
+  const make = (step: "A" | "B" | "stand", isHelm: boolean) => {
+    const g = blankGrid(TW, THh);
+    face(g);
+    if (isHelm) helm(g); else hair(g);
+    body(g, step);
+    outline(g);
+    return g.map((r) => r.join(""));
+  };
+  return { A: make("A", false), B: make("B", false), helm: make("stand", true) };
 }
 const MANNY = buildManny();
 const MANNY_PALETTE: Palette = {
-  H: "#5a3a22", h: "#6e4a2c", i: "#8a6a44", s: "#e8b88a", S: "#cf9e72", e: "#1a1410",
-  p: "#14b8a6", O: "#0b3b35", k: "#cbb487", K: "#b09a6e", b: "#6b4226",
+  o: "#15110d", H: "#5a3a22", L: "#86592f", D: "#3a2614", s: "#f1c69b", d: "#d49b6e", e: "#241a14",
+  p: "#16b8a6", q: "#3fd9c7", r: "#0c8074", k: "#cab488", j: "#a4895d", b: "#5b3a26", w: "#e9e9e9",
   m: "#9aa6ab", n: "#e8e2d0",
 };
 export function PixelManny({ className = "" }: { className?: string }) {
