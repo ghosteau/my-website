@@ -1,0 +1,294 @@
+import type { Lang } from "./components/lang";
+
+export type Accent = "teal" | "cyan" | "emerald";
+
+export const accentText: Record<Accent, string> = {
+  teal: "text-turq-300/70",
+  cyan: "text-cyan-300/70",
+  emerald: "text-emerald-300/70",
+};
+export const accentDot: Record<Accent, string> = {
+  teal: "bg-turq-400/60",
+  cyan: "bg-cyan-400/60",
+  emerald: "bg-emerald-400/60",
+};
+
+/* ── experience ── */
+export const experience: {
+  period: string;
+  org: string;
+  accent: Accent;
+  en: { role: string; bullets: string[] };
+  fr: { role: string; bullets: string[] };
+}[] = [
+  {
+    period: "Sept 2024 – Dec 2025",
+    org: "University of Pittsburgh Athletics",
+    accent: "teal",
+    en: {
+      role: "Data Engineering Intern",
+      bullets: [
+        "Built a serverless data pipeline for the diving team using AWS Lambda, turning raw web data into real-time performance analytics.",
+        "Engineered and deployed an LLM-powered TEXT2SQL tool, democratizing SQL access for non-technical staff.",
+        "Built PowerBI dashboards for donors and leadership; integrated position-specific metrics into football recruitment pipelines under the assistant AD.",
+      ],
+    },
+    fr: {
+      role: "Stagiaire en ingénierie de données",
+      bullets: [
+        "Conception d'un pipeline de données serverless pour l'équipe de plongeon avec AWS Lambda, transformant des données web brutes en analyses de performance en temps réel.",
+        "Développement et déploiement d'un outil TEXT2SQL alimenté par un LLM, démocratisant l'accès au SQL pour le personnel non technique.",
+        "Création de tableaux de bord PowerBI pour les donateurs et la direction ; intégration de métriques par poste dans les pipelines de recrutement de football.",
+      ],
+    },
+  },
+  {
+    period: "May – Aug 2025",
+    org: "BNY",
+    accent: "cyan",
+    en: {
+      role: "Engineering Intern (Co-Op)",
+      bullets: [
+        "Built a data reprocessing algorithm via Spring and Kafka to automatically resolve failed enrichment pipeline messages.",
+        "Optimized reconciliation workflows — $1.7M in cost savings and 8x reduction in processing time.",
+        "Migrated legacy data zones into a new strategic architecture, improving access for risk analysis teams.",
+      ],
+    },
+    fr: {
+      role: "Stagiaire ingénieur (Co-Op)",
+      bullets: [
+        "Développement d'un algorithme de retraitement de données avec Spring et Kafka pour résoudre automatiquement les messages d'enrichissement en échec.",
+        "Optimisation des flux de réconciliation — 1,7 M$ d'économies et temps de traitement divisé par 8.",
+        "Migration de zones de données héritées vers une nouvelle architecture stratégique, améliorant l'accès pour les équipes d'analyse de risque.",
+      ],
+    },
+  },
+  {
+    period: "Sept 2024 – May 2025",
+    org: "Pitt School of Computing",
+    accent: "emerald",
+    en: {
+      role: "Undergraduate Researcher — NLP & AI",
+      bullets: [
+        "Collaborated with PhD students and faculty on LLM-enhanced conversational AI for smart home devices.",
+        "Integrated ChatGPT with the Alexa API via Python and NodeJS to expand functionality and usability.",
+        "Studied how diverse communities interact with AI-driven home technology; presented findings to faculty.",
+      ],
+    },
+    fr: {
+      role: "Chercheur de premier cycle — TAL & IA",
+      bullets: [
+        "Collaboration avec des doctorants et des enseignants sur une IA conversationnelle améliorée par LLM pour les objets connectés.",
+        "Intégration de ChatGPT à l'API Alexa via Python et NodeJS pour étendre les fonctionnalités et l'usabilité.",
+        "Étude de la manière dont diverses communautés interagissent avec la domotique pilotée par l'IA ; présentation des résultats au corps enseignant.",
+      ],
+    },
+  },
+  {
+    period: "May – Aug 2024",
+    org: "Pitt School of Computing",
+    accent: "emerald",
+    en: {
+      role: "Undergraduate Researcher — Virtual Reality",
+      bullets: [
+        "Researched virtual locomotion methods in VR and helped build immersive experiences in Unity.",
+        "Wrote C# scripts to support functional VR research environments.",
+      ],
+    },
+    fr: {
+      role: "Chercheur de premier cycle — Réalité virtuelle",
+      bullets: [
+        "Recherche sur les méthodes de locomotion virtuelle en RV et participation à la création d'expériences immersives sous Unity.",
+        "Écriture de scripts C# pour soutenir des environnements de recherche RV fonctionnels.",
+      ],
+    },
+  },
+];
+
+/* ── projects ── */
+export const projects: {
+  name: string;
+  tech: string;
+  href: string;
+  accent: Accent;
+  en: string;
+  fr: string;
+}[] = [
+  {
+    name: "fastdist",
+    tech: "C++ · CUDA · PyBind11 · Python",
+    href: "https://github.com/ghosteau/fastdist",
+    accent: "teal",
+    en: "High-performance ABI for probabilistic computation in C++ and Python. ~2.5x GPU speedup over standard libraries via optimized kernel execution.",
+    fr: "ABI haute performance pour le calcul probabiliste en C++ et Python. Accélération GPU d'environ 2,5x par rapport aux bibliothèques standard grâce à des noyaux optimisés.",
+  },
+  {
+    name: "generative-terrain",
+    tech: "Java · Python · CNN · SpigotAPI",
+    href: "https://github.com/ghosteau/generative-terrain",
+    accent: "cyan",
+    en: "Minecraft plugin that lets ML models generate terrain in-game via CNNs. Pipelines extract chunk data and produce real-time topographical outputs.",
+    fr: "Plugin Minecraft qui laisse des modèles de ML générer du terrain en jeu via des CNN. Les pipelines extraient les données de chunks et produisent des sorties topographiques en temps réel.",
+  },
+  {
+    name: "embeddings-visualizer",
+    tech: "Python · LLMs · Web",
+    href: "https://github.com/ghosteau/embeddings-visualizer",
+    accent: "emerald",
+    en: "Web application for visualizing LLM embeddings and token representations interactively.",
+    fr: "Application web pour visualiser de manière interactive les embeddings et les représentations de tokens des LLM.",
+  },
+  {
+    name: "overlord-discord-bot",
+    tech: "Python · ML · Discord API",
+    href: "https://github.com/ghosteau/overlord-discord-bot",
+    accent: "teal",
+    en: "Machine learning-powered moderation and analytics bot for Discord servers.",
+    fr: "Bot de modération et d'analyse pour serveurs Discord, propulsé par l'apprentissage automatique.",
+  },
+  {
+    name: "math-meets-code",
+    tech: "Python · Jupyter",
+    href: "https://github.com/ghosteau/math-meets-code",
+    accent: "cyan",
+    en: "A running exploration of mathematics through code — linear algebra, probability, analysis, and more.",
+    fr: "Une exploration continue des mathématiques par le code — algèbre linéaire, probabilités, analyse, et plus encore.",
+  },
+  {
+    name: "PittAPI",
+    tech: "Python · BeautifulSoup · Requests",
+    href: "https://github.com/ghosteau/PittAPI",
+    accent: "emerald",
+    en: "Open-source library for Pitt student data. Contributed full study room reservation support.",
+    fr: "Bibliothèque open-source pour les données étudiantes de Pitt. Contribution : support complet de la réservation de salles d'étude.",
+  },
+];
+
+/* ── coursework ── */
+export const courses: { en: string; fr: string }[] = [
+  { en: "Deep Learning", fr: "Apprentissage profond" },
+  { en: "Computer Vision", fr: "Vision par ordinateur" },
+  { en: "Algorithms & Data Structures", fr: "Algorithmes & structures de données" },
+  { en: "Systems Software", fr: "Logiciels système" },
+  { en: "Computer Organization & Assembly", fr: "Architecture & assembleur" },
+  { en: "Operating Systems", fr: "Systèmes d'exploitation" },
+  { en: "Signals & Systems", fr: "Signaux & systèmes" },
+  { en: "AI & Big Data", fr: "IA & big data" },
+  { en: "Microprocessors", fr: "Microprocesseurs" },
+  { en: "Physics", fr: "Physique" },
+  { en: "Statistics", fr: "Statistiques" },
+];
+
+/* ── research ── */
+export const research: {
+  accent: Accent;
+  en: { title: string; sub: string; body: string };
+  fr: { title: string; sub: string; body: string };
+}[] = [
+  {
+    accent: "emerald",
+    en: {
+      title: "Conversational AI for Smart Home Devices",
+      sub: "NLP & AI · Pitt School of Computing · 2024–2025",
+      body: "Collaborated with PhD students and faculty to develop LLM-enhanced conversational AI for smart home environments. Integrated ChatGPT with the Alexa API via Python and NodeJS. Studied how diverse communities interact with AI-driven home technology and presented findings to faculty.",
+    },
+    fr: {
+      title: "IA conversationnelle pour la maison connectée",
+      sub: "TAL & IA · Pitt School of Computing · 2024–2025",
+      body: "Collaboration avec des doctorants et des enseignants pour développer une IA conversationnelle améliorée par LLM pour les environnements domotiques. Intégration de ChatGPT à l'API Alexa via Python et NodeJS. Étude des interactions de communautés diverses avec la domotique pilotée par l'IA, avec présentation au corps enseignant.",
+    },
+  },
+  {
+    accent: "cyan",
+    en: {
+      title: "Virtual Locomotion in VR",
+      sub: "VR Research · Pitt School of Computing · Summer 2024",
+      body: "Researched the effects of different locomotion methods on user experience in virtual reality. Built and optimized immersive Unity environments and wrote C# scripts supporting the research study.",
+    },
+    fr: {
+      title: "Locomotion virtuelle en RV",
+      sub: "Recherche RV · Pitt School of Computing · Été 2024",
+      body: "Recherche sur les effets de différentes méthodes de locomotion sur l'expérience utilisateur en réalité virtuelle. Construction et optimisation d'environnements immersifs sous Unity et écriture de scripts C# pour l'étude.",
+    },
+  },
+];
+
+/* ── UI strings ── */
+export const ui = {
+  en: {
+    nav: { about: "about", experience: "experience", projects: "projects", research: "research", resume: "résumé", blog: "blog" },
+    heroKicker: "Pittsburgh, PA · Pitt '27 · EN / FR",
+    heroTagline:
+      "Aspiring polymath. I work at the intersection of machine learning, systems, and data — but I'm equally drawn to math, history, philosophy, and more. I care about ideas as much as what you build with them.",
+    quote: "L'imagination gouverne le monde.",
+    quoteAttr: "— Napoléon Bonaparte · imagination governs the world",
+    flags: {
+      usa: { label: "American", caption: "born & raised" },
+      quebec: { label: "Québec", caption: "French-Canadian roots" },
+      france: { label: "France", caption: "lived & studied" },
+    },
+    ctaEmail: "mcgrailmanny@gmail.com",
+    sectionAbout: "01 — about",
+    aboutHeadingTop: "Researcher by instinct,",
+    aboutHeadingBottom: "generalist by design.",
+    aboutP1:
+      "I'm Manny — a Data Science & CS student at the University of Pittsburgh, currently at ENSEA in Cergy, France for the semester. My work sits at the intersection of machine learning, systems programming, and data engineering. I'm drawn to problems that are both mathematically interesting and practically hard.",
+    aboutP2:
+      "Outside of engineering I read research papers, philosophy and history, think seriously about physics and mathematics for their own sake, grind LeetCode for the pure joy of a clean algorithm, and make music. I find the connections between fields as interesting as the fields themselves.",
+    facts: [
+      { label: "Currently", value: "ENSEA, Cergy-Pontoise, France (Spring 2026)" },
+      { label: "Studying", value: "Data Science + Computer Science @ Pitt" },
+      { label: "Research", value: "NLP, Computer Vision, Deep Learning" },
+      { label: "Programming", value: "Python, SQL, C++, Java, R, C" },
+      { label: "Languages", value: "English & French" },
+      { label: "Algorithms", value: "LeetCode grinder — DP, graphs, the classics" },
+      { label: "Goal", value: "Undergraduate → PhD / Masters → AI Research" },
+      { label: "Also", value: "Writer · Musician · Dean's List · Former Athlete" },
+    ],
+    coursework: "coursework",
+    sectionExp: "02 — experience",
+    sectionProj: "03 — projects",
+    viewAll: "view all on github →",
+    sectionResearch: "04 — research",
+    researchInterests: "Current interests: deep learning, NLP, computer vision, GPU computing.",
+    footerTag: "Pittsburgh · Building things",
+  },
+  fr: {
+    nav: { about: "à propos", experience: "expérience", projects: "projets", research: "recherche", resume: "CV", blog: "blog" },
+    heroKicker: "Pittsburgh, PA · Pitt '27 · EN / FR",
+    heroTagline:
+      "Polymathe en devenir. Je travaille à l'intersection de l'apprentissage automatique, des systèmes et des données — mais les maths, l'histoire et la philosophie m'attirent tout autant. Je tiens aux idées autant qu'à ce qu'on en construit.",
+    quote: "L'imagination gouverne le monde.",
+    quoteAttr: "— Napoléon Bonaparte · l'imagination gouverne le monde",
+    flags: {
+      usa: { label: "Américain", caption: "né et élevé" },
+      quebec: { label: "Québec", caption: "racines canadiennes-françaises" },
+      france: { label: "France", caption: "vécu & étudié" },
+    },
+    ctaEmail: "mcgrailmanny@gmail.com",
+    sectionAbout: "01 — à propos",
+    aboutHeadingTop: "Chercheur par instinct,",
+    aboutHeadingBottom: "généraliste par choix.",
+    aboutP1:
+      "Je m'appelle Manny — étudiant en science des données et informatique à l'Université de Pittsburgh, actuellement à l'ENSEA de Cergy, en France, pour le semestre. Mon travail se situe à l'intersection de l'apprentissage automatique, de la programmation système et de l'ingénierie de données. J'aime les problèmes qui sont à la fois mathématiquement intéressants et concrètement difficiles.",
+    aboutP2:
+      "En dehors de l'ingénierie, je lis des articles de recherche, de la philosophie et de l'histoire, je réfléchis sérieusement à la physique et aux mathématiques pour elles-mêmes, je m'entraîne sur LeetCode pour le pur plaisir d'un algorithme élégant, et je fais de la musique. Les liens entre les domaines m'intéressent autant que les domaines eux-mêmes.",
+    facts: [
+      { label: "Actuellement", value: "ENSEA, Cergy-Pontoise, France (printemps 2026)" },
+      { label: "Études", value: "Science des données + Informatique @ Pitt" },
+      { label: "Recherche", value: "TAL, vision par ordinateur, apprentissage profond" },
+      { label: "Programmation", value: "Python, SQL, C++, Java, R, C" },
+      { label: "Langues", value: "Anglais & Français" },
+      { label: "Algorithmes", value: "Accro à LeetCode — prog. dynamique, graphes, les classiques" },
+      { label: "Objectif", value: "Licence → Doctorat / Master → Recherche en IA" },
+      { label: "Aussi", value: "Écrivain · Musicien · Dean's List · Ancien athlète" },
+    ],
+    coursework: "cours suivis",
+    sectionExp: "02 — expérience",
+    sectionProj: "03 — projets",
+    viewAll: "voir tout sur github →",
+    sectionResearch: "04 — recherche",
+    researchInterests: "Intérêts actuels : apprentissage profond, TAL, vision par ordinateur, calcul GPU.",
+    footerTag: "Pittsburgh · Je construis des choses",
+  },
+} satisfies Record<Lang, unknown>;

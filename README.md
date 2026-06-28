@@ -1,42 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Manny McGrail — Personal Website
 
-## Getting Started
+Bilingual (EN / FR) personal site for Emmanuel "Manny" McGrail. Built with
+**Next.js 15 (App Router)**, **React 19**, **TypeScript**, and **Tailwind CSS v4**.
 
-First, run the development server:
+Turquoise theme, Mistral-inspired animation, and hand-built pixel-art sprites
+(waving USA / Québec / France flags + a `ghosteau` ghost easter egg).
+
+---
+
+## Quick start
 
 ```bash
+# 1. install dependencies (first time only)
+npm install
+
+# 2. run the dev server (hot reload)
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open **http://localhost:3000**.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## All commands
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Command         | What it does                                            |
+| --------------- | ------------------------------------------------------- |
+| `npm install`   | Install dependencies (run once, or after pulling)       |
+| `npm run dev`   | Start the dev server at `localhost:3000` with hot reload |
+| `npm run build` | Production build (also runs type-checking + lint)       |
+| `npm run start` | Serve the production build (run `npm run build` first)  |
+| `npm run lint`  | Run ESLint                                              |
 
-## Learn More
+> **Node:** built and tested on Node 20+ (works on Node 24). If `npm run dev`
+> fails, check your Node version with `node --version`.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/
+  layout.tsx          # root layout, fonts (Space Grotesk + JetBrains Mono), metadata
+  globals.css         # Tailwind import, turquoise theme tokens, keyframes
+  page.tsx            # home page (hero, about, experience, projects, research)
+  content.ts          # ALL bilingual copy + experience/projects/research data
+  resume/page.tsx     # /resume  — full CV, bilingual, printable
+  blog/page.tsx       # /blog    — notes & essays (placeholders for now)
+  components/
+    sprites.tsx       # pixel-art flags (USA/Québec/France) + ghost, generated from color grids
+    lang.tsx          # useLang() hook (localStorage-backed) + EN/FR toggle pill
+next.config.ts
+postcss.config.mjs
+tsconfig.json
+```
 
-## Deploy on Vercel
+### Where to edit things
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **Text / translations** → `app/content.ts`. Every string has an `en` and `fr`
+  version. The home page, resume, and blog all read from here (resume and blog
+  have a little extra page-specific copy at the top of their own files).
+- **Experience, projects, research, coursework** → arrays in `app/content.ts`.
+  Add/remove an entry there and it updates everywhere.
+- **Colors** → `app/globals.css`, the `@theme` block (`--color-turq-*`). The
+  three accent families are `turq` (custom), `cyan`, and `emerald`.
+- **Sprites / flags** → `app/components/sprites.tsx`. Each flag is a small
+  character grid mapped to a color palette, so they stay crisp at any size.
+- **Fonts** → `app/layout.tsx` (`next/font/google`).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Language toggle
 
-TODO:
-- Add resume
-- Add blog posts/essays that you have written
-- Add a (good) photo of yourself
-- Make the site live
+The EN/FR toggle lives in the nav. The choice is saved to `localStorage` and
+shared across all pages via the `useLang()` hook in `app/components/lang.tsx`.
+
+---
+
+## Deploying
+
+Easiest path is **Vercel** (made by the Next.js team):
+
+1. Push this repo to GitHub.
+2. Import it at https://vercel.com/new — it auto-detects Next.js.
+3. No env vars needed. Every push to the production branch redeploys.
+
+Or build and self-host:
+
+```bash
+npm run build
+npm run start   # serves on port 3000
+```
+
+---
+
+## Branches
+
+- `main` — stable / production
+- `develop` — active development (you're here)
+
+## TODO
+
+- [ ] Add a real résumé PDF download
+- [ ] Write the first real blog post (placeholders live in `app/blog/page.tsx`)
+- [ ] Add a (good) photo
+- [ ] Point a custom domain at the Vercel deployment
