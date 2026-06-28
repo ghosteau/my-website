@@ -489,7 +489,7 @@ const MANNY_PALETTE: Palette = {
    /public/sprites/ and set the path below. When set, the image is used
    instead of the hand-drawn pixel art. See public/sprites/README.md.
    Remember to credit the artist if the pack requires it. */
-const MANNY_SPRITE_SRC = "";      // e.g. "/sprites/manny-walk.png"
+const MANNY_SPRITE_SRC = "/sprites/manny_sprite.jpg";
 const MANNY_HELM_SPRITE_SRC = ""; // e.g. "/sprites/manny-helm.png"
 
 export function PixelManny({ className = "" }: { className?: string }) {
