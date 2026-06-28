@@ -71,12 +71,17 @@ body {
   0%   { background-position: -200% center; }
   100% { background-position: 200% center; }
 }
-/* sprite flag wave */
+/* sprite flag wave — 3D flutter as if caught in wind */
 @keyframes flag-wave {
-  0%, 100% { transform: skewY(0deg) translateY(0); }
-  25%  { transform: skewY(-1.5deg) translateY(-1px); }
-  50%  { transform: skewY(0deg) translateY(1px); }
-  75%  { transform: skewY(1.5deg) translateY(-1px); }
+  0%, 100% { transform: perspective(140px) rotateY(0deg) skewY(0deg) scaleX(1); }
+  20%  { transform: perspective(140px) rotateY(-16deg) skewY(2deg) scaleX(0.97); }
+  45%  { transform: perspective(140px) rotateY(6deg) skewY(-1.5deg) scaleX(1.02); }
+  70%  { transform: perspective(140px) rotateY(16deg) skewY(2deg) scaleX(0.97); }
+}
+/* character walk across the page */
+@keyframes walk-across {
+  from { transform: translateX(-56px); }
+  to   { transform: translateX(calc(100vw + 56px)); }
 }
 /* floating bob for sprites */
 @keyframes bob {

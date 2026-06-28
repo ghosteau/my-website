@@ -1,5 +1,7 @@
 "use client";
 
+import { useEffect, useState } from "react";
+
 /* ────────────────────────────────────────────────────────────
    Hand-built pixel-art sprites, drawn in the spirit of Gen-5
    (Pokémon Black & White) creature sprites — chunky shading,
@@ -87,33 +89,31 @@ const QC_PALETTE: Palette = { B: "#003DA5", W: "#F4F4F4" };
 const QC_GRID = buildQuebec();
 
 export function Flag({
-  kind, label, caption, delay = 0,
+  kind, label, delay = 0,
 }: {
   kind: "usa" | "quebec" | "france";
   label: string;
-  caption: string;
   delay?: number;
 }) {
   const map = {
-    usa: { grid: USA_GRID, palette: USA_PALETTE, title: "United States" },
-    quebec: { grid: QC_GRID, palette: QC_PALETTE, title: "Québec" },
-    france: { grid: FR_GRID, palette: FR_PALETTE, title: "France" },
+    usa: { grid: USA_GRID, palette: USA_PALETTE },
+    quebec: { grid: QC_GRID, palette: QC_PALETTE },
+    france: { grid: FR_GRID, palette: FR_PALETTE },
   } as const;
   const f = map[kind];
   return (
-    <div className="group flex flex-col items-center gap-3 select-none">
+    <div className="group relative flex flex-col items-center select-none">
       <div className="relative flex items-end">
         <div className="w-[3px] h-16 bg-gradient-to-b from-white/40 to-white/10 rounded-full mr-[-1px] mb-[-2px]" />
         <div className="origin-left transition-transform duration-300 group-hover:scale-110"
-          style={{ animation: `flag-wave 3.2s ease-in-out ${delay}ms infinite` }}>
-          <GridSvg grid={f.grid} palette={f.palette} title={f.title}
+          style={{ animation: `flag-wave 3s ease-in-out ${delay}ms infinite` }}>
+          <GridSvg grid={f.grid} palette={f.palette} title={label}
             className="w-20 h-auto drop-shadow-[0_4px_12px_rgba(0,0,0,0.45)]" />
         </div>
       </div>
-      <div className="text-center">
-        <p className="font-mono text-[11px] tracking-widest uppercase text-white/50 group-hover:text-turq-300 transition-colors duration-200">{label}</p>
-        <p className="text-[10px] text-white/25 font-light mt-0.5">{caption}</p>
-      </div>
+      <span className="absolute -bottom-5 whitespace-nowrap font-mono text-[10px] tracking-widest uppercase text-white/0 group-hover:text-turq-300/80 transition-colors duration-200">
+        {label}
+      </span>
     </div>
   );
 }
@@ -366,4 +366,67 @@ export function GameSprite({
       </span>
     </div>
   );
+}
+
+/* ═══════════════ ANIMATED CHARACTERS (original, multi-frame) ═══════════════ */
+
+function AnimatedCharacter({
+  frames, palette, fps = 4, className = "", title,
+}: {
+  frames: string[][];
+  palette: Palette;
+  fps?: number;
+  className?: string;
+  title?: string;
+}) {
+  const [i, setI] = useState(0);
+  useEffect(() => {
+    const id = setInterval(() => setI((v) => (v + 1) % frames.length), 1000 / fps);
+    return () => clearInterval(id);
+  }, [frames.length, fps]);
+  return <GridSvg grid={frames[i]} palette={palette} className={className} title={title} />;
+}
+
+/* a little adventurer — platformer-hero energy, fully original */
+const HERO_BASE = [
+  "    kkkk    ",
+  "   kKKKKk   ",
+  "   kKKKKk   ",
+  "   ssssss   ",
+  "   sesses   ",
+  "   ssssss   ",
+  "    tttt    ",
+  "   tTTTTt   ",
+  "  htttttth  ",
+  "   tTTTTt   ",
+  "   tttttt   ",
+];
+const HERO_A = [...HERO_BASE, "   bb  bb   ", "   b    b   ", "  bb    bb  "];
+const HERO_B = [...HERO_BASE, "    bbbb    ", "    b  b    ", "   bb  bb   "];
+const HERO_PALETTE: Palette = {
+  k: "#0d9488", K: "#14b8a6", s: "#f0c08a", e: "#14201c",
+  t: "#22d3ee", T: "#0891b2", b: "#6b4226", h: "#f0c08a",
+};
+export function PixelHero({ className = "" }: { className?: string }) {
+  return <AnimatedCharacter frames={[HERO_A, HERO_B]} palette={HERO_PALETTE} fps={4} className={className} title="adventurer" />;
+}
+
+/* a speedy little critter — runner energy, fully original */
+const SPEED_BASE = [
+  "      ooo  ",
+  "    ooCCCo ",
+  "  ooccccCo ",
+  " ooccccccCo",
+  "occwpccccCo",
+  "occccccccCo",
+  " occccccCo ",
+];
+const SPEED_A = [...SPEED_BASE, "  bb   bb  ", " bb     bb "];
+const SPEED_B = [...SPEED_BASE, "   bb bb   ", "  bb   bb  "];
+const SPEED_PALETTE: Palette = {
+  o: "#0a3d36", c: "#06b6d4", C: "#22d3ee",
+  w: "#ecfeff", p: "#0a3d36", b: "#fbbf24",
+};
+export function PixelSpeedster({ className = "" }: { className?: string }) {
+  return <AnimatedCharacter frames={[SPEED_A, SPEED_B]} palette={SPEED_PALETTE} fps={9} className={className} title="speedster" />;
 }

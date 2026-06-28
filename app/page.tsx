@@ -7,6 +7,8 @@ import {
   PixelGhost,
   PixelCoin,
   PixelSparkle,
+  PixelHero,
+  PixelSpeedster,
   GameSprite,
 } from "./components/sprites";
 import {
@@ -218,9 +220,9 @@ export default function Home() {
           {/* Flag sprites — the tri-national story */}
           <div className="flex flex-wrap gap-8 sm:gap-12 mt-12"
             style={{ opacity: 0, animation: "fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.5s forwards" }}>
-            <Flag kind="usa" label={t.flags.usa.label} caption={t.flags.usa.caption} delay={0} />
-            <Flag kind="quebec" label={t.flags.quebec.label} caption={t.flags.quebec.caption} delay={250} />
-            <Flag kind="france" label={t.flags.france.label} caption={t.flags.france.caption} delay={500} />
+            <Flag kind="usa" label={t.flags.usa} delay={0} />
+            <Flag kind="quebec" label={t.flags.quebec} delay={250} />
+            <Flag kind="france" label={t.flags.france} delay={500} />
           </div>
 
           {/* Quote */}
@@ -452,8 +454,20 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Walking characters — original pixel pals strolling across */}
+      <div aria-hidden className="relative z-10 h-16 w-full overflow-hidden pointer-events-none select-none">
+        <div className="absolute bottom-0" style={{ animation: "walk-across 24s linear infinite" }}>
+          <PixelHero className="w-10 h-auto drop-shadow-[0_3px_8px_rgba(0,0,0,0.5)]" />
+        </div>
+        <div className="absolute bottom-2 flex items-center gap-1" style={{ animation: "walk-across 8s linear infinite", animationDelay: "5s" }}>
+          <span className="block w-5 h-px bg-gradient-to-l from-cyan-400/50 to-transparent" />
+          <span className="block w-3 h-px bg-gradient-to-l from-cyan-400/40 to-transparent" />
+          <PixelSpeedster className="w-9 h-auto drop-shadow-[0_3px_8px_rgba(0,0,0,0.5)]" />
+        </div>
+      </div>
+
       {/* Footer */}
-      <footer className="relative z-10 border-t border-white/[0.05] px-8 md:px-20 py-12 mt-20">
+      <footer className="relative z-10 border-t border-white/[0.05] px-8 md:px-20 py-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div className="flex items-center gap-4">
             <PixelGhost className="w-8 h-8 animate-bob opacity-70" />
