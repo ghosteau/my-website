@@ -22,7 +22,7 @@ export const experience: {
   fr: { role: string; bullets: string[] };
 }[] = [
   {
-    period: "Sept 2024 – Dec 2025",
+    period: "Sept 2024 – Present",
     org: "University of Pittsburgh Athletics",
     accent: "teal",
     en: {
@@ -43,11 +43,11 @@ export const experience: {
     },
   },
   {
-    period: "May – Aug 2025",
-    org: "BNY",
+    period: "May 2025 – Present",
+    org: "Bank of New York (BNY)",
     accent: "cyan",
     en: {
-      role: "Engineering Intern (Co-Op)",
+      role: "Engineering Intern",
       bullets: [
         "Built a data reprocessing algorithm via Spring and Kafka to automatically resolve failed enrichment pipeline messages.",
         "Optimized reconciliation workflows — $1.7M in cost savings and 8x reduction in processing time.",
@@ -55,7 +55,7 @@ export const experience: {
       ],
     },
     fr: {
-      role: "Stagiaire ingénieur (Co-Op)",
+      role: "Stagiaire ingénieur",
       bullets: [
         "Développement d'un algorithme de retraitement de données avec Spring et Kafka pour résoudre automatiquement les messages d'enrichissement en échec.",
         "Optimisation des flux de réconciliation — 1,7 M$ d'économies et temps de traitement divisé par 8.",
@@ -64,7 +64,7 @@ export const experience: {
     },
   },
   {
-    period: "Sept 2024 – May 2025",
+    period: "Sept 2024 – June 2025",
     org: "Pitt School of Computing",
     accent: "emerald",
     en: {
@@ -81,25 +81,6 @@ export const experience: {
         "Collaboration avec des doctorants et des enseignants sur une IA conversationnelle améliorée par LLM pour les objets connectés.",
         "Intégration de ChatGPT à l'API Alexa via Python et NodeJS pour étendre les fonctionnalités et l'usabilité.",
         "Étude de la manière dont diverses communautés interagissent avec la domotique pilotée par l'IA ; présentation des résultats au corps enseignant.",
-      ],
-    },
-  },
-  {
-    period: "May – Aug 2024",
-    org: "Pitt School of Computing",
-    accent: "emerald",
-    en: {
-      role: "Undergraduate Researcher — Virtual Reality",
-      bullets: [
-        "Researched virtual locomotion methods in VR and helped build immersive experiences in Unity.",
-        "Wrote C# scripts to support functional VR research environments.",
-      ],
-    },
-    fr: {
-      role: "Chercheur de premier cycle — Réalité virtuelle",
-      bullets: [
-        "Recherche sur les méthodes de locomotion virtuelle en RV et participation à la création d'expériences immersives sous Unity.",
-        "Écriture de scripts C# pour soutenir des environnements de recherche RV fonctionnels.",
       ],
     },
   },
@@ -228,18 +209,19 @@ export const ui = {
     aboutHeadingTop: "Researcher by instinct,",
     aboutHeadingBottom: "generalist by design.",
     aboutP1:
-      "I'm Manny — a Data Science & CS student at the University of Pittsburgh, currently at ENSEA in Cergy, France for the semester. My work sits at the intersection of machine learning, systems programming, and data engineering. I'm drawn to problems that are both mathematically interesting and practically hard.",
+      "I'm Manny — a Data Science & Computer Science student at the University of Pittsburgh, with a minor in French. I spent last semester on exchange at ENSEA in Cergy, France, and I'm back in Pittsburgh now, currently interning at BNY. My work sits at the intersection of machine learning, systems programming, and data engineering — I'm drawn to problems that are both mathematically interesting and practically hard.",
     aboutP2:
       "Outside of engineering I read research papers, philosophy and history, think seriously about physics and mathematics for their own sake, grind LeetCode for the pure joy of a clean algorithm, and make music. I find the connections between fields as interesting as the fields themselves.",
     facts: [
-      { label: "Currently", value: "ENSEA, Cergy-Pontoise, France (Spring 2026)" },
-      { label: "Studying", value: "Data Science + Computer Science @ Pitt" },
+      { label: "Currently", value: "Back at Pitt, Pittsburgh PA · interning at BNY" },
+      { label: "Studying", value: "Data Science + Computer Science @ Pitt · French minor" },
+      { label: "GPA", value: "3.76 · Dean's List" },
       { label: "Research", value: "NLP, Computer Vision, Deep Learning" },
-      { label: "Programming", value: "Python, SQL, C++, Java, R, C" },
+      { label: "Programming", value: "Python, C++, Java, R, C#, C, SQL" },
       { label: "Languages", value: "English & French" },
       { label: "Algorithms", value: "LeetCode grinder — DP, graphs, the classics" },
       { label: "Goal", value: "Undergraduate → PhD / Masters → AI Research" },
-      { label: "Also", value: "Writer · Musician · Dean's List · Former Athlete" },
+      { label: "Also", value: "Musician · Writer · All-Academic Athlete" },
     ],
     coursework: "coursework",
     sectionExp: "02 — experience",
@@ -255,6 +237,7 @@ export const ui = {
       "Before the code, there was rhythm. I composed much of this album and played the drums on it — music is one of the ways I think through ideas. More to come.",
     musicSoon: "more on the way",
     musicListen: "Listen on Spotify ↗",
+    scroll: "scroll",
     footerTag: "Pittsburgh · Building things",
   },
   fr: {
@@ -270,18 +253,19 @@ export const ui = {
     aboutHeadingTop: "Chercheur par instinct,",
     aboutHeadingBottom: "généraliste par choix.",
     aboutP1:
-      "Je m'appelle Manny — étudiant en science des données et informatique à l'Université de Pittsburgh, actuellement à l'ENSEA de Cergy, en France, pour le semestre. Mon travail se situe à l'intersection de l'apprentissage automatique, de la programmation système et de l'ingénierie de données. J'aime les problèmes qui sont à la fois mathématiquement intéressants et concrètement difficiles.",
+      "Je m'appelle Manny — étudiant en science des données et informatique à l'Université de Pittsburgh, avec une mineure en français. J'ai passé le semestre dernier en échange à l'ENSEA de Cergy, en France, et je suis de retour à Pittsburgh, actuellement en stage chez BNY. Mon travail se situe à l'intersection de l'apprentissage automatique, de la programmation système et de l'ingénierie de données — j'aime les problèmes à la fois mathématiquement intéressants et concrètement difficiles.",
     aboutP2:
       "En dehors de l'ingénierie, je lis des articles de recherche, de la philosophie et de l'histoire, je réfléchis sérieusement à la physique et aux mathématiques pour elles-mêmes, je m'entraîne sur LeetCode pour le pur plaisir d'un algorithme élégant, et je fais de la musique. Les liens entre les domaines m'intéressent autant que les domaines eux-mêmes.",
     facts: [
-      { label: "Actuellement", value: "ENSEA, Cergy-Pontoise, France (printemps 2026)" },
-      { label: "Études", value: "Science des données + Informatique @ Pitt" },
+      { label: "Actuellement", value: "De retour à Pitt, Pittsburgh PA · stage chez BNY" },
+      { label: "Études", value: "Science des données + Informatique @ Pitt · mineure en français" },
+      { label: "Moyenne", value: "3,76 · Dean's List" },
       { label: "Recherche", value: "TAL, vision par ordinateur, apprentissage profond" },
-      { label: "Programmation", value: "Python, SQL, C++, Java, R, C" },
+      { label: "Programmation", value: "Python, C++, Java, R, C#, C, SQL" },
       { label: "Langues", value: "Anglais & Français" },
       { label: "Algorithmes", value: "Accro à LeetCode — prog. dynamique, graphes, les classiques" },
       { label: "Objectif", value: "Licence → Doctorat / Master → Recherche en IA" },
-      { label: "Aussi", value: "Écrivain · Musicien · Dean's List · Ancien athlète" },
+      { label: "Aussi", value: "Musicien · Écrivain · Athlète académique" },
     ],
     coursework: "cours suivis",
     sectionExp: "02 — expérience",
@@ -297,6 +281,7 @@ export const ui = {
       "Avant le code, il y avait le rythme. J'ai composé une grande partie de cet album et j'y ai joué de la batterie — la musique est une de mes façons de réfléchir. D'autres projets à venir.",
     musicSoon: "d'autres à venir",
     musicListen: "Écouter sur Spotify ↗",
+    scroll: "défiler",
     footerTag: "Pittsburgh · Je construis des choses",
   },
 } satisfies Record<Lang, unknown>;

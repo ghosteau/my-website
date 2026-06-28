@@ -20,15 +20,26 @@ const copy = {
     title: "Résumé",
     summaryHead: "Summary",
     summary:
-      "Data Science & Computer Science student at the University of Pittsburgh (Class of 2027), currently studying at ENSEA in Cergy, France. Focused on machine learning, systems, and data engineering — aiming toward graduate study and AI research.",
+      "Data Science & Computer Science student at the University of Pittsburgh (French minor, GPA 3.76, graduating Spring 2027). Spent Spring 2026 on exchange at ENSEA in France; currently interning at BNY. Focused on machine learning, systems, and data engineering — aiming toward graduate study and AI research.",
     expHead: "Experience",
     projHead: "Selected Projects",
     eduHead: "Education",
-    eduMain: "University of Pittsburgh — B.S. Data Science & Computer Science",
-    eduSub: "Expected 2027 · Dean's List · Currently on exchange at ENSEA (Cergy, France)",
+    edu: [
+      {
+        main: "University of Pittsburgh — B.S. Data Science, B.S. Computer Science, Minor in French",
+        sub: "Pittsburgh, PA · GPA 3.76 · Graduating Spring 2027",
+      },
+      {
+        main: "ENSEA (École Nationale Supérieure de l'Électronique)",
+        sub: "Cergy, France · Engineering Study Abroad · Spring 2026",
+      },
+    ],
     courseHead: "Selected Coursework",
     skillsHead: "Skills",
-    skills: "Python · SQL · C++ · Java · C · R · PyTorch · CUDA · AWS · Spark · Kafka · Spring · Git",
+    skills:
+      "Python · C++ · Java · R · C# · C · SQL · PyTorch · CUDA · Transformers · scikit-learn · Pandas · NumPy · Spring · Kafka · Spark · Snowflake · AWS (Lambda, Step Functions, Athena, S3) · Git",
+    awardsHead: "Awards & Honors",
+    awards: "Dean's List · French Dedication Award · EU Economic Project Award · All-Academic Athlete",
     download: "View on LinkedIn ↗",
     print: "Print / Save PDF",
   },
@@ -37,15 +48,26 @@ const copy = {
     title: "CV",
     summaryHead: "Résumé",
     summary:
-      "Étudiant en science des données et informatique à l'Université de Pittsburgh (promotion 2027), actuellement à l'ENSEA de Cergy, en France. Spécialisé en apprentissage automatique, systèmes et ingénierie de données — en route vers des études supérieures et la recherche en IA.",
+      "Étudiant en science des données et informatique à l'Université de Pittsburgh (mineure en français, moyenne 3,76, diplôme prévu au printemps 2027). Semestre d'échange à l'ENSEA en France au printemps 2026 ; actuellement en stage chez BNY. Spécialisé en apprentissage automatique, systèmes et ingénierie de données — en route vers des études supérieures et la recherche en IA.",
     expHead: "Expérience",
     projHead: "Projets sélectionnés",
     eduHead: "Formation",
-    eduMain: "Université de Pittsburgh — Licence en science des données & informatique",
-    eduSub: "Diplôme prévu en 2027 · Dean's List · En échange à l'ENSEA (Cergy, France)",
+    edu: [
+      {
+        main: "Université de Pittsburgh — Licence science des données, Licence informatique, mineure en français",
+        sub: "Pittsburgh, PA · Moyenne 3,76 · Diplôme prévu au printemps 2027",
+      },
+      {
+        main: "ENSEA (École Nationale Supérieure de l'Électronique)",
+        sub: "Cergy, France · Échange en ingénierie · Printemps 2026",
+      },
+    ],
     courseHead: "Cours suivis",
     skillsHead: "Compétences",
-    skills: "Python · SQL · C++ · Java · C · R · PyTorch · CUDA · AWS · Spark · Kafka · Spring · Git",
+    skills:
+      "Python · C++ · Java · R · C# · C · SQL · PyTorch · CUDA · Transformers · scikit-learn · Pandas · NumPy · Spring · Kafka · Spark · Snowflake · AWS (Lambda, Step Functions, Athena, S3) · Git",
+    awardsHead: "Distinctions",
+    awards: "Dean's List · Prix de dévouement au français · Prix du projet économique de l'UE · Athlète académique",
     download: "Voir sur LinkedIn ↗",
     print: "Imprimer / Enregistrer en PDF",
   },
@@ -127,8 +149,14 @@ export default function Resume() {
         </Section>
 
         <Section title={c.eduHead}>
-          <h3 className="text-white/80 font-light">{c.eduMain}</h3>
-          <p className="text-white/35 text-sm font-light mt-1">{c.eduSub}</p>
+          <div className="flex flex-col gap-4">
+            {c.edu.map((ed) => (
+              <div key={ed.main}>
+                <h3 className="text-white/80 font-light">{ed.main}</h3>
+                <p className="text-white/35 text-sm font-light mt-1">{ed.sub}</p>
+              </div>
+            ))}
+          </div>
         </Section>
 
         <Section title={c.courseHead}>
@@ -141,6 +169,10 @@ export default function Resume() {
 
         <Section title={c.skillsHead}>
           <p className="font-mono text-white/40 text-sm leading-relaxed">{c.skills}</p>
+        </Section>
+
+        <Section title={c.awardsHead}>
+          <p className="text-white/40 text-sm font-light leading-relaxed">{c.awards}</p>
         </Section>
       </article>
     </main>

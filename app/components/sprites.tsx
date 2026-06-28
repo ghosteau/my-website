@@ -403,9 +403,17 @@ function buildManny() {
   };
   const head = (g: string[][]) => {
     const { set, row } = place(g);
-    row(0, 3, 8, "H"); row(1, 2, 9, "H"); row(2, 2, 9, "H"); row(2, 3, 8, "h");
-    row(3, 2, 9, "s"); set(2, 3, "H"); set(9, 3, "H");
-    row(4, 2, 9, "s"); set(2, 4, "H"); set(9, 4, "H"); set(4, 4, "e"); set(7, 4, "e");
+    // tousled, side-swept trainer hair (Steven Stone x Blue) — brown, no afro
+    set(3, 0, "H"); set(4, 0, "H"); set(6, 0, "H"); set(8, 0, "H");   // spiky tips with gaps
+    row(1, 2, 9, "H");
+    row(2, 2, 9, "H");
+    set(3, 1, "i"); set(4, 1, "i"); set(3, 2, "h"); set(7, 1, "h");   // swept sheen
+    // forehead: thin sideburns + a fringe sweeping across (asymmetric)
+    row(3, 3, 8, "s");
+    set(2, 3, "H"); set(9, 3, "H"); set(3, 3, "H"); set(4, 3, "H"); set(8, 3, "H");
+    // eyes
+    row(4, 3, 8, "s"); set(2, 4, "H"); set(9, 4, "H"); set(4, 4, "e"); set(7, 4, "e");
+    // lower face
     row(5, 3, 8, "s"); set(5, 5, "S"); set(6, 5, "S");
   };
   const headHelm = (g: string[][]) => {
@@ -436,7 +444,7 @@ function buildManny() {
 }
 const MANNY = buildManny();
 const MANNY_PALETTE: Palette = {
-  H: "#5a3a22", h: "#6e4a2c", s: "#e8b88a", S: "#cf9e72", e: "#1a1410",
+  H: "#5a3a22", h: "#6e4a2c", i: "#8a6a44", s: "#e8b88a", S: "#cf9e72", e: "#1a1410",
   p: "#14b8a6", O: "#0b3b35", k: "#cbb487", K: "#b09a6e", b: "#6b4226",
   m: "#9aa6ab", n: "#e8e2d0",
 };

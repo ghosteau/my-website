@@ -113,17 +113,33 @@ function EmDash() {
 export default function Home() {
   const [lang, , toggle] = useLang();
   const t = ui[lang];
-  const [mousePos, setMousePos] = useState({ x: -1000, y: -1000 });
-  const [scrollY, setScrollY] = useState(0);
+  const spotlightRef = useRef<HTMLDivElement>(null);
+  const scrollHintRef = useRef<HTMLDivElement>(null);
 
+  // Drive the spotlight + scroll hint via refs (rAF-throttled) instead of
+  // React state, so moving the mouse never re-renders the whole page.
   useEffect(() => {
-    const onMouse = (e: MouseEvent) => setMousePos({ x: e.clientX, y: e.clientY });
-    const onScroll = () => setScrollY(window.scrollY);
-    window.addEventListener("mousemove", onMouse);
+    let raf = 0;
+    let lx = -1000, ly = -1000;
+    const paint = () => {
+      raf = 0;
+      if (spotlightRef.current)
+        spotlightRef.current.style.background = `radial-gradient(600px circle at ${lx}px ${ly}px, rgba(45,212,191,0.10), transparent 70%)`;
+    };
+    const onMouse = (e: MouseEvent) => {
+      lx = e.clientX; ly = e.clientY;
+      if (!raf) raf = requestAnimationFrame(paint);
+    };
+    const onScroll = () => {
+      if (scrollHintRef.current)
+        scrollHintRef.current.style.opacity = String(Math.max(0, 1 - window.scrollY / 180));
+    };
+    window.addEventListener("mousemove", onMouse, { passive: true });
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => {
       window.removeEventListener("mousemove", onMouse);
       window.removeEventListener("scroll", onScroll);
+      if (raf) cancelAnimationFrame(raf);
     };
   }, []);
 
@@ -140,16 +156,16 @@ export default function Home() {
 
       {/* Mouse spotlight */}
       <div
+        ref={spotlightRef}
         className="fixed inset-0 pointer-events-none z-0 transition-none"
-        style={{ background: `radial-gradient(600px circle at ${mousePos.x}px ${mousePos.y}px, rgba(45,212,191,0.10), transparent 70%)` }}
       />
 
       {/* Ambient blobs */}
       <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="blob blob-1 absolute top-[-10%] left-[-5%] w-[650px] h-[650px] rounded-full bg-turq-600/20 blur-[140px]" />
-        <div className="blob blob-2 absolute bottom-[5%] right-[-8%] w-[500px] h-[500px] rounded-full bg-cyan-500/15 blur-[120px]" />
-        <div className="blob blob-3 absolute top-[45%] left-[35%] w-[380px] h-[380px] rounded-full bg-emerald-500/12 blur-[100px]" />
-        <div className="blob blob-4 absolute top-[20%] right-[20%] w-[260px] h-[260px] rounded-full bg-teal-600/10 blur-[80px]" />
+        <div className="blob blob-1 absolute top-[-10%] left-[-5%] w-[650px] h-[650px] rounded-full bg-turq-600/20 blur-[140px] will-change-transform" />
+        <div className="blob blob-2 absolute bottom-[5%] right-[-8%] w-[500px] h-[500px] rounded-full bg-cyan-500/15 blur-[120px] will-change-transform" />
+        <div className="blob blob-3 absolute top-[45%] left-[35%] w-[380px] h-[380px] rounded-full bg-emerald-500/12 blur-[100px] will-change-transform" />
+        <div className="blob blob-4 absolute top-[20%] right-[20%] w-[260px] h-[260px] rounded-full bg-teal-600/10 blur-[80px] will-change-transform" />
       </div>
 
       {/* Grid */}
@@ -255,11 +271,12 @@ export default function Home() {
 
         {/* Scroll indicator */}
         <div
+          ref={scrollHintRef}
           className="fixed bottom-10 left-8 md:left-20 flex items-center gap-3 text-white/20 text-xs font-mono tracking-widest uppercase z-20 pointer-events-none"
-          style={{ opacity: Math.max(0, 1 - scrollY / 180), transition: "opacity 0.15s" }}
+          style={{ transition: "opacity 0.15s" }}
         >
           <div className="w-px h-8 bg-gradient-to-b from-transparent via-white/30 to-transparent animate-pulse-line" />
-          scroll
+          {t.scroll}
         </div>
       </section>
 
