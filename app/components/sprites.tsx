@@ -235,3 +235,135 @@ const SPARKLE_PALETTE: Palette = { o: "#a5f3ec" };
 export function PixelSparkle({ className = "" }: { className?: string }) {
   return <GridSvg grid={SPARKLE_GRID} palette={SPARKLE_PALETTE} className={className} title="sparkle" />;
 }
+
+/* ═══════════════ GAME HOMAGES (original pixel art) ═══════════════ */
+
+/* Minecraft — grass block */
+const MC_GRID = [
+  "oooooooooooo",
+  "ogggGgggggGo",
+  "oGgggggggggo",
+  "ogggggGggggo",
+  "odddDdddddDo",
+  "odDddddddddo",
+  "oddddddDdddo",
+  "odDddddddddo",
+  "oddddddddDdo",
+  "odddDddddddo",
+  "oddddddddddo",
+  "oooooooooooo",
+];
+const MC_PALETTE: Palette = { o: "#2c1a10", g: "#6cb33f", G: "#4e8b2c", d: "#8a5a3b", D: "#6b4329" };
+
+/* Elder Scrolls (Skyrim / Oblivion) — a sword */
+const SWORD_GRID = [
+  "   s   ",
+  "  sSs  ",
+  "  sSs  ",
+  "  sSs  ",
+  "  sSs  ",
+  "  sSs  ",
+  "  sSs  ",
+  "  sSs  ",
+  "  sSs  ",
+  " ggggg ",
+  "ggggggg",
+  "   h   ",
+  "   h   ",
+  "   h   ",
+  "  ggg  ",
+];
+const SWORD_PALETTE: Palette = { s: "#9ca3af", S: "#e5e7eb", g: "#d4a843", h: "#6b4226" };
+
+/* Pokémon — poké ball */
+const POKE_GRID = [
+  "    oooo    ",
+  "  oorrrroo  ",
+  " orrrrrrrro ",
+  " orrrrrrrro ",
+  "orrrrrrrrrro",
+  "okkkkWWkkkko",
+  "okkkkWWkkkko",
+  "ollllllllllo",
+  " ollllllllo ",
+  " ollllllllo ",
+  "  oolllloo  ",
+  "    oooo    ",
+];
+const POKE_PALETTE: Palette = { o: "#1a1a1a", r: "#e3350d", k: "#1a1a1a", W: "#f4f4f4", l: "#f4f4f4" };
+
+/* Zelda — Triforce */
+const TRI_GRID = [
+  "       y       ",
+  "      yyy      ",
+  "     yyyyy     ",
+  "    yyyyyyy    ",
+  "   y       y   ",
+  "  yyy     yyy  ",
+  " yyyyy   yyyyy ",
+  "yyyyyyy yyyyyyy",
+];
+const TRI_PALETTE: Palette = { y: "#f2c14e" };
+
+/* Mario — ? block */
+const QBLOCK_GRID = [
+  "oooooooooooo",
+  "orqqqqqqqqro",
+  "oqqqwwwwqqqo",
+  "oqqwqqqqwqqo",
+  "oqqqqqqqwqqo",
+  "oqqqqqqwqqqo",
+  "oqqqqqwqqqqo",
+  "oqqqqqwqqqqo",
+  "oqqqqqqqqqqo",
+  "oqqqqqwqqqqo",
+  "orqqqqqqqqro",
+  "oooooooooooo",
+];
+const QBLOCK_PALETTE: Palette = { o: "#5a3a08", q: "#f5a623", r: "#5a3a08", w: "#f4f4f4" };
+
+/* Sonic — ring */
+const RING_GRID = [
+  "    oooo    ",
+  "  ooyyyyoo  ",
+  " oyyo  oyyo ",
+  " oyo    oyo ",
+  "oyyo    oyyo",
+  "oyo      oyo",
+  "oyo      oyo",
+  "oyyo    oyyo",
+  " oyo    oyo ",
+  " oyyo  oyyo ",
+  "  ooyyyyoo  ",
+  "    oooo    ",
+];
+const RING_PALETTE: Palette = { o: "#9a7416", y: "#ffd23f" };
+
+const GAME_MAP: Record<string, { grid: string[]; palette: Palette }> = {
+  minecraft: { grid: MC_GRID, palette: MC_PALETTE },
+  elderscrolls: { grid: SWORD_GRID, palette: SWORD_PALETTE },
+  pokemon: { grid: POKE_GRID, palette: POKE_PALETTE },
+  zelda: { grid: TRI_GRID, palette: TRI_PALETTE },
+  mario: { grid: QBLOCK_GRID, palette: QBLOCK_PALETTE },
+  sonic: { grid: RING_GRID, palette: RING_PALETTE },
+};
+
+export function GameSprite({
+  kind, label, className = "",
+}: {
+  kind: string;
+  label: string;
+  className?: string;
+}) {
+  const g = GAME_MAP[kind];
+  if (!g) return null;
+  return (
+    <div className="group relative flex flex-col items-center gap-2 select-none">
+      <GridSvg grid={g.grid} palette={g.palette} title={label}
+        className={`h-auto transition-transform duration-300 group-hover:-translate-y-1 group-hover:scale-110 ${className}`} />
+      <span className="absolute -bottom-5 whitespace-nowrap font-mono text-[10px] tracking-wide text-white/0 group-hover:text-turq-300/80 transition-colors duration-200">
+        {label}
+      </span>
+    </div>
+  );
+}

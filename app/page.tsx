@@ -5,18 +5,18 @@ import { useLang, LangToggle } from "./components/lang";
 import {
   Flag,
   PixelGhost,
-  PixelSlime,
   PixelCoin,
-  PixelHeart,
-  PixelPotion,
   PixelSparkle,
+  GameSprite,
 } from "./components/sprites";
 import {
   experience,
   projects,
   courses,
   research,
+  games,
   ui,
+  SPOTIFY_ALBUM_ID,
   type Accent,
 } from "./content";
 
@@ -130,6 +130,7 @@ export default function Home() {
     ["experience", t.nav.experience],
     ["projects", t.nav.projects],
     ["research", t.nav.research],
+    ["music", t.nav.music],
   ];
 
   return (
@@ -262,8 +263,6 @@ export default function Home() {
 
       {/* About */}
       <section id="about" className="relative z-10 px-8 md:px-20 py-32 max-w-6xl mx-auto">
-        {/* hidden sprite — potion */}
-        <PixelPotion className="hidden md:block absolute top-28 right-2 w-8 h-auto opacity-40 hover:opacity-90 animate-sway transition-opacity duration-300" />
         <FadeIn>
           <p className="font-mono text-turq-400/50 text-xs tracking-[0.3em] uppercase mb-12">{t.sectionAbout}</p>
         </FadeIn>
@@ -304,12 +303,20 @@ export default function Home() {
             ))}
           </div>
         </FadeIn>
+
+        {/* games — original pixel homages, hover for the title */}
+        <FadeIn delay={120} className="mt-16">
+          <p className="font-mono text-white/15 text-xs tracking-[0.3em] uppercase mb-7">{t.gamesHeading}</p>
+          <div className="flex flex-wrap items-end gap-7 sm:gap-9">
+            {games.map((g) => (
+              <GameSprite key={g.key} kind={g.key} label={g.label} className="w-9" />
+            ))}
+          </div>
+        </FadeIn>
       </section>
 
       {/* Experience */}
-      <section id="experience" className="relative z-10 px-8 md:px-20 py-32 max-w-6xl mx-auto overflow-hidden">
-        {/* hidden sprite — slime peeking from the bottom edge */}
-        <PixelSlime className="hidden md:block absolute bottom-0 right-10 w-14 h-auto opacity-50 hover:opacity-100 animate-squash transition-opacity duration-300" />
+      <section id="experience" className="relative z-10 px-8 md:px-20 py-32 max-w-6xl mx-auto">
         <FadeIn>
           <p className="font-mono text-cyan-400/50 text-xs tracking-[0.3em] uppercase mb-12">{t.sectionExp}</p>
         </FadeIn>
@@ -402,16 +409,56 @@ export default function Home() {
         </FadeIn>
       </section>
 
+      {/* Music */}
+      <section id="music" className="relative z-10 px-8 md:px-20 py-32 max-w-6xl mx-auto">
+        <FadeIn>
+          <p className="font-mono text-cyan-400/50 text-xs tracking-[0.3em] uppercase mb-12">{t.sectionMusic}</p>
+        </FadeIn>
+        <div className="grid md:grid-cols-2 gap-12 items-center">
+          <FadeIn delay={80}>
+            <h2 className="text-3xl font-extralight text-white/90 leading-snug mb-6">
+              {t.musicHeading}<br />
+              <span className="bg-gradient-to-r from-turq-300 to-cyan-300 bg-clip-text text-transparent">
+                {t.musicHeadingAccent}
+              </span>
+            </h2>
+            <p className="text-white/45 font-light leading-relaxed text-base mb-6">
+              {t.musicBlurb}
+            </p>
+            <div className="flex flex-wrap items-center gap-4">
+              <a href={`https://open.spotify.com/album/${SPOTIFY_ALBUM_ID}`} target="_blank" rel="noopener noreferrer"
+                className="px-6 py-3 border border-turq-500/35 text-turq-300 hover:bg-turq-500/10 hover:border-turq-400/70 text-sm font-mono tracking-wide transition-all duration-200 rounded-sm">
+                {t.musicListen}
+              </a>
+              <span className="font-mono text-[10px] uppercase tracking-widest text-cyan-300/50 border border-cyan-500/20 rounded-sm px-2.5 py-1.5 animate-pulse-line">
+                {t.musicSoon}
+              </span>
+            </div>
+          </FadeIn>
+          <FadeIn delay={160}>
+            <div className="rounded-xl overflow-hidden border border-white/[0.08] shadow-2xl shadow-turq-950/40">
+              <iframe
+                title="Spotify album"
+                style={{ borderRadius: "12px" }}
+                src={`https://open.spotify.com/embed/album/${SPOTIFY_ALBUM_ID}?utm_source=generator&theme=0`}
+                width="100%"
+                height="352"
+                frameBorder="0"
+                allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                loading="lazy"
+              />
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* Footer */}
-      <footer className="group/foot relative z-10 border-t border-white/[0.05] px-8 md:px-20 py-12 mt-20">
+      <footer className="relative z-10 border-t border-white/[0.05] px-8 md:px-20 py-12 mt-20">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div className="flex items-center gap-4">
             <PixelGhost className="w-8 h-8 animate-bob opacity-70" />
             <div>
-              <p className="font-mono text-white/15 text-xs tracking-widest uppercase flex items-center gap-2">
-                Emmanuel McGrail
-                <PixelHeart className="w-3.5 h-3.5 opacity-0 group-hover/foot:opacity-100 animate-beat transition-opacity duration-300" />
-              </p>
+              <p className="font-mono text-white/15 text-xs tracking-widest uppercase">Emmanuel McGrail</p>
               <p className="text-white/10 text-xs mt-1 font-light">{t.footerTag}</p>
             </div>
           </div>

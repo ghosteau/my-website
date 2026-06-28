@@ -216,7 +216,7 @@ export const research: {
 /* ── UI strings ── */
 export const ui = {
   en: {
-    nav: { about: "about", experience: "experience", projects: "projects", research: "research", resume: "résumé", blog: "blog" },
+    nav: { about: "about", experience: "experience", projects: "projects", research: "research", music: "music", resume: "résumé", blog: "blog" },
     heroKicker: "Pittsburgh, PA · Pitt '27 · EN / FR",
     heroTagline:
       "Aspiring polymath. I work at the intersection of machine learning, systems, and data — but I'm equally drawn to math, history, philosophy, and more. I care about ideas as much as what you build with them.",
@@ -251,10 +251,18 @@ export const ui = {
     viewAll: "view all on github →",
     sectionResearch: "04 — research",
     researchInterests: "Current interests: deep learning, NLP, computer vision, GPU computing.",
+    gamesHeading: "also into",
+    sectionMusic: "05 — music",
+    musicHeading: "Drums, composition,",
+    musicHeadingAccent: "and whatever comes next.",
+    musicBlurb:
+      "Before the code, there was rhythm. I composed much of this album and played the drums on it — music is one of the ways I think through ideas. More to come.",
+    musicSoon: "more on the way",
+    musicListen: "Listen on Spotify ↗",
     footerTag: "Pittsburgh · Building things",
   },
   fr: {
-    nav: { about: "à propos", experience: "expérience", projects: "projets", research: "recherche", resume: "CV", blog: "blog" },
+    nav: { about: "à propos", experience: "expérience", projects: "projets", research: "recherche", music: "musique", resume: "CV", blog: "blog" },
     heroKicker: "Pittsburgh, PA · Pitt '27 · EN / FR",
     heroTagline:
       "Polymathe en devenir. Je travaille à l'intersection de l'apprentissage automatique, des systèmes et des données — mais les maths, l'histoire et la philosophie m'attirent tout autant. Je tiens aux idées autant qu'à ce qu'on en construit.",
@@ -289,6 +297,26 @@ export const ui = {
     viewAll: "voir tout sur github →",
     sectionResearch: "04 — recherche",
     researchInterests: "Intérêts actuels : apprentissage profond, TAL, vision par ordinateur, calcul GPU.",
+    gamesHeading: "aussi fan de",
+    sectionMusic: "05 — musique",
+    musicHeading: "Batterie, composition,",
+    musicHeadingAccent: "et la suite.",
+    musicBlurb:
+      "Avant le code, il y avait le rythme. J'ai composé une grande partie de cet album et j'y ai joué de la batterie — la musique est une de mes façons de réfléchir. D'autres projets à venir.",
+    musicSoon: "d'autres à venir",
+    musicListen: "Écouter sur Spotify ↗",
     footerTag: "Pittsburgh · Je construis des choses",
   },
 } satisfies Record<Lang, unknown>;
+
+/* ── favorite games (original pixel homages, mapped by key) ── */
+export const games: { key: string; label: string }[] = [
+  { key: "minecraft", label: "Minecraft" },
+  { key: "elderscrolls", label: "Skyrim · Oblivion" },
+  { key: "pokemon", label: "Pokémon" },
+  { key: "zelda", label: "Zelda" },
+  { key: "mario", label: "Mario" },
+  { key: "sonic", label: "Sonic" },
+];
+
+export const SPOTIFY_ALBUM_ID = "05v0il6BwD1Pge2k69NQVa";
