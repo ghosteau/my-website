@@ -95,11 +95,51 @@ body {
   90%  { opacity: 0.5; }
   100% { transform: translateY(-120px) rotate(20deg); opacity: 0; }
 }
+/* slime idle squash — classic RPG creature bounce */
+@keyframes squash {
+  0%, 100% { transform: scaleX(1) scaleY(1); }
+  45%      { transform: scaleX(1) scaleY(1); }
+  60%      { transform: scaleX(1.12) scaleY(0.85); }
+  75%      { transform: scaleX(0.95) scaleY(1.06); }
+  90%      { transform: scaleX(1.02) scaleY(0.98); }
+}
+/* coin spin */
+@keyframes coin-flip {
+  0%, 100% { transform: scaleX(1); }
+  50%      { transform: scaleX(0.12); }
+}
+/* heartbeat */
+@keyframes beat {
+  0%, 100%   { transform: scale(1); }
+  15%, 35%   { transform: scale(1.18); }
+  25%        { transform: scale(1.05); }
+}
+/* sparkle twinkle */
+@keyframes twinkle {
+  0%, 100% { transform: scale(0.7) rotate(0deg); opacity: 0.35; }
+  50%      { transform: scale(1) rotate(45deg); opacity: 1; }
+}
+/* gentle sway */
+@keyframes sway {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  50%      { transform: translateX(3px) rotate(2deg); }
+}
+/* peek up from behind an edge */
+@keyframes peek {
+  0%, 100% { transform: translateY(60%); }
+  50%      { transform: translateY(8%); }
+}
 
 .animate-underline { animation: underline-grow 1s cubic-bezier(0.16,1,0.3,1) 1s forwards; }
 .animate-pulse-line { animation: pulse-line 2.2s ease-in-out infinite; }
 .animate-bob { animation: bob 3.5s ease-in-out infinite; }
 .animate-blink { animation: blink 1.1s step-end infinite; }
+.animate-squash { animation: squash 2.6s ease-in-out infinite; transform-origin: bottom center; }
+.animate-coin { animation: coin-flip 2.4s ease-in-out infinite; }
+.animate-beat { animation: beat 1.4s ease-in-out infinite; }
+.animate-twinkle { animation: twinkle 2.2s ease-in-out infinite; }
+.animate-sway { animation: sway 4s ease-in-out infinite; transform-origin: bottom center; }
+.animate-peek { animation: peek 4s ease-in-out infinite; }
 .blob-1 { animation: blob-drift-1 20s ease-in-out infinite; }
 .blob-2 { animation: blob-drift-2 26s ease-in-out infinite; }
 .blob-3 { animation: blob-drift-3 17s ease-in-out infinite; }

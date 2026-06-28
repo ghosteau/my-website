@@ -220,8 +220,8 @@ export const ui = {
     heroKicker: "Pittsburgh, PA · Pitt '27 · EN / FR",
     heroTagline:
       "Aspiring polymath. I work at the intersection of machine learning, systems, and data — but I'm equally drawn to math, history, philosophy, and more. I care about ideas as much as what you build with them.",
-    quote: "L'imagination gouverne le monde.",
-    quoteAttr: "— Napoléon Bonaparte · imagination governs the world",
+    quote: "Fortis imaginatio generat casum.",
+    quoteAttr: "— Montaigne, On the Power of Imagination · a strong imagination begets the event",
     flags: {
       usa: { label: "American", caption: "born & raised" },
       quebec: { label: "Québec", caption: "French-Canadian roots" },
@@ -258,8 +258,8 @@ export const ui = {
     heroKicker: "Pittsburgh, PA · Pitt '27 · EN / FR",
     heroTagline:
       "Polymathe en devenir. Je travaille à l'intersection de l'apprentissage automatique, des systèmes et des données — mais les maths, l'histoire et la philosophie m'attirent tout autant. Je tiens aux idées autant qu'à ce qu'on en construit.",
-    quote: "L'imagination gouverne le monde.",
-    quoteAttr: "— Napoléon Bonaparte · l'imagination gouverne le monde",
+    quote: "Fortis imaginatio generat casum.",
+    quoteAttr: "— Montaigne, De la force de l'imagination · une imagination forte engendre l'événement",
     flags: {
       usa: { label: "Américain", caption: "né et élevé" },
       quebec: { label: "Québec", caption: "racines canadiennes-françaises" },

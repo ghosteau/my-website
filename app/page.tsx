@@ -2,7 +2,15 @@
 
 import { useEffect, useRef, useState } from "react";
 import { useLang, LangToggle } from "./components/lang";
-import { Flag, PixelGhost } from "./components/sprites";
+import {
+  Flag,
+  PixelGhost,
+  PixelSlime,
+  PixelCoin,
+  PixelHeart,
+  PixelPotion,
+  PixelSparkle,
+} from "./components/sprites";
 import {
   experience,
   projects,
@@ -197,6 +205,7 @@ export default function Home() {
                 McGrail
               </span>
               <span className="absolute -bottom-1 left-0 h-px bg-gradient-to-r from-turq-500/60 to-cyan-500/60 w-0 animate-underline" />
+              <PixelSparkle className="absolute -top-2 -right-7 w-5 h-5 animate-twinkle pointer-events-none" />
             </span>
           </h1>
 
@@ -253,6 +262,8 @@ export default function Home() {
 
       {/* About */}
       <section id="about" className="relative z-10 px-8 md:px-20 py-32 max-w-6xl mx-auto">
+        {/* hidden sprite — potion */}
+        <PixelPotion className="hidden md:block absolute top-28 right-2 w-8 h-auto opacity-40 hover:opacity-90 animate-sway transition-opacity duration-300" />
         <FadeIn>
           <p className="font-mono text-turq-400/50 text-xs tracking-[0.3em] uppercase mb-12">{t.sectionAbout}</p>
         </FadeIn>
@@ -296,7 +307,9 @@ export default function Home() {
       </section>
 
       {/* Experience */}
-      <section id="experience" className="relative z-10 px-8 md:px-20 py-32 max-w-6xl mx-auto">
+      <section id="experience" className="relative z-10 px-8 md:px-20 py-32 max-w-6xl mx-auto overflow-hidden">
+        {/* hidden sprite — slime peeking from the bottom edge */}
+        <PixelSlime className="hidden md:block absolute bottom-0 right-10 w-14 h-auto opacity-50 hover:opacity-100 animate-squash transition-opacity duration-300" />
         <FadeIn>
           <p className="font-mono text-cyan-400/50 text-xs tracking-[0.3em] uppercase mb-12">{t.sectionExp}</p>
         </FadeIn>
@@ -331,6 +344,8 @@ export default function Home() {
 
       {/* Projects */}
       <section id="projects" className="relative z-10 px-8 md:px-20 py-32 max-w-6xl mx-auto">
+        {/* hidden sprite — spinning coin */}
+        <PixelCoin className="absolute top-28 right-3 md:right-6 w-7 h-7 opacity-60 hover:opacity-100 animate-coin transition-opacity duration-300" />
         <FadeIn>
           <p className="font-mono text-emerald-400/50 text-xs tracking-[0.3em] uppercase mb-12">{t.sectionProj}</p>
         </FadeIn>
@@ -388,12 +403,15 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="relative z-10 border-t border-white/[0.05] px-8 md:px-20 py-12 mt-20">
+      <footer className="group/foot relative z-10 border-t border-white/[0.05] px-8 md:px-20 py-12 mt-20">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div className="flex items-center gap-4">
             <PixelGhost className="w-8 h-8 animate-bob opacity-70" />
             <div>
-              <p className="font-mono text-white/15 text-xs tracking-widest uppercase">Emmanuel McGrail</p>
+              <p className="font-mono text-white/15 text-xs tracking-widest uppercase flex items-center gap-2">
+                Emmanuel McGrail
+                <PixelHeart className="w-3.5 h-3.5 opacity-0 group-hover/foot:opacity-100 animate-beat transition-opacity duration-300" />
+              </p>
               <p className="text-white/10 text-xs mt-1 font-light">{t.footerTag}</p>
             </div>
           </div>
