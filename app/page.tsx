@@ -7,8 +7,8 @@ import {
   PixelGhost,
   PixelCoin,
   PixelSparkle,
-  PixelHero,
-  PixelSpeedster,
+  PixelManny,
+  PixelMannyHelm,
   GameSprite,
 } from "./components/sprites";
 import {
@@ -308,7 +308,12 @@ export default function Home() {
 
         {/* games — original pixel homages, hover for the title */}
         <FadeIn delay={120} className="mt-16">
-          <p className="font-mono text-white/15 text-xs tracking-[0.3em] uppercase mb-7">{t.gamesHeading}</p>
+          <div className="flex items-center gap-3 mb-7">
+            <span title="me, geared up" className="cursor-default">
+              <PixelMannyHelm className="w-7 h-auto animate-bob" />
+            </span>
+            <p className="font-mono text-white/15 text-xs tracking-[0.3em] uppercase">{t.gamesHeading}</p>
+          </div>
           <div className="flex flex-wrap items-end gap-7 sm:gap-9">
             {games.map((g) => (
               <GameSprite key={g.key} kind={g.key} label={g.label} className="w-9" />
@@ -454,15 +459,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Walking characters — original pixel pals strolling across */}
-      <div aria-hidden className="relative z-10 h-16 w-full overflow-hidden pointer-events-none select-none">
-        <div className="absolute bottom-0" style={{ animation: "walk-across 24s linear infinite" }}>
-          <PixelHero className="w-10 h-auto drop-shadow-[0_3px_8px_rgba(0,0,0,0.5)]" />
-        </div>
-        <div className="absolute bottom-2 flex items-center gap-1" style={{ animation: "walk-across 8s linear infinite", animationDelay: "5s" }}>
-          <span className="block w-5 h-px bg-gradient-to-l from-cyan-400/50 to-transparent" />
-          <span className="block w-3 h-px bg-gradient-to-l from-cyan-400/40 to-transparent" />
-          <PixelSpeedster className="w-9 h-auto drop-shadow-[0_3px_8px_rgba(0,0,0,0.5)]" />
+      {/* Walking character — Manny strolling with his ghosteau companion */}
+      <div aria-hidden className="relative z-10 h-20 w-full overflow-hidden pointer-events-none select-none">
+        <div className="absolute bottom-0 flex items-end gap-2" style={{ animation: "walk-across 26s linear infinite" }}>
+          <PixelManny className="w-11 h-auto drop-shadow-[0_3px_8px_rgba(0,0,0,0.5)]" />
+          <PixelGhost className="w-7 h-auto mb-3 animate-bob opacity-80" />
         </div>
       </div>
 

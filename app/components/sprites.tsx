@@ -387,46 +387,62 @@ function AnimatedCharacter({
   return <GridSvg grid={frames[i]} palette={palette} className={className} title={title} />;
 }
 
-/* a little adventurer — platformer-hero energy, fully original */
-const HERO_BASE = [
-  "    kkkk    ",
-  "   kKKKKk   ",
-  "   kKKKKk   ",
-  "   ssssss   ",
-  "   sesses   ",
-  "   ssssss   ",
-  "    tttt    ",
-  "   tTTTTt   ",
-  "  htttttth  ",
-  "   tTTTTt   ",
-  "   tttttt   ",
-];
-const HERO_A = [...HERO_BASE, "   bb  bb   ", "   b    b   ", "  bb    bb  "];
-const HERO_B = [...HERO_BASE, "    bbbb    ", "    b  b    ", "   bb  bb   "];
-const HERO_PALETTE: Palette = {
-  k: "#0d9488", K: "#14b8a6", s: "#f0c08a", e: "#14201c",
-  t: "#22d3ee", T: "#0891b2", b: "#6b4226", h: "#f0c08a",
-};
-export function PixelHero({ className = "" }: { className?: string }) {
-  return <AnimatedCharacter frames={[HERO_A, HERO_B]} palette={HERO_PALETTE} fps={4} className={className} title="adventurer" />;
+/* Manny — a little BW-overworld-style trainer of the man himself:
+   brown hair, teal polo, khaki dress shorts. Built by placing pixels
+   so the figure stays correct; "helm" swaps the hair for a generic
+   horned Nordic helmet (Dragonborn energy, original art). */
+function blankGrid(w: number, h: number): string[][] {
+  return Array.from({ length: h }, () => Array(w).fill(" "));
 }
-
-/* a speedy little critter — runner energy, fully original */
-const SPEED_BASE = [
-  "      ooo  ",
-  "    ooCCCo ",
-  "  ooccccCo ",
-  " ooccccccCo",
-  "occwpccccCo",
-  "occccccccCo",
-  " occccccCo ",
-];
-const SPEED_A = [...SPEED_BASE, "  bb   bb  ", " bb     bb "];
-const SPEED_B = [...SPEED_BASE, "   bb bb   ", "  bb   bb  "];
-const SPEED_PALETTE: Palette = {
-  o: "#0a3d36", c: "#06b6d4", C: "#22d3ee",
-  w: "#ecfeff", p: "#0a3d36", b: "#fbbf24",
+function buildManny() {
+  const W = 12, H = 16;
+  const place = (g: string[][]) => {
+    const set = (x: number, y: number, c: string) => { if (x >= 0 && x < W && y >= 0 && y < H) g[y][x] = c; };
+    const row = (y: number, a: number, b: number, c: string) => { for (let x = a; x <= b; x++) set(x, y, c); };
+    return { set, row };
+  };
+  const head = (g: string[][]) => {
+    const { set, row } = place(g);
+    row(0, 3, 8, "H"); row(1, 2, 9, "H"); row(2, 2, 9, "H"); row(2, 3, 8, "h");
+    row(3, 2, 9, "s"); set(2, 3, "H"); set(9, 3, "H");
+    row(4, 2, 9, "s"); set(2, 4, "H"); set(9, 4, "H"); set(4, 4, "e"); set(7, 4, "e");
+    row(5, 3, 8, "s"); set(5, 5, "S"); set(6, 5, "S");
+  };
+  const headHelm = (g: string[][]) => {
+    const { set, row } = place(g);
+    set(2, 0, "n"); set(9, 0, "n");                                   // horn tips
+    set(1, 1, "n"); set(2, 1, "n"); set(9, 1, "n"); set(10, 1, "n");  // horn bases
+    row(1, 3, 8, "m"); row(2, 2, 9, "m");                             // helmet dome
+    row(3, 3, 8, "s"); set(2, 3, "m"); set(9, 3, "m"); set(5, 3, "m"); set(6, 3, "m");
+    row(4, 3, 8, "s"); set(4, 4, "e"); set(7, 4, "e"); set(5, 4, "m"); set(6, 4, "m"); // noseguard
+    row(5, 3, 8, "s"); set(5, 5, "m"); set(6, 5, "m");
+  };
+  const body = (g: string[][], step: "A" | "B" | "stand") => {
+    const { set, row } = place(g);
+    row(6, 4, 7, "s");                                                // neck
+    row(7, 3, 8, "p"); set(5, 7, "O"); set(6, 7, "O");                // collar V
+    row(8, 2, 9, "p"); row(9, 2, 9, "p"); row(10, 2, 9, "p");         // torso
+    set(2, 8, "s"); set(9, 8, "s"); set(2, 9, "s"); set(9, 9, "s"); set(2, 10, "s"); set(9, 10, "s"); // arms
+    row(11, 3, 8, "k"); row(12, 3, 8, "k"); set(5, 12, "K"); set(6, 12, "K"); // shorts
+    if (step === "A") { row(13, 3, 4, "s"); row(13, 7, 8, "s"); row(14, 3, 4, "s"); row(14, 7, 8, "s"); row(15, 2, 4, "b"); row(15, 7, 9, "b"); }
+    else if (step === "B") { row(13, 4, 5, "s"); row(13, 6, 7, "s"); row(14, 4, 5, "s"); row(14, 6, 7, "s"); row(15, 3, 5, "b"); row(15, 6, 8, "b"); }
+    else { row(13, 3, 4, "s"); row(13, 7, 8, "s"); row(14, 3, 4, "s"); row(14, 7, 8, "s"); row(15, 3, 4, "b"); row(15, 7, 8, "b"); }
+  };
+  const A = blankGrid(W, H); head(A); body(A, "A");
+  const B = blankGrid(W, H); head(B); body(B, "B");
+  const helm = blankGrid(W, H); headHelm(helm); body(helm, "stand");
+  const join = (g: string[][]) => g.map((r) => r.join(""));
+  return { A: join(A), B: join(B), helm: join(helm) };
+}
+const MANNY = buildManny();
+const MANNY_PALETTE: Palette = {
+  H: "#5a3a22", h: "#6e4a2c", s: "#e8b88a", S: "#cf9e72", e: "#1a1410",
+  p: "#14b8a6", O: "#0b3b35", k: "#cbb487", K: "#b09a6e", b: "#6b4226",
+  m: "#9aa6ab", n: "#e8e2d0",
 };
-export function PixelSpeedster({ className = "" }: { className?: string }) {
-  return <AnimatedCharacter frames={[SPEED_A, SPEED_B]} palette={SPEED_PALETTE} fps={9} className={className} title="speedster" />;
+export function PixelManny({ className = "" }: { className?: string }) {
+  return <AnimatedCharacter frames={[MANNY.A, MANNY.B]} palette={MANNY_PALETTE} fps={4} className={className} title="Manny" />;
+}
+export function PixelMannyHelm({ className = "" }: { className?: string }) {
+  return <GridSvg grid={MANNY.helm} palette={MANNY_PALETTE} className={className} title="Manny — Dragonborn mode" />;
 }
