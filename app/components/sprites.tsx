@@ -49,17 +49,10 @@ function GridSvg({
   );
 }
 
-/* wrap a solid (gapless) grid in a 1px dark outline frame */
-function bordered(grid: string[]): string[] {
-  const cols = Math.max(...grid.map((r) => r.length));
-  const top = "o".repeat(cols + 2);
-  return [top, ...grid.map((r) => "o" + r.padEnd(cols, " ") + "o"), top];
-}
-
 /* ═══════════════ FLAGS ═══════════════ */
 
-const FR_PALETTE: Palette = { B: "#0055A4", W: "#F4F4F4", R: "#EF4135", o: "#15110d" };
-const FR_GRID = bordered(Array.from({ length: 8 }, () => "BBBBWWWWRRRR"));
+const FR_PALETTE: Palette = { B: "#0055A4", W: "#F4F4F4", R: "#EF4135" };
+const FR_GRID = Array.from({ length: 8 }, () => "BBBBWWWWRRRR");
 
 function buildUSA(): string[] {
   const cols = 15, rows = 10;
@@ -74,8 +67,8 @@ function buildUSA(): string[] {
   }
   return grid;
 }
-const USA_PALETTE: Palette = { N: "#3C3B6E", S: "#FFFFFF", R: "#B22234", W: "#F4F4F4", o: "#15110d" };
-const USA_GRID = bordered(buildUSA());
+const USA_PALETTE: Palette = { N: "#3C3B6E", S: "#FFFFFF", R: "#B22234", W: "#F4F4F4" };
+const USA_GRID = buildUSA();
 
 function buildQuebec(): string[] {
   const cols = 13, rows = 9;
@@ -92,8 +85,8 @@ function buildQuebec(): string[] {
   }
   return grid;
 }
-const QC_PALETTE: Palette = { B: "#003DA5", W: "#F4F4F4", o: "#15110d" };
-const QC_GRID = bordered(buildQuebec());
+const QC_PALETTE: Palette = { B: "#003DA5", W: "#F4F4F4" };
+const QC_GRID = buildQuebec();
 
 export function Flag({
   kind, label, delay = 0,
@@ -421,13 +414,16 @@ function buildManny() {
   };
   const hair = (g: string[][]) => {
     const { set, row } = place(g);
-    row(0, 5, 10, "H");
-    row(1, 4, 11, "H");
-    row(2, 4, 11, "H"); set(5, 2, "L"); set(6, 2, "L"); set(7, 2, "L"); // light sweep
-    row(3, 4, 11, "H"); set(8, 3, "L");
-    set(4, 4, "H"); set(5, 4, "H"); set(7, 4, "H"); set(10, 4, "H"); set(11, 4, "H"); // bangs
-    set(8, 4, "D");                                                     // part strand
-    set(4, 5, "H"); set(11, 5, "H");                                    // sideburns
+    // flat-ish styled cut — soft peak, NOT a round dome / afro
+    set(7, 0, "H"); set(8, 0, "H");                                     // soft peak
+    row(1, 5, 10, "H");                                                 // crown
+    row(2, 4, 11, "H"); set(6, 2, "L"); set(7, 2, "L");                 // temples + small sheen
+    // swept fringe with a side part (gap at col 8)
+    set(4, 3, "H"); set(5, 3, "H"); set(6, 3, "H"); set(7, 3, "H");
+    set(9, 3, "H"); set(10, 3, "H"); set(11, 3, "H");
+    // jagged bang tips over the eyes + sideburns
+    set(4, 4, "H"); set(6, 4, "H"); set(9, 4, "H"); set(11, 4, "H");
+    set(4, 5, "H"); set(11, 5, "H");
   };
   const helm = (g: string[][]) => {
     const { set, row } = place(g);
