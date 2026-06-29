@@ -115,6 +115,9 @@ export default function Home() {
   const t = ui[lang];
   const spotlightRef = useRef<HTMLDivElement>(null);
   const scrollHintRef = useRef<HTMLDivElement>(null);
+  const scrollTopRef = useRef<HTMLButtonElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
 
   // Drive the spotlight + scroll hint via refs (rAF-throttled) instead of
   // React state, so moving the mouse never re-renders the whole page.
@@ -131,8 +134,14 @@ export default function Home() {
       if (!raf) raf = requestAnimationFrame(paint);
     };
     const onScroll = () => {
+      const y = window.scrollY;
       if (scrollHintRef.current)
-        scrollHintRef.current.style.opacity = String(Math.max(0, 1 - window.scrollY / 180));
+        scrollHintRef.current.style.opacity = String(Math.max(0, 1 - y / 180));
+      if (scrollTopRef.current) {
+        const show = y > 500;
+        scrollTopRef.current.style.opacity = show ? "1" : "0";
+        scrollTopRef.current.style.pointerEvents = show ? "auto" : "none";
+      }
     };
     window.addEventListener("mousemove", onMouse, { passive: true });
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -141,6 +150,21 @@ export default function Home() {
       window.removeEventListener("scroll", onScroll);
       if (raf) cancelAnimationFrame(raf);
     };
+  }, []);
+
+  // Scroll spy — highlight active section in nav
+  useEffect(() => {
+    const sections = document.querySelectorAll<HTMLElement>("section[id]");
+    const obs = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) setActiveSection(e.target.id);
+        }
+      },
+      { rootMargin: "-35% 0px -60% 0px" }
+    );
+    sections.forEach((s) => obs.observe(s));
+    return () => obs.disconnect();
   }, []);
 
   const navItems: [string, string][] = [
@@ -194,17 +218,42 @@ export default function Home() {
       {/* Nav */}
       <nav className="fixed top-0 w-full z-50 px-8 py-5 flex justify-between items-center border-b border-white/[0.06] backdrop-blur-md bg-[#04100f]/75">
         <span className="font-mono text-sm text-white/30 tracking-widest uppercase">manny mcgrail</span>
-        <div className="flex gap-6 md:gap-8 items-center text-sm text-white/40 font-light tracking-wide">
-          <div className="hidden md:flex gap-8">
+        <div className="flex gap-4 md:gap-8 items-center text-sm font-light tracking-wide">
+          <div className="hidden md:flex gap-8 text-white/40">
             {navItems.map(([id, label]) => (
-              <a key={id} href={`#${id}`} className="hover:text-turq-300 transition-all duration-200 hover:tracking-wider">{label}</a>
+              <a key={id} href={`#${id}`}
+                className={`transition-all duration-200 hover:tracking-wider ${activeSection === id ? "text-turq-300" : "hover:text-turq-300"}`}>
+                {label}
+              </a>
             ))}
             <a href="/resume" className="hover:text-turq-300 transition-all duration-200 hover:tracking-wider">{t.nav.resume}</a>
             <a href="/blog" className="hover:text-turq-300 transition-all duration-200 hover:tracking-wider">{t.nav.blog}</a>
           </div>
           <LangToggle lang={lang} toggle={toggle} />
+          <button
+            className="md:hidden text-white/40 hover:text-turq-300 transition-colors duration-200 text-lg leading-none"
+            onClick={() => setMenuOpen((o) => !o)}
+            aria-label="Toggle menu"
+          >
+            {menuOpen ? "✕" : "☰"}
+          </button>
         </div>
       </nav>
+
+      {/* Mobile menu */}
+      {menuOpen && (
+        <div className="fixed top-[69px] inset-x-0 z-40 bg-[#04100f]/97 backdrop-blur-md border-b border-white/[0.06] flex flex-col md:hidden">
+          {navItems.map(([id, label]) => (
+            <a key={id} href={`#${id}`}
+              onClick={() => setMenuOpen(false)}
+              className={`px-8 py-4 text-sm font-mono border-b border-white/[0.04] transition-colors duration-200 ${activeSection === id ? "text-turq-300" : "text-white/40 hover:text-turq-300"}`}>
+              {label}
+            </a>
+          ))}
+          <a href="/resume" onClick={() => setMenuOpen(false)} className="px-8 py-4 text-sm font-mono text-white/40 hover:text-turq-300 transition-colors duration-200 border-b border-white/[0.04]">{t.nav.resume}</a>
+          <a href="/blog" onClick={() => setMenuOpen(false)} className="px-8 py-4 text-sm font-mono text-white/40 hover:text-turq-300 transition-colors duration-200">{t.nav.blog}</a>
+        </div>
+      )}
 
       {/* Hero */}
       <section className="relative z-10 min-h-screen flex flex-col justify-center px-8 md:px-20 pt-24 pb-32">
@@ -484,6 +533,17 @@ export default function Home() {
         </div>
       </div>
 
+      {/* Scroll-to-top */}
+      <button
+        ref={scrollTopRef}
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="fixed bottom-8 right-8 z-30 w-10 h-10 flex items-center justify-center border border-turq-500/30 bg-[#04100f]/80 text-turq-300/70 hover:text-turq-300 hover:border-turq-400/60 backdrop-blur-sm rounded-sm transition-all duration-300 font-mono text-sm"
+        style={{ opacity: 0, pointerEvents: "none", transition: "opacity 0.3s" }}
+        aria-label="Back to top"
+      >
+        ↑
+      </button>
+
       {/* Footer */}
       <footer className="relative z-10 border-t border-white/[0.05] px-8 md:px-20 py-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
@@ -491,7 +551,7 @@ export default function Home() {
             <PixelGhost className="w-8 h-8 animate-bob opacity-70" />
             <div>
               <p className="font-mono text-white/15 text-xs tracking-widest uppercase">Emmanuel McGrail</p>
-              <p className="text-white/10 text-xs mt-1 font-light">{t.footerTag}</p>
+              <p className="text-white/10 text-xs mt-1 font-light">{t.footerTag} · © {new Date().getFullYear()}</p>
             </div>
           </div>
           <div className="flex gap-6 text-xs font-mono text-white/18">
