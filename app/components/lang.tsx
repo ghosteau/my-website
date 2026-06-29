@@ -9,13 +9,12 @@ const EVT = "manny-lang-change";
 
 /** Language state shared across pages via localStorage + a window event. */
 export function useLang(): [Lang, (l: Lang) => void, () => void] {
-  const [lang, setLangState] = useState<Lang>("en");
+  const [lang, setLangState] = useState<Lang>(() => {
+    if (typeof window === "undefined") return "en";
+    return (localStorage.getItem(KEY) as Lang) === "fr" ? "fr" : "en";
+  });
 
   useEffect(() => {
-    const stored = (typeof window !== "undefined" &&
-      (localStorage.getItem(KEY) as Lang)) || "en";
-    setLangState(stored === "fr" ? "fr" : "en");
-
     const onChange = () => {
       const next = (localStorage.getItem(KEY) as Lang) || "en";
       setLangState(next === "fr" ? "fr" : "en");

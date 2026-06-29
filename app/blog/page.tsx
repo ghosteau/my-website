@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useLang, LangToggle } from "../components/lang";
 import { PixelGhost } from "../components/sprites";
 
@@ -32,7 +33,7 @@ export default function Blog() {
       </div>
 
       <nav className="fixed top-0 w-full z-50 px-8 py-5 flex justify-between items-center border-b border-white/[0.06] backdrop-blur-md bg-[#04100f]/75">
-        <a href="/" className="font-mono text-sm text-white/40 hover:text-turq-300 transition-colors tracking-widest uppercase">{c.back}</a>
+        <Link href="/" className="font-mono text-sm text-white/40 hover:text-turq-300 transition-colors tracking-widest uppercase">{c.back}</Link>
         <LangToggle lang={lang} toggle={toggle} />
       </nav>
 

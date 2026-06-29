@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useLang, LangToggle } from "../components/lang";
 import { experience, projects, courses, ui, type Accent } from "../content";
 
@@ -86,7 +87,7 @@ export default function Resume() {
       </div>
 
       <nav className="fixed top-0 w-full z-50 px-8 py-5 flex justify-between items-center border-b border-white/[0.06] backdrop-blur-md bg-[#04100f]/75">
-        <a href="/" className="font-mono text-sm text-white/40 hover:text-turq-300 transition-colors tracking-widest uppercase">{c.back}</a>
+        <Link href="/" className="font-mono text-sm text-white/40 hover:text-turq-300 transition-colors tracking-widest uppercase">{c.back}</Link>
         <div className="flex items-center gap-6">
           <button onClick={() => window.print()} className="hidden sm:block font-mono text-xs text-white/30 hover:text-turq-300 transition-colors tracking-wide">{c.print}</button>
           <LangToggle lang={lang} toggle={toggle} />
