@@ -1,0 +1,177 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  /* turquoise core palette — deep, not too light */
+  --color-turq-50: #ecfeff;
+  --color-turq-100: #cffafe;
+  --color-turq-200: #a5f3ec;
+  --color-turq-300: #5eead4;
+  --color-turq-400: #2dd4bf;
+  --color-turq-500: #14b8a6;
+  --color-turq-600: #0d9488;
+  --color-turq-700: #0f766e;
+  --color-turq-800: #115e59;
+  --color-turq-900: #134e4a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #04100f;
+  color: #fff;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ===== keyframes ===== */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes underline-grow {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+@keyframes blob-drift-1 {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  25%  { transform: translate(50px,-40px) scale(1.07); }
+  50%  { transform: translate(20px,35px) scale(0.95); }
+  75%  { transform: translate(-30px,-10px) scale(1.04); }
+}
+@keyframes blob-drift-2 {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33%  { transform: translate(-60px,35px) scale(1.1); }
+  66%  { transform: translate(40px,-50px) scale(0.93); }
+}
+@keyframes blob-drift-3 {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  50%  { transform: translate(40px,40px) scale(1.15); }
+}
+@keyframes blob-drift-4 {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  40%  { transform: translate(-30px,25px) scale(1.1); }
+  80%  { transform: translate(20px,-20px) scale(0.9); }
+}
+@keyframes pulse-line {
+  0%, 100% { opacity: 0.15; }
+  50%      { opacity: 0.5; }
+}
+@keyframes shimmer {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+/* sprite flag wave — 3D flutter as if caught in wind */
+@keyframes flag-wave {
+  0%, 100% { transform: perspective(140px) rotateY(0deg) skewY(0deg) scaleX(1); }
+  20%  { transform: perspective(140px) rotateY(-16deg) skewY(2deg) scaleX(0.97); }
+  45%  { transform: perspective(140px) rotateY(6deg) skewY(-1.5deg) scaleX(1.02); }
+  70%  { transform: perspective(140px) rotateY(16deg) skewY(2deg) scaleX(0.97); }
+}
+/* character walk across the page */
+@keyframes walk-across {
+  from { transform: translateX(-56px); }
+  to   { transform: translateX(calc(100vw + 56px)); }
+}
+/* floating bob for sprites */
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+/* 2-step walking bounce for a single-frame sprite */
+@keyframes walk-step {
+  0%,100% { transform: translateY(0px); }
+  25%     { transform: translateY(-4px); }
+  75%     { transform: translateY(-4px); }
+}
+/* blinking caret */
+@keyframes blink {
+  0%, 49%  { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+/* pixel drift across background */
+@keyframes pixel-float {
+  0%   { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.5; }
+  90%  { opacity: 0.5; }
+  100% { transform: translateY(-120px) rotate(20deg); opacity: 0; }
+}
+/* slime idle squash — classic RPG creature bounce */
+@keyframes squash {
+  0%, 100% { transform: scaleX(1) scaleY(1); }
+  45%      { transform: scaleX(1) scaleY(1); }
+  60%      { transform: scaleX(1.12) scaleY(0.85); }
+  75%      { transform: scaleX(0.95) scaleY(1.06); }
+  90%      { transform: scaleX(1.02) scaleY(0.98); }
+}
+/* coin spin */
+@keyframes coin-flip {
+  0%, 100% { transform: scaleX(1); }
+  50%      { transform: scaleX(0.12); }
+}
+/* heartbeat */
+@keyframes beat {
+  0%, 100%   { transform: scale(1); }
+  15%, 35%   { transform: scale(1.18); }
+  25%        { transform: scale(1.05); }
+}
+/* sparkle twinkle */
+@keyframes twinkle {
+  0%, 100% { transform: scale(0.7) rotate(0deg); opacity: 0.35; }
+  50%      { transform: scale(1) rotate(45deg); opacity: 1; }
+}
+/* gentle sway */
+@keyframes sway {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  50%      { transform: translateX(3px) rotate(2deg); }
+}
+/* peek up from behind an edge */
+@keyframes peek {
+  0%, 100% { transform: translateY(60%); }
+  50%      { transform: translateY(8%); }
+}
+
+.animate-underline { animation: underline-grow 1s cubic-bezier(0.16,1,0.3,1) 1s forwards; }
+.animate-pulse-line { animation: pulse-line 2.2s ease-in-out infinite; }
+.animate-bob { animation: bob 3.5s ease-in-out infinite; }
+.animate-walk-step { animation: walk-step 0.45s ease-in-out infinite; }
+.animate-blink { animation: blink 1.1s step-end infinite; }
+.animate-squash { animation: squash 2.6s ease-in-out infinite; transform-origin: bottom center; }
+.animate-coin { animation: coin-flip 2.4s ease-in-out infinite; }
+.animate-beat { animation: beat 1.4s ease-in-out infinite; }
+.animate-twinkle { animation: twinkle 2.2s ease-in-out infinite; }
+.animate-sway { animation: sway 4s ease-in-out infinite; transform-origin: bottom center; }
+.animate-peek { animation: peek 4s ease-in-out infinite; }
+.blob-1 { animation: blob-drift-1 20s ease-in-out infinite; }
+.blob-2 { animation: blob-drift-2 26s ease-in-out infinite; }
+.blob-3 { animation: blob-drift-3 17s ease-in-out infinite; }
+.blob-4 { animation: blob-drift-4 22s ease-in-out infinite 3s; }
+
+/* pixel-art rendering for sprites */
+.pixelated { image-rendering: pixelated; image-rendering: crisp-edges; }
+
+/* selection */
+::selection { background: rgba(45,212,191,0.25); color: #fff; }
+
+/* scrollbar */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #04100f; }
+::-webkit-scrollbar-thumb { background: #0f766e; border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: #14b8a6; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
