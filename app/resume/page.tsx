@@ -42,7 +42,6 @@ const copy = {
     awardsHead: "Awards & Honors",
     awards: "Dean's List · French Dedication Award · EU Economic Project Award · All-Academic Athlete",
     download: "Download PDF ↓",
-    print: "Print",
   },
   fr: {
     back: "← retour",
@@ -70,7 +69,6 @@ const copy = {
     awardsHead: "Distinctions",
     awards: "Dean's List · Prix de dévouement au français · Prix du projet économique de l'UE · Athlète académique",
     download: "Télécharger le PDF ↓",
-    print: "Imprimer",
   },
 };
 
@@ -90,7 +88,6 @@ export default function Resume() {
         <Link href="/" className="font-mono text-sm text-white/40 hover:text-turq-300 transition-colors tracking-widest uppercase">{c.back}</Link>
         <div className="flex items-center gap-6">
           <a href="/resume.pdf" download className="hidden sm:block font-mono text-xs text-turq-300/60 hover:text-turq-300 transition-colors tracking-wide">{c.download}</a>
-          <button onClick={() => window.print()} className="hidden sm:block font-mono text-xs text-white/25 hover:text-white/50 transition-colors tracking-wide">{c.print}</button>
           <LangToggle lang={lang} toggle={toggle} />
         </div>
       </nav>
