@@ -88,6 +88,12 @@ body {
   0%, 100% { transform: translateY(0); }
   50%      { transform: translateY(-6px); }
 }
+/* 2-step walking bounce for a single-frame sprite */
+@keyframes walk-step {
+  0%,100% { transform: translateY(0px); }
+  25%     { transform: translateY(-4px); }
+  75%     { transform: translateY(-4px); }
+}
 /* blinking caret */
 @keyframes blink {
   0%, 49%  { opacity: 1; }
@@ -138,6 +144,7 @@ body {
 .animate-underline { animation: underline-grow 1s cubic-bezier(0.16,1,0.3,1) 1s forwards; }
 .animate-pulse-line { animation: pulse-line 2.2s ease-in-out infinite; }
 .animate-bob { animation: bob 3.5s ease-in-out infinite; }
+.animate-walk-step { animation: walk-step 0.45s ease-in-out infinite; }
 .animate-blink { animation: blink 1.1s step-end infinite; }
 .animate-squash { animation: squash 2.6s ease-in-out infinite; transform-origin: bottom center; }
 .animate-coin { animation: coin-flip 2.4s ease-in-out infinite; }
