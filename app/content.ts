@@ -197,7 +197,7 @@ export const research: {
 /* ── UI strings ── */
 export const ui = {
   en: {
-    nav: { about: "about", experience: "experience", projects: "projects", research: "research", music: "music", resume: "résumé", blog: "blog" },
+    nav: { about: "about", experience: "experience", projects: "projects", research: "research", music: "music", resume: "résumé", blog: "blog", photos: "photos" },
     heroKicker: "Pittsburgh, PA · Pitt '27 · EN / FR",
     heroTagline:
       "Aspiring polymath. I work at the intersection of machine learning, systems, and data — but I'm equally drawn to math, history, philosophy, and more. I care about ideas as much as what you build with them.",
@@ -223,6 +223,7 @@ export const ui = {
       { label: "Goal", value: "Undergraduate → PhD / Masters → AI Research" },
       { label: "Also", value: "Musician · Writer · All-Academic Athlete" },
     ],
+    rootsLabel: "Roots",
     coursework: "coursework",
     sectionExp: "02 — experience",
     sectionProj: "03 — projects",
@@ -241,7 +242,7 @@ export const ui = {
     footerTag: "Pittsburgh · Building things",
   },
   fr: {
-    nav: { about: "à propos", experience: "expérience", projects: "projets", research: "recherche", music: "musique", resume: "CV", blog: "blog" },
+    nav: { about: "à propos", experience: "expérience", projects: "projets", research: "recherche", music: "musique", resume: "CV", blog: "blog", photos: "photos" },
     heroKicker: "Pittsburgh, PA · Pitt '27 · EN / FR",
     heroTagline:
       "Polymathe en devenir. Je travaille à l'intersection de l'apprentissage automatique, des systèmes et des données — mais les maths, l'histoire et la philosophie m'attirent tout autant. Je tiens aux idées autant qu'à ce qu'on en construit.",
@@ -267,6 +268,7 @@ export const ui = {
       { label: "Objectif", value: "Licence → Doctorat / Master → Recherche en IA" },
       { label: "Aussi", value: "Musicien · Écrivain · Athlète académique" },
     ],
+    rootsLabel: "Racines",
     coursework: "cours suivis",
     sectionExp: "02 — expérience",
     sectionProj: "03 — projets",

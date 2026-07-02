@@ -48,6 +48,8 @@ app/
     page.tsx              # /resume — full CV, bilingual, browser-printable
   blog/
     page.tsx              # /blog — empty state (ready for first post)
+  photos/
+    page.tsx              # /photos — photo journal placeholder (gallery-ready grid)
   components/
     sprites.tsx           # All pixel-art: flags, ghost, game sprites, Manny avatar
     lang.tsx              # useLang() hook + EN/FR toggle pill component
@@ -199,15 +201,6 @@ const onMouse = (e: MouseEvent) => {
 
 The scroll-to-top button visibility is controlled the same way (`scrollTopRef.current.style.opacity`), keeping the main tree render-free during scroll.
 
-### Scroll spy (active nav highlight)
-
-An `IntersectionObserver` watches every `<section id="...">` and updates `activeSection` state when a section enters the center of the viewport. The nav links compare against this value to apply the `text-turq-300` highlight class.
-
-```ts
-{ rootMargin: "-35% 0px -60% 0px" }
-// Only fires when the section occupies the middle 5% of the viewport height
-```
-
 ### FadeIn animation
 
 A lightweight `<FadeIn delay={ms}>` wrapper uses its own `IntersectionObserver` to play a `translateY(32px) → 0 + opacity 0 → 1` entrance when an element scrolls into view. Used on every content section.
@@ -218,8 +211,8 @@ A lightweight `<FadeIn delay={ms}>` wrapper uses its own `IntersectionObserver` 
 
 ### `/` — Home
 Sections (in order):
-1. **Hero** — name, tagline, flags, Montaigne quote, CTA buttons
-2. **About** — bio paragraphs, quick-facts grid, coursework chips, game sprites
+1. **Hero** — name, tagline, Montaigne quote, CTA buttons
+2. **About** — bio paragraphs, quick-facts grid (incl. the "roots" flag row), coursework chips, game sprites
 3. **Experience** — BNY, Pitt Athletics, Pitt NLP research
 4. **Projects** — 6 featured GitHub repos
 5. **Research** — 2 research entries
@@ -228,10 +221,14 @@ Sections (in order):
 8. **Footer** — links + year
 
 ### `/resume`
-Full bilingual CV. Reads experience, projects, and courses from `content.ts` (same data as home page). Has a browser-print button (`window.print()`) so you can save to PDF from the browser.
+Full bilingual CV. Reads experience, projects, and courses from `content.ts` (same data as home page). Links to the real PDF at `public/resume.pdf` (Download PDF button in the nav and header).
 
 ### `/blog`
 Empty state with a localized message. Add posts by building out this page.
+
+### `/photos`
+Photo journal placeholder — a dashed 6-tile grid ready to hold real images. Drop
+photos in `public/` and replace the placeholder tiles with `<img>`/`next/image` tags.
 
 ---
 
@@ -270,7 +267,6 @@ Open a PR from `develop → main` on GitHub when a batch of changes is ready.
 ## TODO
 
 - [ ] Write the first blog post (`app/blog/page.tsx`)
-- [ ] Add a downloadable résumé PDF to `public/` and link it from the résumé page
+- [ ] Add real photos to `/photos` (`app/photos/page.tsx`)
 - [ ] Point a custom domain at the Vercel deployment
 - [ ] Add an OG image (`public/og.png`) for richer social previews — currently only text metadata is set
-- [ ] Swap in an updated Manny sprite if a better template is made (see `public/sprites/README.md`)
