@@ -33,12 +33,12 @@ export default function Blog() {
       </div>
 
       <nav className="fixed top-0 w-full z-50 px-8 py-5 flex justify-between items-center border-b border-white/[0.06] backdrop-blur-md bg-[#04100f]/75">
-        <Link href="/" className="font-mono text-sm text-white/40 hover:text-turq-300 transition-colors tracking-widest uppercase">{c.back}</Link>
+        <Link href="/" className="font-mono text-sm text-white/55 hover:text-turq-300 transition-colors tracking-widest uppercase">{c.back}</Link>
         <LangToggle lang={lang} toggle={toggle} />
       </nav>
 
       <section className="relative z-10 max-w-3xl mx-auto px-8 pt-32 pb-24">
-        <p className="font-mono text-cyan-400/60 text-xs tracking-[0.3em] uppercase mb-5">{c.kicker}</p>
+        <p className="font-mono text-cyan-400/80 text-xs tracking-[0.3em] uppercase mb-5">{c.kicker}</p>
         <h1 className="text-5xl font-extralight tracking-tight mb-16">
           <span className="bg-gradient-to-r from-turq-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">{c.title}</span>
         </h1>
@@ -46,8 +46,8 @@ export default function Blog() {
         {/* empty state */}
         <div className="flex flex-col items-center text-center gap-6 border border-white/[0.07] bg-white/[0.015] rounded-sm py-20 px-8">
           <PixelGhost className="w-12 h-12 animate-bob opacity-70" />
-          <p className="font-mono text-white/55 text-lg">{c.empty}</p>
-          <p className="text-white/35 text-sm font-light leading-relaxed max-w-md">{c.sub}</p>
+          <p className="font-mono text-white/75 text-lg">{c.empty}</p>
+          <p className="text-white/55 text-sm font-light leading-relaxed max-w-md">{c.sub}</p>
         </div>
       </section>
     </main>

@@ -10,9 +10,9 @@ const dot: Record<Accent, string> = {
   emerald: "bg-emerald-400/60",
 };
 const period: Record<Accent, string> = {
-  teal: "text-turq-400/60",
-  cyan: "text-cyan-400/60",
-  emerald: "text-emerald-400/60",
+  teal: "text-turq-400/85",
+  cyan: "text-cyan-400/85",
+  emerald: "text-emerald-400/85",
 };
 
 const copy = {
@@ -85,7 +85,7 @@ export default function Resume() {
       </div>
 
       <nav className="fixed top-0 w-full z-50 px-8 py-5 flex justify-between items-center border-b border-white/[0.06] backdrop-blur-md bg-[#04100f]/75">
-        <Link href="/" className="font-mono text-sm text-white/40 hover:text-turq-300 transition-colors tracking-widest uppercase">{c.back}</Link>
+        <Link href="/" className="font-mono text-sm text-white/55 hover:text-turq-300 transition-colors tracking-widest uppercase">{c.back}</Link>
         <div className="flex items-center gap-6">
           <a href="/resume.pdf" download className="hidden sm:block font-mono text-xs text-turq-300/60 hover:text-turq-300 transition-colors tracking-wide">{c.download}</a>
           <LangToggle lang={lang} toggle={toggle} />
@@ -98,7 +98,7 @@ export default function Resume() {
             Emmanuel{" "}
             <span className="bg-gradient-to-r from-turq-400 to-cyan-300 bg-clip-text text-transparent font-light">McGrail</span>
           </h1>
-          <p className="font-mono text-white/30 text-sm mt-3 tracking-wide">
+          <p className="font-mono text-white/55 text-sm mt-3 tracking-wide">
             {c.title} · Pittsburgh, PA · mcgrailmanny@gmail.com
           </p>
           <div className="flex gap-4 mt-5 text-xs font-mono flex-wrap">
@@ -109,7 +109,7 @@ export default function Resume() {
         </header>
 
         <Section title={c.summaryHead}>
-          <p className="text-white/45 font-light leading-relaxed">{c.summary}</p>
+          <p className="text-white/70 font-light leading-relaxed">{c.summary}</p>
         </Section>
 
         <Section title={c.expHead}>
@@ -117,13 +117,13 @@ export default function Resume() {
             {experience.map((e) => (
               <div key={e.en.role}>
                 <div className="flex flex-wrap justify-between items-baseline gap-2">
-                  <h3 className="text-white/80 font-light">{e[lang].role}</h3>
+                  <h3 className="text-white/90 font-light">{e[lang].role}</h3>
                   <span className={`font-mono text-xs ${period[e.accent]}`}>{e.period}</span>
                 </div>
-                <p className="text-white/30 text-sm font-light mb-2">{e.org}</p>
+                <p className="text-white/50 text-sm font-light mb-2">{e.org}</p>
                 <ul className="flex flex-col gap-1.5">
                   {e[lang].bullets.map((b, j) => (
-                    <li key={j} className="flex gap-3 text-white/40 text-sm font-light leading-relaxed">
+                    <li key={j} className="flex gap-3 text-white/65 text-sm font-light leading-relaxed">
                       <span className={`mt-1.5 w-1 h-1 rounded-full shrink-0 ${dot[e.accent]}`} />
                       {b}
                     </li>
@@ -140,9 +140,9 @@ export default function Resume() {
               <div key={p.name}>
                 <div className="flex flex-wrap justify-between items-baseline gap-2">
                   <a href={p.href} target="_blank" rel="noopener noreferrer" className="font-mono text-turq-300/90 hover:text-turq-300 transition-colors text-sm">{p.name} ↗</a>
-                  <span className="font-mono text-white/25 text-xs">{p.tech}</span>
+                  <span className="font-mono text-white/50 text-xs">{p.tech}</span>
                 </div>
-                <p className="text-white/40 text-sm font-light leading-relaxed mt-1">{p[lang]}</p>
+                <p className="text-white/65 text-sm font-light leading-relaxed mt-1">{p[lang]}</p>
               </div>
             ))}
           </div>
@@ -152,8 +152,8 @@ export default function Resume() {
           <div className="flex flex-col gap-4">
             {c.edu.map((ed) => (
               <div key={ed.main}>
-                <h3 className="text-white/80 font-light">{ed.main}</h3>
-                <p className="text-white/35 text-sm font-light mt-1">{ed.sub}</p>
+                <h3 className="text-white/90 font-light">{ed.main}</h3>
+                <p className="text-white/55 text-sm font-light mt-1">{ed.sub}</p>
               </div>
             ))}
           </div>
@@ -162,17 +162,17 @@ export default function Resume() {
         <Section title={c.courseHead}>
           <div className="flex flex-wrap gap-2">
             {courses.map((co) => (
-              <span key={co.en} className="px-2.5 py-1 border border-white/[0.08] bg-white/[0.02] rounded-sm text-xs font-mono text-white/35">{co[lang]}</span>
+              <span key={co.en} className="px-2.5 py-1 border border-white/[0.08] bg-white/[0.02] rounded-sm text-xs font-mono text-white/60">{co[lang]}</span>
             ))}
           </div>
         </Section>
 
         <Section title={c.skillsHead}>
-          <p className="font-mono text-white/40 text-sm leading-relaxed">{c.skills}</p>
+          <p className="font-mono text-white/65 text-sm leading-relaxed">{c.skills}</p>
         </Section>
 
         <Section title={c.awardsHead}>
-          <p className="text-white/40 text-sm font-light leading-relaxed">{c.awards}</p>
+          <p className="text-white/65 text-sm font-light leading-relaxed">{c.awards}</p>
         </Section>
       </article>
     </main>
@@ -182,7 +182,7 @@ export default function Resume() {
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section className="mb-10">
-      <h2 className="font-mono text-turq-400/50 text-xs tracking-[0.3em] uppercase mb-4 border-b border-white/[0.06] pb-2">{title}</h2>
+      <h2 className="font-mono text-turq-400/80 text-xs tracking-[0.3em] uppercase mb-4 border-b border-white/[0.06] pb-2">{title}</h2>
       {children}
     </section>
   );
