@@ -118,6 +118,37 @@ export function Flag({
   );
 }
 
+/* canada — red bands + simplified maple leaf, used only as a small tag icon */
+const CA_PALETTE: Palette = { R: "#D52B1E", W: "#F4F4F4" };
+const CA_GRID = [
+  "RRRRWWWWWWWWRRRR",
+  "RRRRWWWRWWWWRRRR",
+  "RRRRWWRRRWWWRRRR",
+  "RRRRWRRRRRWWRRRR",
+  "RRRRWWRRRWWWRRRR",
+  "RRRRWWWRWWWWRRRR",
+  "RRRRWWWWWWWWRRRR",
+  "RRRRWWWWWWWWRRRR",
+];
+
+/* small flat flag — no pole, no wave; for inline tag chips */
+export function FlagIcon({
+  kind, className = "", title,
+}: {
+  kind: "usa" | "quebec" | "france" | "canada";
+  className?: string;
+  title?: string;
+}) {
+  const map = {
+    usa: { grid: USA_GRID, palette: USA_PALETTE },
+    quebec: { grid: QC_GRID, palette: QC_PALETTE },
+    france: { grid: FR_GRID, palette: FR_PALETTE },
+    canada: { grid: CA_GRID, palette: CA_PALETTE },
+  } as const;
+  const f = map[kind];
+  return <GridSvg grid={f.grid} palette={f.palette} title={title} className={className} />;
+}
+
 /* ═══════════════ CREATURES ═══════════════ */
 
 /* ghosteau — a shaded little ghost with a wavy tail */

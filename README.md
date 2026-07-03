@@ -47,14 +47,18 @@ app/
   resume/
     page.tsx              # /resume — full CV, bilingual, browser-printable
   blog/
-    page.tsx              # /blog — empty state (ready for first post)
+    page.tsx              # /blog — post index
+    generative-ai/
+      page.tsx            # /blog/generative-ai — essay: generative AI & deep learning
   photos/
-    page.tsx              # /photos — photo journal placeholder (gallery-ready grid)
+    page.tsx              # /photos — photo journal (swipeable moment carousel)
   components/
     sprites.tsx           # All pixel-art: flags, ghost, game sprites, Manny avatar
     lang.tsx              # useLang() hook + EN/FR toggle pill component
 
 public/
+  photos/
+    quebec/               # Québec Parliament trip photos (May 2026)
   sprites/
     manny_sprite.png      # Real pixel-art avatar (transparent background)
     manny_sprite.jpg      # Original source JPEG (kept for reference)
@@ -224,11 +228,16 @@ Sections (in order):
 Full bilingual CV. Reads experience, projects, and courses from `content.ts` (same data as home page). Links to the real PDF at `public/resume.pdf` (Download PDF button in the nav and header).
 
 ### `/blog`
-Empty state with a localized message. Add posts by building out this page.
+Post index. Each post lives at its own route (e.g. `app/blog/generative-ai/page.tsx`)
+and gets a card on the index with tags, date, and a blurb. Post content is in English
+with an `EN` tag; the surrounding UI stays bilingual.
 
 ### `/photos`
-Photo journal placeholder — a dashed 6-tile grid ready to hold real images. Drop
-photos in `public/` and replace the placeholder tiles with `<img>`/`next/image` tags.
+Photo journal built around "moments" — a moment is a set of photos sharing one
+caption, date, and tag chips (pixel-flag icons via `<FlagIcon />`). Photos render in
+a swipeable card carousel (arrows, dots, touch swipe). To add a moment: drop compressed
+JPEGs in `public/photos/<name>/` and add an entry alongside `quebecMoment` in
+`app/photos/page.tsx`.
 
 ---
 
@@ -266,7 +275,5 @@ Open a PR from `develop → main` on GitHub when a batch of changes is ready.
 
 ## TODO
 
-- [ ] Write the first blog post (`app/blog/page.tsx`)
-- [ ] Add real photos to `/photos` (`app/photos/page.tsx`)
 - [ ] Point a custom domain at the Vercel deployment
 - [ ] Add an OG image (`public/og.png`) for richer social previews — currently only text metadata is set

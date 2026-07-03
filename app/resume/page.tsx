@@ -92,7 +92,7 @@ export default function Resume() {
         </div>
       </nav>
 
-      <article className="relative z-10 max-w-3xl mx-auto px-8 pt-32 pb-24">
+      <article className="page-enter relative z-10 max-w-3xl mx-auto px-8 pt-32 pb-24">
         <header className="mb-12">
           <h1 className="text-5xl font-extralight tracking-tight">
             Emmanuel{" "}
