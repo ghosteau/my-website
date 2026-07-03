@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useLang, LangToggle } from "../components/lang";
 import { FlagIcon, PixelSparkle } from "../components/sprites";
@@ -24,7 +24,9 @@ const copy = {
   },
 };
 
-/* one "moment" = a set of photos sharing a caption, date, and tags */
+/* one "moment" = a set of photos sharing a caption, date, and tags.
+   emoji = shown on devices that render the glyph; flag = pixel fallback
+   (Windows renders country-flag emoji as letter codes, so those get a pixel flag). */
 const quebecMoment = {
   images: [
     "/photos/quebec/parliament-1.jpg",
@@ -34,58 +36,134 @@ const quebecMoment = {
   ],
   en: { caption: "My visit to the Québec Parliament!", date: "May 27, 2026" },
   fr: { caption: "Ma visite au parlement du Québec !", date: "Le 27 mai 2026" },
-  /* country-flag emojis render as letter codes on Windows, so Canada/France
-     use the pixel FlagIcons; ⚜️ and 🏛️ render everywhere */
   tags: [
-    { key: "quebec", icon: "⚜️", flag: null, en: "Québec", fr: "Québec" },
-    { key: "canada", icon: null, flag: "canada" as const, en: "Canada", fr: "Canada" },
-    { key: "french", icon: null, flag: "france" as const, en: "French", fr: "Français" },
-    { key: "gov", icon: "🏛️", flag: null, en: "Government", fr: "Gouvernement" },
+    { key: "quebec", emoji: "⚜️", flag: null, en: "Québec", fr: "Québec" },
+    { key: "canada", emoji: "🇨🇦", flag: "canada" as const, en: "Canada", fr: "Canada" },
+    { key: "french", emoji: "🇫🇷", flag: "france" as const, en: "French", fr: "Français" },
+    { key: "gov", emoji: "🏛️", flag: null, en: "Government", fr: "Gouvernement" },
   ],
 };
 
+/* Detect whether the platform renders country-flag emoji (Mac/iOS/Android do;
+   Windows shows the two-letter code instead). We draw 🇨🇦 and look for red
+   pixels — a real flag is colored, the letter-code fallback is monochrome text. */
+function detectFlagEmoji(): boolean {
+  try {
+    const canvas = document.createElement("canvas");
+    canvas.width = canvas.height = 16;
+    const ctx = canvas.getContext("2d", { willReadFrequently: true });
+    if (!ctx) return false;
+    ctx.textBaseline = "top";
+    ctx.font = "16px sans-serif";
+    ctx.fillText("🇨🇦", 0, 0);
+    const { data } = ctx.getImageData(0, 0, 16, 16);
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i] > 120 && data[i + 1] < 90 && data[i + 2] < 90 && data[i + 3] > 0) return true;
+    }
+  } catch {
+    /* keep pixel-flag fallback */
+  }
+  return false;
+}
+
+function useFlagEmoji() {
+  const [ok, setOk] = useState(false);
+  useEffect(() => {
+    // One-time capability check. It must run post-mount (not during render or a
+    // lazy initializer) so the server and first client paint agree on the
+    // pixel-flag fallback, avoiding a hydration mismatch on emoji-capable devices.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (detectFlagEmoji()) setOk(true);
+  }, []);
+  return ok;
+}
+
 /* how each card sits in the stack, by distance from the front */
 const deckStyles = [
-  { transform: "translate(0px, 0px) rotate(0deg) scale(1)", zIndex: 40, opacity: 1 },
-  { transform: "translate(12px, 9px) rotate(2.4deg) scale(0.97)", zIndex: 30, opacity: 1 },
-  { transform: "translate(-10px, 16px) rotate(-2.8deg) scale(0.94)", zIndex: 20, opacity: 1 },
-  { transform: "translate(4px, 22px) rotate(1.2deg) scale(0.91)", zIndex: 10, opacity: 0.85 },
+  { x: 0, y: 0, rot: 0, scale: 1, zIndex: 40, opacity: 1 },
+  { x: 12, y: 9, rot: 2.4, scale: 0.97, zIndex: 30, opacity: 1 },
+  { x: -10, y: 16, rot: -2.8, scale: 0.94, zIndex: 20, opacity: 1 },
+  { x: 4, y: 22, rot: 1.2, scale: 0.91, zIndex: 10, opacity: 0.85 },
 ];
 
-function MomentCarousel({ lang, photoAlt, hint }: { lang: "en" | "fr"; photoAlt: string; hint: string }) {
-  const m = quebecMoment;
-  const [idx, setIdx] = useState(0);
-  const touchX = useRef<number | null>(null);
-  const n = m.images.length;
+const CARD_TRANSITION =
+  "transform 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease, z-index 0s linear 0.25s";
 
-  const go = useCallback((d: number) => setIdx((i) => (i + d + n) % n), [n]);
+function MomentCarousel({
+  lang, photoAlt, hint, emojiFlags,
+}: {
+  lang: "en" | "fr";
+  photoAlt: string;
+  hint: string;
+  emojiFlags: boolean;
+}) {
+  const m = quebecMoment;
+  const n = m.images.length;
+  const [idx, setIdx] = useState(0);
+  const [dragX, setDragX] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const startX = useRef(0);
+  const maxMove = useRef(0);
+
+  const go = useCallback((d: number) => {
+    setIdx((i) => (i + d + n) % n);
+    setDragX(0);
+  }, [n]);
+
+  const onDown = (e: React.PointerEvent) => {
+    setDragging(true);
+    startX.current = e.clientX;
+    maxMove.current = 0;
+    (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
+  };
+  const onMove = (e: React.PointerEvent) => {
+    if (!dragging) return;
+    const dx = e.clientX - startX.current;
+    maxMove.current = Math.max(maxMove.current, Math.abs(dx));
+    setDragX(dx);
+  };
+  const onUp = () => {
+    if (!dragging) return;
+    setDragging(false);
+    const threshold = 80;
+    if (dragX > threshold) go(-1);
+    else if (dragX < -threshold) go(1);
+    else if (maxMove.current < 6) go(1); // treat as a tap
+    else setDragX(0); // small drag → snap back
+  };
 
   return (
     <div className="grid md:grid-cols-[minmax(0,400px)_1fr] gap-10 md:gap-14 items-start">
       {/* stacked card deck */}
       <div className="pb-2">
-        <div
-          className="relative aspect-[3/4] select-none"
-          onTouchStart={(e) => { touchX.current = e.touches[0].clientX; }}
-          onTouchEnd={(e) => {
-            if (touchX.current === null) return;
-            const dx = e.changedTouches[0].clientX - touchX.current;
-            if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
-            touchX.current = null;
-          }}
-          role="group"
-          aria-label={m[lang].caption}
-        >
+        <div className="relative aspect-[3/4] select-none" role="group" aria-label={m[lang].caption}>
           {m.images.map((src, i) => {
             const pos = (i - idx + n) % n;
-            const s = deckStyles[pos] ?? { transform: "translate(0px, 24px) scale(0.88)", zIndex: 0, opacity: 0 };
+            const base = deckStyles[pos] ?? { x: 0, y: 24, rot: 0, scale: 0.88, zIndex: 0, opacity: 0 };
             const front = pos === 0;
+
+            const x = front ? base.x + dragX : base.x;
+            const rot = front ? base.rot + dragX * 0.045 : base.rot;
+            const opacity = front
+              ? Math.max(0.4, base.opacity - Math.abs(dragX) / 500)
+              : base.opacity;
+
             return (
               <div
                 key={src}
-                onClick={front ? () => go(1) : undefined}
-                className={`absolute inset-0 rounded-sm overflow-hidden border bg-[#0a1f1c] shadow-2xl shadow-black/50 transition-all duration-500 ease-out ${front ? "border-white/25 cursor-pointer" : "border-white/10"}`}
-                style={s}
+                onPointerDown={front ? onDown : undefined}
+                onPointerMove={front ? onMove : undefined}
+                onPointerUp={front ? onUp : undefined}
+                onPointerCancel={front ? onUp : undefined}
+                className={`absolute inset-0 rounded-sm overflow-hidden border bg-[#0a1f1c] shadow-2xl shadow-black/50 ${front ? "border-white/25 cursor-grab active:cursor-grabbing" : "border-white/10"}`}
+                style={{
+                  transform: `translate(${x}px, ${base.y}px) rotate(${rot}deg) scale(${base.scale})`,
+                  zIndex: base.zIndex,
+                  opacity,
+                  transition: dragging && front ? "none" : CARD_TRANSITION,
+                  willChange: "transform, opacity",
+                  touchAction: "pan-y",
+                }}
                 aria-hidden={!front}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -94,7 +172,7 @@ function MomentCarousel({ lang, photoAlt, hint }: { lang: "en" | "fr"; photoAlt:
                   alt={front ? `${photoAlt} ${i + 1}/${n}` : ""}
                   loading={i === 0 ? "eager" : "lazy"}
                   draggable={false}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover pointer-events-none"
                 />
                 {front && (
                   <span className="absolute top-3 right-3 font-mono text-[11px] text-white/85 bg-[#04100f]/65 border border-white/10 rounded-sm px-2 py-0.5 backdrop-blur-sm">
@@ -114,7 +192,7 @@ function MomentCarousel({ lang, photoAlt, hint }: { lang: "en" | "fr"; photoAlt:
           </button>
           <div className="flex gap-2">
             {m.images.map((_, i) => (
-              <button key={i} onClick={() => setIdx(i)} aria-label={`Photo ${i + 1}`}
+              <button key={i} onClick={() => { setIdx(i); setDragX(0); }} aria-label={`Photo ${i + 1}`}
                 className={`w-2 h-2 rounded-full transition-all duration-200 ${i === idx ? "bg-turq-300 scale-110" : "bg-white/25 hover:bg-white/50"}`} />
             ))}
           </div>
@@ -134,10 +212,10 @@ function MomentCarousel({ lang, photoAlt, hint }: { lang: "en" | "fr"; photoAlt:
           {m.tags.map((tag) => (
             <span key={tag.key}
               className="flex items-center gap-2 px-2.5 py-1.5 border border-white/[0.1] bg-white/[0.02] rounded-sm text-xs font-mono text-white/65">
-              {tag.flag ? (
+              {tag.flag && !emojiFlags ? (
                 <FlagIcon kind={tag.flag} title={tag[lang]} className="w-5 h-auto" />
               ) : (
-                <span aria-hidden>{tag.icon}</span>
+                <span aria-hidden className="text-sm leading-none">{tag.emoji}</span>
               )}
               {tag[lang]}
             </span>
@@ -156,6 +234,7 @@ function MomentCarousel({ lang, photoAlt, hint }: { lang: "en" | "fr"; photoAlt:
 export default function Photos() {
   const [lang, , toggle] = useLang();
   const c = copy[lang];
+  const emojiFlags = useFlagEmoji();
 
   return (
     <main className="min-h-screen bg-[#04100f] text-white">
@@ -175,7 +254,7 @@ export default function Photos() {
           <span className="bg-gradient-to-r from-turq-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">{c.title}</span>
         </h1>
 
-        <MomentCarousel lang={lang} photoAlt={c.photoAlt} hint={c.hint} />
+        <MomentCarousel lang={lang} photoAlt={c.photoAlt} hint={c.hint} emojiFlags={emojiFlags} />
 
         {/* more coming */}
         <div className="flex items-center gap-3 mt-16 pl-1">
