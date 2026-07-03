@@ -12,6 +12,7 @@ const copy = {
     title: "Moments",
     more: "More moments on the way.",
     photoAlt: "Québec Parliament trip photo",
+    hint: "tap or swipe the cards",
   },
   fr: {
     back: "← retour",
@@ -19,6 +20,7 @@ const copy = {
     title: "Moments",
     more: "D'autres moments arrivent bientôt.",
     photoAlt: "Photo du voyage au parlement du Québec",
+    hint: "touchez ou balayez les cartes",
   },
 };
 
@@ -32,15 +34,25 @@ const quebecMoment = {
   ],
   en: { caption: "My visit to the Québec Parliament!", date: "May 27, 2026" },
   fr: { caption: "Ma visite au parlement du Québec !", date: "Le 27 mai 2026" },
+  /* country-flag emojis render as letter codes on Windows, so Canada/France
+     use the pixel FlagIcons; ⚜️ and 🏛️ render everywhere */
   tags: [
-    { key: "quebec", flag: "quebec" as const, en: "Québec", fr: "Québec" },
-    { key: "canada", flag: "canada" as const, en: "Canada", fr: "Canada" },
-    { key: "french", flag: "france" as const, en: "French", fr: "Français" },
-    { key: "gov", flag: null, icon: "🏛️", en: "Government", fr: "Gouvernement" },
+    { key: "quebec", icon: "⚜️", flag: null, en: "Québec", fr: "Québec" },
+    { key: "canada", icon: null, flag: "canada" as const, en: "Canada", fr: "Canada" },
+    { key: "french", icon: null, flag: "france" as const, en: "French", fr: "Français" },
+    { key: "gov", icon: "🏛️", flag: null, en: "Government", fr: "Gouvernement" },
   ],
 };
 
-function MomentCarousel({ lang, photoAlt }: { lang: "en" | "fr"; photoAlt: string }) {
+/* how each card sits in the stack, by distance from the front */
+const deckStyles = [
+  { transform: "translate(0px, 0px) rotate(0deg) scale(1)", zIndex: 40, opacity: 1 },
+  { transform: "translate(12px, 9px) rotate(2.4deg) scale(0.97)", zIndex: 30, opacity: 1 },
+  { transform: "translate(-10px, 16px) rotate(-2.8deg) scale(0.94)", zIndex: 20, opacity: 1 },
+  { transform: "translate(4px, 22px) rotate(1.2deg) scale(0.91)", zIndex: 10, opacity: 0.85 },
+];
+
+function MomentCarousel({ lang, photoAlt, hint }: { lang: "en" | "fr"; photoAlt: string; hint: string }) {
   const m = quebecMoment;
   const [idx, setIdx] = useState(0);
   const touchX = useRef<number | null>(null);
@@ -49,54 +61,69 @@ function MomentCarousel({ lang, photoAlt }: { lang: "en" | "fr"; photoAlt: strin
   const go = useCallback((d: number) => setIdx((i) => (i + d + n) % n), [n]);
 
   return (
-    <div className="grid md:grid-cols-[minmax(0,420px)_1fr] gap-8 md:gap-12 items-start">
-      {/* swipeable card */}
-      <div
-        className="relative select-none rounded-sm overflow-hidden border border-white/[0.1] bg-white/[0.02] shadow-2xl shadow-turq-950/30"
-        onTouchStart={(e) => { touchX.current = e.touches[0].clientX; }}
-        onTouchEnd={(e) => {
-          if (touchX.current === null) return;
-          const dx = e.changedTouches[0].clientX - touchX.current;
-          if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
-          touchX.current = null;
-        }}
-        role="group"
-        aria-label={m[lang].caption}
-      >
-        <div className="relative aspect-[3/4]">
-          {m.images.map((src, i) => (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              key={src}
-              src={src}
-              alt={`${photoAlt} ${i + 1}/${n}`}
-              loading={i === 0 ? "eager" : "lazy"}
-              draggable={false}
-              className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
-              style={{ opacity: i === idx ? 1 : 0 }}
-            />
-          ))}
-          {/* prev / next */}
+    <div className="grid md:grid-cols-[minmax(0,400px)_1fr] gap-10 md:gap-14 items-start">
+      {/* stacked card deck */}
+      <div className="pb-2">
+        <div
+          className="relative aspect-[3/4] select-none"
+          onTouchStart={(e) => { touchX.current = e.touches[0].clientX; }}
+          onTouchEnd={(e) => {
+            if (touchX.current === null) return;
+            const dx = e.changedTouches[0].clientX - touchX.current;
+            if (Math.abs(dx) > 40) go(dx < 0 ? 1 : -1);
+            touchX.current = null;
+          }}
+          role="group"
+          aria-label={m[lang].caption}
+        >
+          {m.images.map((src, i) => {
+            const pos = (i - idx + n) % n;
+            const s = deckStyles[pos] ?? { transform: "translate(0px, 24px) scale(0.88)", zIndex: 0, opacity: 0 };
+            const front = pos === 0;
+            return (
+              <div
+                key={src}
+                onClick={front ? () => go(1) : undefined}
+                className={`absolute inset-0 rounded-sm overflow-hidden border bg-[#0a1f1c] shadow-2xl shadow-black/50 transition-all duration-500 ease-out ${front ? "border-white/25 cursor-pointer" : "border-white/10"}`}
+                style={s}
+                aria-hidden={!front}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={src}
+                  alt={front ? `${photoAlt} ${i + 1}/${n}` : ""}
+                  loading={i === 0 ? "eager" : "lazy"}
+                  draggable={false}
+                  className="w-full h-full object-cover"
+                />
+                {front && (
+                  <span className="absolute top-3 right-3 font-mono text-[11px] text-white/85 bg-[#04100f]/65 border border-white/10 rounded-sm px-2 py-0.5 backdrop-blur-sm">
+                    {idx + 1} / {n}
+                  </span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* controls under the deck — subtle arrows + dots */}
+        <div className="flex items-center justify-center gap-4 mt-8">
           <button onClick={() => go(-1)} aria-label="Previous photo"
-            className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-sm bg-[#04100f]/60 hover:bg-[#04100f]/85 border border-white/15 text-white/80 hover:text-white backdrop-blur-sm transition-all duration-200">
+            className="w-8 h-8 flex items-center justify-center rounded-sm border border-white/15 text-white/60 hover:text-turq-300 hover:border-turq-500/50 transition-all duration-200">
             ‹
           </button>
+          <div className="flex gap-2">
+            {m.images.map((_, i) => (
+              <button key={i} onClick={() => setIdx(i)} aria-label={`Photo ${i + 1}`}
+                className={`w-2 h-2 rounded-full transition-all duration-200 ${i === idx ? "bg-turq-300 scale-110" : "bg-white/25 hover:bg-white/50"}`} />
+            ))}
+          </div>
           <button onClick={() => go(1)} aria-label="Next photo"
-            className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 flex items-center justify-center rounded-sm bg-[#04100f]/60 hover:bg-[#04100f]/85 border border-white/15 text-white/80 hover:text-white backdrop-blur-sm transition-all duration-200">
+            className="w-8 h-8 flex items-center justify-center rounded-sm border border-white/15 text-white/60 hover:text-turq-300 hover:border-turq-500/50 transition-all duration-200">
             ›
           </button>
-          {/* counter */}
-          <span className="absolute top-3 right-3 font-mono text-[11px] text-white/85 bg-[#04100f]/65 border border-white/10 rounded-sm px-2 py-0.5 backdrop-blur-sm">
-            {idx + 1} / {n}
-          </span>
         </div>
-        {/* dots */}
-        <div className="flex justify-center gap-2 py-3 bg-[#04100f]/40">
-          {m.images.map((_, i) => (
-            <button key={i} onClick={() => setIdx(i)} aria-label={`Photo ${i + 1}`}
-              className={`w-2 h-2 rounded-full transition-all duration-200 ${i === idx ? "bg-turq-300 scale-110" : "bg-white/25 hover:bg-white/50"}`} />
-          ))}
-        </div>
+        <p className="text-center font-mono text-white/35 text-[11px] tracking-wide mt-3">{hint}</p>
       </div>
 
       {/* caption panel */}
@@ -148,7 +175,7 @@ export default function Photos() {
           <span className="bg-gradient-to-r from-turq-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">{c.title}</span>
         </h1>
 
-        <MomentCarousel lang={lang} photoAlt={c.photoAlt} />
+        <MomentCarousel lang={lang} photoAlt={c.photoAlt} hint={c.hint} />
 
         {/* more coming */}
         <div className="flex items-center gap-3 mt-16 pl-1">
