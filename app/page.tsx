@@ -380,17 +380,31 @@ export default function Home() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {projects.map((p, i) => (
             <FadeIn key={p.name} delay={i * 55}>
-              <a href={p.href} target="_blank" rel="noopener noreferrer"
-                className={`group block h-full p-6 border rounded-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white/[0.015] ${projCard[p.accent]}`}>
+              <div
+                className={`group relative flex flex-col h-full p-6 border rounded-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white/[0.015] ${projCard[p.accent]}`}>
                 <div className="flex justify-between items-start mb-4">
-                  <h3 className="font-mono text-white/95 text-base group-hover:text-white transition-colors duration-200">{p.name}</h3>
+                  {/* primary link — spans the whole card when there are no extra links */}
+                  <a href={p.href} target="_blank" rel="noopener noreferrer"
+                    className={`font-mono text-white/95 text-base group-hover:text-white transition-colors duration-200 ${p.links ? "" : "after:absolute after:inset-0"}`}>
+                    {p.name}
+                  </a>
                   <span className="text-white/15 group-hover:text-white/60 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 inline-block text-lg">↗</span>
                 </div>
                 <p className="text-white/60 text-sm leading-relaxed mb-5">{p[lang]}</p>
-                <p className={`font-mono text-xs tracking-wide ${projTech[p.accent]}`}>
+                <p className={`font-mono text-xs tracking-wide ${projTech[p.accent]} ${p.links ? "mb-4" : "mt-auto"}`}>
                   {p.tech}
                 </p>
-              </a>
+                {p.links && (
+                  <div className="flex flex-wrap gap-2 mt-auto pt-1">
+                    {p.links.map((l) => (
+                      <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
+                        className={`relative z-10 font-mono text-[11px] px-2 py-1 border rounded-sm transition-all duration-200 ${projCard[p.accent]} text-white/60 hover:text-white`}>
+                        {l.label} ↗
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
             </FadeIn>
           ))}
         </div>

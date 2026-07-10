@@ -22,44 +22,46 @@ export const experience: {
   fr: { role: string; bullets: string[] };
 }[] = [
   {
-    period: "Sept 2024 – Present",
-    org: "University of Pittsburgh Athletics",
-    accent: "teal",
-    en: {
-      role: "Data Engineering Intern",
-      bullets: [
-        "Built a serverless data pipeline for the diving team using AWS Lambda, turning raw web data into real-time performance analytics.",
-        "Engineered and deployed an LLM-powered TEXT2SQL tool, democratizing SQL access for non-technical staff.",
-        "Built PowerBI dashboards for donors and leadership; integrated position-specific metrics into football recruitment pipelines under the assistant AD.",
-      ],
-    },
-    fr: {
-      role: "Stagiaire en ingénierie de données",
-      bullets: [
-        "Conception d'un pipeline de données serverless pour l'équipe de plongeon avec AWS Lambda, transformant des données web brutes en analyses de performance en temps réel.",
-        "Développement et déploiement d'un outil TEXT2SQL alimenté par un LLM, démocratisant l'accès au SQL pour le personnel non technique.",
-        "Création de tableaux de bord PowerBI pour les donateurs et la direction ; intégration de métriques par poste dans les pipelines de recrutement de football.",
-      ],
-    },
-  },
-  {
-    period: "May 2025 – Present",
+    period: "May 2025 – Aug 2025 · May 2026 – Present",
     org: "Bank of New York (BNY)",
-    accent: "cyan",
+    accent: "teal",
     en: {
       role: "Engineering Intern",
       bullets: [
-        "Built a data reprocessing algorithm via Spring and Kafka to automatically resolve failed enrichment pipeline messages.",
-        "Optimized reconciliation workflows — $1.7M in cost savings and 8x reduction in processing time.",
-        "Migrated legacy data zones into a new strategic architecture, improving access for risk analysis teams.",
+        "Leading a team of interns to design and build an SLA monitoring dashboard covering thousands of daily extract/feed file deliveries, backed by a configurable SLA rules engine and API — chosen to head the effort based on system expertise and team tenure.",
+        "Engineered a data reprocessing algorithm via Spring and Kafka to automatically resolve failed enrichment pipeline messages, increasing system reliability.",
+        "Optimized reconciliation workflows — $1.7M in cost savings and an 8x reduction in processing time.",
+        "Migrated legacy data zones into a strategic architecture, improving cross-functional access for risk analysis teams.",
       ],
     },
     fr: {
       role: "Stagiaire ingénieur",
       bullets: [
-        "Développement d'un algorithme de retraitement de données avec Spring et Kafka pour résoudre automatiquement les messages d'enrichissement en échec.",
+        "Direction d'une équipe de stagiaires pour concevoir et bâtir un tableau de bord de suivi des SLA couvrant des milliers de livraisons de fichiers quotidiennes, appuyé par un moteur de règles SLA configurable et une API — choisi pour piloter l'effort grâce à mon expertise du système et mon ancienneté dans l'équipe.",
+        "Développement d'un algorithme de retraitement de données avec Spring et Kafka pour résoudre automatiquement les messages d'enrichissement en échec, augmentant la fiabilité du système.",
         "Optimisation des flux de réconciliation — 1,7 M$ d'économies et temps de traitement divisé par 8.",
-        "Migration de zones de données héritées vers une nouvelle architecture stratégique, améliorant l'accès pour les équipes d'analyse de risque.",
+        "Migration de zones de données héritées vers une architecture stratégique, améliorant l'accès inter-équipes pour l'analyse de risque.",
+      ],
+    },
+  },
+  {
+    period: "Sept 2024 – Dec 2026",
+    org: "University of Pittsburgh Athletics",
+    accent: "cyan",
+    en: {
+      role: "Data Engineering Intern",
+      bullets: [
+        "Developed a proprietary data pipeline for the diving team using AWS Lambda, processing and grading performance data for thousands of divers to track athletes' improvement over time.",
+        "Enhanced recruitment workflows by integrating position-specific metrics into football pipelines and building PowerBI dashboards for donors alongside business teams.",
+        "Engineered and deployed an LLM-powered TEXT2SQL tool, simplifying SQL query generation and democratizing data access for non-technical team members.",
+      ],
+    },
+    fr: {
+      role: "Stagiaire en ingénierie de données",
+      bullets: [
+        "Conception d'un pipeline de données propriétaire pour l'équipe de plongeon avec AWS Lambda, traitant et notant les données de performance de milliers de plongeurs pour suivre leur progression.",
+        "Amélioration des processus de recrutement en intégrant des métriques par poste aux pipelines de football et en créant des tableaux de bord PowerBI pour les donateurs avec les équipes métier.",
+        "Développement et déploiement d'un outil TEXT2SQL alimenté par un LLM, simplifiant la génération de requêtes SQL et démocratisant l'accès aux données pour le personnel non technique.",
       ],
     },
   },
@@ -94,6 +96,7 @@ export const projects: {
   accent: Accent;
   en: string;
   fr: string;
+  links?: { label: string; href: string }[];
 }[] = [
   {
     name: "fastdist",
@@ -104,12 +107,17 @@ export const projects: {
     fr: "ABI haute performance pour le calcul probabiliste en C++ et Python. Accélération GPU d'environ 2,5x par rapport aux bibliothèques standard grâce à des noyaux optimisés.",
   },
   {
-    name: "generative-terrain",
-    tech: "Java · Python · CNN · SpigotAPI",
+    name: "STEVE",
+    tech: "Java · Python · PyTorch · ONNX · SpigotAPI",
     href: "https://github.com/ghosteau/generative-terrain",
     accent: "cyan",
-    en: "Minecraft plugin that lets ML models generate terrain in-game via CNNs. Pipelines extract chunk data and produce real-time topographical outputs.",
-    fr: "Plugin Minecraft qui laisse des modèles de ML générer du terrain en jeu via des CNN. Les pipelines extraient les données de chunks et produisent des sorties topographiques en temps réel.",
+    en: "Spatial Terrain Engineering & Voxel Embedding — a Minecraft plugin that generates terrain in under 3 seconds per chunk via a custom Voxel Neural Network (ONNX inference), with an in-game API for collecting and labeling live chunk data. Evolved from my GenerativeTerrain project.",
+    fr: "Spatial Terrain Engineering & Voxel Embedding — un plugin Minecraft qui génère du terrain en moins de 3 secondes par chunk grâce à un réseau de neurones voxel sur mesure (inférence ONNX), avec une API en jeu pour collecter et annoter des données de chunks en direct. Évolution de mon projet GenerativeTerrain.",
+    links: [
+      { label: "GitHub", href: "https://github.com/ghosteau/generative-terrain" },
+      { label: "STEVE-1 model", href: "https://huggingface.co/ghosteau/STEVE-1" },
+      { label: "chunk dataset", href: "https://huggingface.co/datasets/ghosteau/minecraft-chunks" },
+    ],
   },
   {
     name: "embeddings-visualizer",
@@ -138,10 +146,10 @@ export const projects: {
   {
     name: "PittAPI",
     tech: "Python · BeautifulSoup · Requests",
-    href: "https://github.com/ghosteau/PittAPI",
+    href: "https://github.com/pittcsc/PittAPI",
     accent: "emerald",
-    en: "Open-source library for Pitt student data. Contributed full study room reservation support.",
-    fr: "Bibliothèque open-source pour les données étudiantes de Pitt. Contribution : support complet de la réservation de salles d'étude.",
+    en: "Open-source Python library (100+ stars, on PyPI) for programmatic access to Pitt course, dining, library, and shuttle data. Shipped full study room reservation support end-to-end.",
+    fr: "Bibliothèque Python open-source (100+ étoiles, sur PyPI) pour un accès programmatique aux données de cours, restauration, bibliothèque et navettes de Pitt. Ajout complet de la réservation de salles d'étude, de bout en bout.",
   },
 ];
 

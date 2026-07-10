@@ -38,7 +38,7 @@ const copy = {
     courseHead: "Selected Coursework",
     skillsHead: "Skills",
     skills:
-      "Python · C++ · Java · R · C# · C · SQL · PyTorch · CUDA · Transformers · scikit-learn · Pandas · NumPy · Spring · Kafka · Spark · Snowflake · AWS (Lambda, Step Functions, Athena, S3) · Git",
+      "Python · C++ · Java · R · C# · C · SQL · PyTorch · CUDA · ONNX Runtime · Transformers · scikit-learn · SciPy · Pandas · NumPy · Spring · Kafka · Spark · Snowflake · AWS (Lambda, Step Functions, Athena, S3) · Git",
     awardsHead: "Awards & Honors",
     awards: "Dean's List · French Dedication Award · EU Economic Project Award · All-Academic Athlete",
     download: "Download PDF ↓",
@@ -65,7 +65,7 @@ const copy = {
     courseHead: "Cours suivis",
     skillsHead: "Compétences",
     skills:
-      "Python · C++ · Java · R · C# · C · SQL · PyTorch · CUDA · Transformers · scikit-learn · Pandas · NumPy · Spring · Kafka · Spark · Snowflake · AWS (Lambda, Step Functions, Athena, S3) · Git",
+      "Python · C++ · Java · R · C# · C · SQL · PyTorch · CUDA · ONNX Runtime · Transformers · scikit-learn · SciPy · Pandas · NumPy · Spring · Kafka · Spark · Snowflake · AWS (Lambda, Step Functions, Athena, S3) · Git",
     awardsHead: "Distinctions",
     awards: "Dean's List · Prix de dévouement au français · Prix du projet économique de l'UE · Athlète académique",
     download: "Télécharger le PDF ↓",
@@ -143,6 +143,16 @@ export default function Resume() {
                   <span className="font-mono text-white/50 text-xs">{p.tech}</span>
                 </div>
                 <p className="text-white/65 text-sm font-light leading-relaxed mt-1">{p[lang]}</p>
+                {p.links && (
+                  <div className="flex flex-wrap gap-3 mt-1.5">
+                    {p.links.map((l) => (
+                      <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
+                        className="font-mono text-[11px] text-cyan-300/70 hover:text-cyan-300 transition-colors">
+                        {l.label} ↗
+                      </a>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>
