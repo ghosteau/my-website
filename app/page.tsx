@@ -245,6 +245,7 @@ export default function Home() {
             {[
               { label: "GitHub ↗", href: "https://github.com/ghosteau", cls: "border-turq-500/35 text-turq-300 hover:bg-turq-500/10 hover:border-turq-400/70 hover:shadow-lg hover:shadow-turq-950/40" },
               { label: "LinkedIn ↗", href: "https://www.linkedin.com/in/manny-mcgrail/", cls: "border-cyan-500/35 text-cyan-300 hover:bg-cyan-500/10 hover:border-cyan-400/70 hover:shadow-lg hover:shadow-cyan-950/40" },
+              { label: "Hugging Face ↗", href: "https://huggingface.co/ghosteau", cls: "border-emerald-500/35 text-emerald-300 hover:bg-emerald-500/10 hover:border-emerald-400/70 hover:shadow-lg hover:shadow-emerald-950/40" },
               { label: t.ctaEmail, href: "mailto:mcgrailmanny@gmail.com", cls: "border-white/15 text-white/55 hover:bg-white/5 hover:text-white/85" },
             ].map(({ label, href, cls }) => (
               <a key={label} href={href}
@@ -380,17 +381,31 @@ export default function Home() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
           {projects.map((p, i) => (
             <FadeIn key={p.name} delay={i * 55}>
-              <a href={p.href} target="_blank" rel="noopener noreferrer"
-                className={`group block h-full p-6 border rounded-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white/[0.015] ${projCard[p.accent]}`}>
+              <div
+                className={`group relative flex flex-col h-full p-6 border rounded-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl bg-white/[0.015] ${projCard[p.accent]}`}>
                 <div className="flex justify-between items-start mb-4">
-                  <h3 className="font-mono text-white/95 text-base group-hover:text-white transition-colors duration-200">{p.name}</h3>
+                  {/* primary link — spans the whole card when there are no extra links */}
+                  <a href={p.href} target="_blank" rel="noopener noreferrer"
+                    className={`font-mono text-white/95 text-base group-hover:text-white transition-colors duration-200 ${p.links ? "" : "after:absolute after:inset-0"}`}>
+                    {p.name}
+                  </a>
                   <span className="text-white/15 group-hover:text-white/60 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 inline-block text-lg">↗</span>
                 </div>
                 <p className="text-white/60 text-sm leading-relaxed mb-5">{p[lang]}</p>
-                <p className={`font-mono text-xs tracking-wide ${projTech[p.accent]}`}>
+                <p className={`font-mono text-xs tracking-wide ${projTech[p.accent]} ${p.links ? "mb-4" : "mt-auto"}`}>
                   {p.tech}
                 </p>
-              </a>
+                {p.links && (
+                  <div className="flex flex-wrap gap-2 mt-auto pt-1">
+                    {p.links.map((l) => (
+                      <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
+                        className={`relative z-10 font-mono text-[11px] px-2 py-1 border rounded-sm transition-all duration-200 ${projCard[p.accent]} text-white/60 hover:text-white`}>
+                        {l.label} ↗
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </div>
             </FadeIn>
           ))}
         </div>
@@ -505,6 +520,7 @@ export default function Home() {
           <div className="flex gap-6 text-xs font-mono text-white/45">
             <a href="https://github.com/ghosteau" target="_blank" rel="noopener noreferrer" className="hover:text-turq-300 transition-colors duration-200">GitHub</a>
             <a href="https://www.linkedin.com/in/manny-mcgrail/" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-300 transition-colors duration-200">LinkedIn</a>
+            <a href="https://huggingface.co/ghosteau" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-300 transition-colors duration-200">Hugging Face</a>
             <a href="mailto:mcgrailmanny@gmail.com" className="hover:text-white/80 transition-colors duration-200">Email</a>
           </div>
         </div>

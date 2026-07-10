@@ -275,5 +275,6 @@ Open a PR from `develop → main` on GitHub when a batch of changes is ready.
 
 ## TODO
 
-- [ ] Point a custom domain at the Vercel deployment
 - [ ] Add an OG image (`public/og.png`) for richer social previews — currently only text metadata is set
+- [ ] Add photo of myself so people can see what I look like without going to LinkedIn
+- [ ] Make a way to subscribe to an emailing list for blogs and moments, potentially even create way to subscribe to different tags
