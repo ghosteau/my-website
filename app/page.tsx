@@ -245,6 +245,7 @@ export default function Home() {
             {[
               { label: "GitHub ↗", href: "https://github.com/ghosteau", cls: "border-turq-500/35 text-turq-300 hover:bg-turq-500/10 hover:border-turq-400/70 hover:shadow-lg hover:shadow-turq-950/40" },
               { label: "LinkedIn ↗", href: "https://www.linkedin.com/in/manny-mcgrail/", cls: "border-cyan-500/35 text-cyan-300 hover:bg-cyan-500/10 hover:border-cyan-400/70 hover:shadow-lg hover:shadow-cyan-950/40" },
+              { label: "Hugging Face ↗", href: "https://huggingface.co/ghosteau", cls: "border-emerald-500/35 text-emerald-300 hover:bg-emerald-500/10 hover:border-emerald-400/70 hover:shadow-lg hover:shadow-emerald-950/40" },
               { label: t.ctaEmail, href: "mailto:mcgrailmanny@gmail.com", cls: "border-white/15 text-white/55 hover:bg-white/5 hover:text-white/85" },
             ].map(({ label, href, cls }) => (
               <a key={label} href={href}
@@ -519,6 +520,7 @@ export default function Home() {
           <div className="flex gap-6 text-xs font-mono text-white/45">
             <a href="https://github.com/ghosteau" target="_blank" rel="noopener noreferrer" className="hover:text-turq-300 transition-colors duration-200">GitHub</a>
             <a href="https://www.linkedin.com/in/manny-mcgrail/" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-300 transition-colors duration-200">LinkedIn</a>
+            <a href="https://huggingface.co/ghosteau" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-300 transition-colors duration-200">Hugging Face</a>
             <a href="mailto:mcgrailmanny@gmail.com" className="hover:text-white/80 transition-colors duration-200">Email</a>
           </div>
         </div>
