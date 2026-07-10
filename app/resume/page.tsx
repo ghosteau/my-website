@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useLang, LangToggle } from "../components/lang";
+import { GitHubMark, LinkedInMark } from "../components/sprites";
 import { experience, projects, courses, ui, type Accent } from "../content";
 
 const dot: Record<Accent, string> = {
@@ -103,9 +104,9 @@ export default function Resume() {
           </p>
           <div className="flex gap-4 mt-5 text-xs font-mono flex-wrap">
             <a href="/resume.pdf" download className="text-turq-300/80 hover:text-turq-300 border border-turq-500/30 hover:border-turq-400/60 rounded-sm px-3 py-1.5 transition-all">{c.download}</a>
-            <a href="https://www.linkedin.com/in/manny-mcgrail/" target="_blank" rel="noopener noreferrer" className="text-cyan-300/80 hover:text-cyan-300 border border-cyan-500/30 hover:border-cyan-400/60 rounded-sm px-3 py-1.5 transition-all">LinkedIn ↗</a>
-            <a href="https://github.com/ghosteau" target="_blank" rel="noopener noreferrer" className="text-white/30 hover:text-white/60 border border-white/10 hover:border-white/25 rounded-sm px-3 py-1.5 transition-all">GitHub ↗</a>
-            <a href="https://huggingface.co/ghosteau" target="_blank" rel="noopener noreferrer" className="text-emerald-300/80 hover:text-emerald-300 border border-emerald-500/30 hover:border-emerald-400/60 rounded-sm px-3 py-1.5 transition-all">Hugging Face ↗</a>
+            <a href="https://www.linkedin.com/in/manny-mcgrail/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-cyan-300/80 hover:text-cyan-300 border border-cyan-500/30 hover:border-cyan-400/60 rounded-sm px-3 py-1.5 transition-all"><LinkedInMark className="w-3.5 h-3.5" />LinkedIn ↗</a>
+            <a href="https://github.com/ghosteau" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-white/60 hover:text-white border border-white/15 hover:border-white/30 rounded-sm px-3 py-1.5 transition-all"><GitHubMark className="w-3.5 h-3.5" />GitHub ↗</a>
+            <a href="https://huggingface.co/ghosteau" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-yellow-300/90 hover:text-yellow-300 border border-yellow-500/30 hover:border-yellow-400/60 rounded-sm px-3 py-1.5 transition-all"><span aria-hidden>🤗</span>Hugging Face ↗</a>
           </div>
         </header>
 
