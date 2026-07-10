@@ -280,6 +280,21 @@ export default function Home() {
         </FadeIn>
         <div className="grid md:grid-cols-2 gap-16">
           <FadeIn delay={80}>
+            {/* personal photo — a silhouette at Fontainebleau, France */}
+            <figure className="mb-8 group">
+              <div className="overflow-hidden rounded-sm border border-turq-500/20 shadow-xl shadow-turq-950/30">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/photos/me/fontainebleau-window.jpg"
+                  alt="Manny looking out a window at Château de Fontainebleau, France"
+                  loading="lazy"
+                  className="w-full h-auto transition-transform duration-500 group-hover:scale-[1.03]"
+                />
+              </div>
+              <figcaption className="font-mono text-white/35 text-[11px] tracking-wide mt-2">
+                Château de Fontainebleau, France
+              </figcaption>
+            </figure>
             <h2 className="text-3xl font-extralight text-white/90 leading-snug mb-6">
               {t.aboutHeadingTop}<br />
               <span className="bg-gradient-to-r from-turq-300 to-cyan-300 bg-clip-text text-transparent">

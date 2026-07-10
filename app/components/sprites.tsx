@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactElement } from "react";
 
 /* ────────────────────────────────────────────────────────────
    Hand-built pixel-art sprites, drawn in the spirit of Gen-5
@@ -118,35 +118,62 @@ export function Flag({
   );
 }
 
-/* canada — red bands + simplified maple leaf, used only as a small tag icon */
-const CA_PALETTE: Palette = { R: "#D52B1E", W: "#F4F4F4" };
-const CA_GRID = [
-  "RRRRWWWWWWWWRRRR",
-  "RRRRWWWRWWWWRRRR",
-  "RRRRWWRRRWWWRRRR",
-  "RRRRWRRRRRWWRRRR",
-  "RRRRWWRRRWWWRRRR",
-  "RRRRWWWRWWWWRRRR",
-  "RRRRWWWWWWWWRRRR",
-  "RRRRWWWWWWWWRRRR",
-];
-
-/* small flat flag — no pole, no wave; for inline tag chips */
+/* Clean vector flags for inline tag chips — crisp at any size (the pixel-grid
+   Flag above is for the large hero display; at ~20px it reads as noise). */
 export function FlagIcon({
   kind, className = "", title,
 }: {
-  kind: "usa" | "quebec" | "france" | "canada";
+  kind: "usa" | "france" | "quebec";
   className?: string;
   title?: string;
 }) {
-  const map = {
-    usa: { grid: USA_GRID, palette: USA_PALETTE },
-    quebec: { grid: QC_GRID, palette: QC_PALETTE },
-    france: { grid: FR_GRID, palette: FR_PALETTE },
-    canada: { grid: CA_GRID, palette: CA_PALETTE },
-  } as const;
-  const f = map[kind];
-  return <GridSvg grid={f.grid} palette={f.palette} title={title} className={className} />;
+  if (kind === "france") {
+    return (
+      <svg viewBox="0 0 3 2" className={className} role="img" aria-label={title}>
+        {title ? <title>{title}</title> : null}
+        <rect width="1" height="2" x="0" fill="#0055A4" />
+        <rect width="1" height="2" x="1" fill="#F4F4F4" />
+        <rect width="1" height="2" x="2" fill="#EF4135" />
+      </svg>
+    );
+  }
+  if (kind === "quebec") {
+    const fleurs: [number, number][] = [[5.5, 4], [18.5, 4], [5.5, 12], [18.5, 12]];
+    return (
+      <svg viewBox="0 0 24 16" className={className} role="img" aria-label={title}>
+        {title ? <title>{title}</title> : null}
+        <rect width="24" height="16" fill="#003DA5" />
+        <rect x="10.5" width="3" height="16" fill="#F4F4F4" />
+        <rect y="6.5" width="24" height="3" fill="#F4F4F4" />
+        {fleurs.map(([cx, cy], i) => (
+          <g key={i} fill="#F4F4F4">
+            <rect x={cx - 0.5} y={cy - 3} width="1" height="6" />
+            <circle cx={cx} cy={cy - 2.4} r="1.1" />
+            <path d={`M${cx} ${cy} q-2.6 -1.4 -2.6 -3.4 0 2 2.6 2.2 q2.6 -0.2 2.6 -2.2 0 2 -2.6 3.4z`} />
+          </g>
+        ))}
+      </svg>
+    );
+  }
+  // usa — 13 stripes, blue canton, suggestion of stars
+  const stripes = Array.from({ length: 13 }, (_, i) => (
+    <rect key={i} x="0" y={(i * 20) / 13} width="38" height={20 / 13} fill={i % 2 === 0 ? "#B22234" : "#F4F4F4"} />
+  ));
+  const stars: ReactElement[] = [];
+  for (let r = 0; r < 4; r++) {
+    const cols = r % 2 === 0 ? 5 : 4;
+    for (let c = 0; c < cols; c++) {
+      stars.push(<circle key={`${r}-${c}`} cx={1.6 + c * 3 + (r % 2 ? 1.5 : 0)} cy={1.6 + r * 2.5} r="0.6" fill="#fff" />);
+    }
+  }
+  return (
+    <svg viewBox="0 0 38 20" className={className} role="img" aria-label={title}>
+      {title ? <title>{title}</title> : null}
+      {stripes}
+      <rect x="0" y="0" width="15.2" height={(7 * 20) / 13} fill="#3C3B6E" />
+      {stars}
+    </svg>
+  );
 }
 
 /* ═══════════════ BRAND MARKS ═══════════════ */
