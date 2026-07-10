@@ -10,6 +10,8 @@ import {
   PixelManny,
   PixelMannyHelm,
   GameSprite,
+  GitHubMark,
+  LinkedInMark,
 } from "./components/sprites";
 import {
   experience,
@@ -243,16 +245,18 @@ export default function Home() {
           <div className="flex flex-wrap gap-4 mt-12"
             style={{ opacity: 0, animation: "fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.7s forwards" }}>
             {[
-              { label: "GitHub ↗", href: "https://github.com/ghosteau", cls: "border-turq-500/35 text-turq-300 hover:bg-turq-500/10 hover:border-turq-400/70 hover:shadow-lg hover:shadow-turq-950/40" },
-              { label: "LinkedIn ↗", href: "https://www.linkedin.com/in/manny-mcgrail/", cls: "border-cyan-500/35 text-cyan-300 hover:bg-cyan-500/10 hover:border-cyan-400/70 hover:shadow-lg hover:shadow-cyan-950/40" },
-              { label: "Hugging Face ↗", href: "https://huggingface.co/ghosteau", cls: "border-emerald-500/35 text-emerald-300 hover:bg-emerald-500/10 hover:border-emerald-400/70 hover:shadow-lg hover:shadow-emerald-950/40" },
-              { label: t.ctaEmail, href: "mailto:mcgrailmanny@gmail.com", cls: "border-white/15 text-white/55 hover:bg-white/5 hover:text-white/85" },
-            ].map(({ label, href, cls }) => (
+              { label: "GitHub", href: "https://github.com/ghosteau", icon: <GitHubMark className="w-4 h-4" />, cls: "border-white/20 text-white/70 hover:bg-white/5 hover:text-white hover:border-white/40" },
+              { label: "LinkedIn", href: "https://www.linkedin.com/in/manny-mcgrail/", icon: <LinkedInMark className="w-4 h-4" />, cls: "border-cyan-500/35 text-cyan-300 hover:bg-cyan-500/10 hover:border-cyan-400/70 hover:shadow-lg hover:shadow-cyan-950/40" },
+              { label: "Hugging Face", href: "https://huggingface.co/ghosteau", icon: <span aria-hidden className="text-base leading-none">🤗</span>, cls: "border-yellow-500/35 text-yellow-300 hover:bg-yellow-500/10 hover:border-yellow-400/70 hover:shadow-lg hover:shadow-yellow-950/40" },
+              { label: t.ctaEmail, href: "mailto:mcgrailmanny@gmail.com", icon: null, cls: "border-white/15 text-white/55 hover:bg-white/5 hover:text-white/85" },
+            ].map(({ label, href, icon, cls }) => (
               <a key={label} href={href}
                 target={href.startsWith("http") ? "_blank" : undefined}
                 rel="noopener noreferrer"
-                className={`px-6 py-3 border text-sm font-mono tracking-wide transition-all duration-200 rounded-sm ${cls}`}>
+                className={`px-6 py-3 border text-sm font-mono tracking-wide transition-all duration-200 rounded-sm inline-flex items-center gap-2 ${cls}`}>
+                {icon}
                 {label}
+                {href.startsWith("http") && <span className="opacity-60">↗</span>}
               </a>
             ))}
           </div>
@@ -276,6 +280,21 @@ export default function Home() {
         </FadeIn>
         <div className="grid md:grid-cols-2 gap-16">
           <FadeIn delay={80}>
+            {/* personal photo — a silhouette at Fontainebleau, France */}
+            <figure className="mb-8 group">
+              <div className="overflow-hidden rounded-sm border border-turq-500/20 shadow-xl shadow-turq-950/30">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/photos/me/fontainebleau-window.jpg"
+                  alt="Manny looking out a window at Château de Fontainebleau, France"
+                  loading="lazy"
+                  className="w-full h-auto transition-transform duration-500 group-hover:scale-[1.03]"
+                />
+              </div>
+              <figcaption className="font-mono text-white/35 text-[11px] tracking-wide mt-2">
+                Château de Fontainebleau, France
+              </figcaption>
+            </figure>
             <h2 className="text-3xl font-extralight text-white/90 leading-snug mb-6">
               {t.aboutHeadingTop}<br />
               <span className="bg-gradient-to-r from-turq-300 to-cyan-300 bg-clip-text text-transparent">
@@ -518,9 +537,9 @@ export default function Home() {
             </div>
           </div>
           <div className="flex gap-6 text-xs font-mono text-white/45">
-            <a href="https://github.com/ghosteau" target="_blank" rel="noopener noreferrer" className="hover:text-turq-300 transition-colors duration-200">GitHub</a>
-            <a href="https://www.linkedin.com/in/manny-mcgrail/" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-300 transition-colors duration-200">LinkedIn</a>
-            <a href="https://huggingface.co/ghosteau" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-300 transition-colors duration-200">Hugging Face</a>
+            <a href="https://github.com/ghosteau" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-white transition-colors duration-200"><GitHubMark className="w-3.5 h-3.5" />GitHub</a>
+            <a href="https://www.linkedin.com/in/manny-mcgrail/" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-cyan-300 transition-colors duration-200"><LinkedInMark className="w-3.5 h-3.5" />LinkedIn</a>
+            <a href="https://huggingface.co/ghosteau" target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 hover:text-yellow-300 transition-colors duration-200"><span aria-hidden>🤗</span>Hugging Face</a>
             <a href="mailto:mcgrailmanny@gmail.com" className="hover:text-white/80 transition-colors duration-200">Email</a>
           </div>
         </div>

@@ -114,7 +114,6 @@ export const projects: {
     en: "Spatial Terrain Engineering & Voxel Embedding — a Minecraft plugin that generates terrain in under 3 seconds per chunk via a custom Voxel Neural Network (ONNX inference), with an in-game API for collecting and labeling live chunk data. Evolved from my GenerativeTerrain project.",
     fr: "Spatial Terrain Engineering & Voxel Embedding — un plugin Minecraft qui génère du terrain en moins de 3 secondes par chunk grâce à un réseau de neurones voxel sur mesure (inférence ONNX), avec une API en jeu pour collecter et annoter des données de chunks en direct. Évolution de mon projet GenerativeTerrain.",
     links: [
-      { label: "GitHub", href: "https://github.com/ghosteau/generative-terrain" },
       { label: "STEVE-1 model", href: "https://huggingface.co/ghosteau/STEVE-1" },
       { label: "chunk dataset", href: "https://huggingface.co/datasets/ghosteau/minecraft-chunks" },
     ],
