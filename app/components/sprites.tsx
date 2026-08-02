@@ -200,7 +200,8 @@ export function PixelSkyline({ className = "" }: { className?: string }) {
       {/* steel slab (tallest) */}
       <rect x="98" y="20" width="34" height="52" fill={B} />
       <rect x="98" y="20" width="34" height="3" fill="#123f38" />
-      <rect x="136" y="40" width="18" height="32" fill={B} />
+      {/* bridge's left abutment building — mirrors the one on the right */}
+      <rect x="136" y="44" width="24" height="28" fill={B} />
       {/* suspension bridge — every part mirrors about MID (240 = viewBox center) */}
       <rect x={MID - 76} y="58" width="152" height="4" fill={B} />
       <rect x={MID - 43} y="26" width="5" height="36" fill={B} />
@@ -212,9 +213,10 @@ export function PixelSkyline({ className = "" }: { className?: string }) {
         <rect key={d} x={MID + d - 0.75} y={40 + Math.abs(d) * 0.12} width="1.5"
           height={18 - Math.abs(d) * 0.12} fill={B} />
       ))}
-      {/* right cluster — starts at 326 so the gap to the bridge (10) matches the
-          left side, and its 146 width mirrors the left cluster's */}
-      <rect x="326" y="46" width="18" height="26" fill={B} />
+      {/* right cluster — mirrors the left: same 4-unit gap to the deck, same
+          152 width, and an identical abutment building so both approaches read
+          the same. Wider gaps made the bridge look like it floated in a moat. */}
+      <rect x="320" y="44" width="24" height="28" fill={B} />
       <rect x="348" y="34" width="26" height="38" fill={B} />
       <polygon points="378,72 378,44 385,36 392,44 392,72" fill={B} />
       <rect x="396" y="40" width="22" height="32" fill={B} />
