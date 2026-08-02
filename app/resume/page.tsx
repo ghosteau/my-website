@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { useLang, LangToggle } from "../components/lang";
+import { useLang } from "../components/lang";
+import { SiteNav } from "../components/nav";
 import { GitHubMark, LinkedInMark } from "../components/sprites";
 import { experience, projects, courses, ui, type Accent } from "../content";
 
@@ -18,7 +18,6 @@ const period: Record<Accent, string> = {
 
 const copy = {
   en: {
-    back: "← back",
     title: "Résumé",
     summaryHead: "Summary",
     summary:
@@ -45,7 +44,6 @@ const copy = {
     download: "Download PDF ↓",
   },
   fr: {
-    back: "← retour",
     title: "CV",
     summaryHead: "Résumé",
     summary:
@@ -74,7 +72,7 @@ const copy = {
 };
 
 export default function Resume() {
-  const [lang, , toggle] = useLang();
+  const [lang] = useLang();
   const t = ui[lang];
   const c = copy[lang];
 
@@ -85,13 +83,7 @@ export default function Resume() {
         <div className="blob blob-2 absolute bottom-[5%] right-[-8%] w-[400px] h-[400px] rounded-full bg-cyan-500/10 blur-[120px]" />
       </div>
 
-      <nav className="fixed top-0 w-full z-50 px-8 py-5 flex justify-between items-center border-b border-white/[0.06] backdrop-blur-md bg-[#04100f]/75">
-        <Link href="/" className="font-mono text-sm text-white/55 hover:text-turq-300 transition-colors tracking-widest uppercase">{c.back}</Link>
-        <div className="flex items-center gap-6">
-          <a href="/resume.pdf" download className="hidden sm:block font-mono text-xs text-turq-300/60 hover:text-turq-300 transition-colors tracking-wide">{c.download}</a>
-          <LangToggle lang={lang} toggle={toggle} />
-        </div>
-      </nav>
+      <SiteNav />
 
       <article className="page-enter relative z-10 max-w-3xl mx-auto px-8 pt-32 pb-24">
         <header className="mb-12">

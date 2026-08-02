@@ -1,12 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useLang, LangToggle } from "../components/lang";
+import { useLang } from "../components/lang";
+import { SiteNav } from "../components/nav";
 import { PixelGhost } from "../components/sprites";
 
 const copy = {
   en: {
-    back: "← back",
     kicker: "writing",
     title: "Notes & Essays",
     more: "More on the way — thoughts on math, algorithms, AI, and history.",
@@ -15,7 +15,6 @@ const copy = {
     writtenIn: { en: "written in English", fr: "written in French" },
   },
   fr: {
-    back: "← retour",
     kicker: "écriture",
     title: "Notes & essais",
     more: "D'autres billets arrivent — réflexions sur les maths, les algorithmes, l'IA et l'histoire.",
@@ -26,7 +25,7 @@ const copy = {
 
 const posts: {
   href: string;
-  date: string;
+  date: { en: string; fr: string };
   postLang: "en" | "fr";
   tags: string[];
   en: { title: string; sub: string; blurb: string };
@@ -34,7 +33,7 @@ const posts: {
 }[] = [
   {
     href: "/blog/ia-un-an-plus-tard",
-    date: "2026",
+    date: { en: "August 1, 2026", fr: "Le 1er août 2026" },
     postLang: "fr",
     tags: ["essai", "IA"],
     en: {
@@ -52,7 +51,7 @@ const posts: {
   },
   {
     href: "/blog/generative-ai",
-    date: "April 9, 2025",
+    date: { en: "April 9, 2025", fr: "Le 9 avril 2025" },
     postLang: "en",
     tags: ["essay", "AI"],
     en: {
@@ -71,7 +70,7 @@ const posts: {
 ];
 
 export default function Blog() {
-  const [lang, , toggle] = useLang();
+  const [lang] = useLang();
   const c = copy[lang];
 
   return (
@@ -81,10 +80,7 @@ export default function Blog() {
         <div className="blob blob-3 absolute bottom-[5%] right-[-8%] w-[400px] h-[400px] rounded-full bg-emerald-500/10 blur-[120px] will-change-transform" />
       </div>
 
-      <nav className="fixed top-0 w-full z-50 px-8 py-5 flex justify-between items-center border-b border-white/[0.06] backdrop-blur-md bg-[#04100f]/75">
-        <Link href="/" className="font-mono text-sm text-white/55 hover:text-turq-300 transition-colors tracking-widest uppercase">{c.back}</Link>
-        <LangToggle lang={lang} toggle={toggle} />
-      </nav>
+      <SiteNav />
 
       <section className="page-enter relative z-10 max-w-3xl mx-auto px-8 pt-32 pb-24">
         <p className="font-mono text-cyan-400/80 text-xs tracking-[0.3em] uppercase mb-5">{c.kicker}</p>
@@ -102,7 +98,7 @@ export default function Blog() {
                     {tag}
                   </span>
                 ))}
-                <span className="font-mono text-xs text-white/40 ml-auto">{p.date}</span>
+                <span className="font-mono text-xs text-white/40 ml-auto">{p.date[lang]}</span>
               </div>
               <h2 className="text-white/90 text-xl font-light leading-snug group-hover:text-white transition-colors duration-200">
                 {p[lang].title}

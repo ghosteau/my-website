@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useLang, LangToggle } from "./components/lang";
+import { useLang } from "./components/lang";
+import { SiteNav } from "./components/nav";
 import {
   Flag,
   PixelGhost,
@@ -136,7 +137,7 @@ function EmDash() {
 }
 
 export default function Home() {
-  const [lang, , toggle] = useLang();
+  const [lang] = useLang();
   const t = ui[lang];
   const spotlightRef = useRef<HTMLDivElement>(null);
   const scrollHintRef = useRef<HTMLDivElement>(null);
@@ -215,17 +216,7 @@ export default function Home() {
         ))}
       </div>
 
-      {/* Nav — just the pages + language toggle; scrolling does the rest */}
-      <nav className="fixed top-0 w-full z-50 px-6 md:px-8 py-5 flex justify-between items-center border-b border-white/[0.06] backdrop-blur-md bg-[#04100f]/75">
-        <span className="hidden sm:inline font-mono text-sm text-white/50 tracking-widest uppercase">manny mcgrail</span>
-        <span className="sm:hidden font-mono text-sm text-white/50 tracking-widest uppercase">mm</span>
-        <div className="flex gap-5 md:gap-8 items-center text-sm text-white/60 font-light tracking-wide">
-          <a href="/resume" className="hover:text-turq-300 transition-colors duration-200">{t.nav.resume}</a>
-          <a href="/blog" className="hover:text-turq-300 transition-colors duration-200">{t.nav.blog}</a>
-          <a href="/photos" className="hover:text-turq-300 transition-colors duration-200">{t.nav.photos}</a>
-          <LangToggle lang={lang} toggle={toggle} />
-        </div>
-      </nav>
+      <SiteNav />
 
       {/* Hero */}
       <section className="relative z-10 min-h-screen flex flex-col justify-center px-8 md:px-20 pt-20 pb-28">

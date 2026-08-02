@@ -1,13 +1,12 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import Link from "next/link";
-import { useLang, LangToggle } from "../components/lang";
+import { useLang } from "../components/lang";
+import { SiteNav } from "../components/nav";
 import { FlagIcon, PixelSparkle } from "../components/sprites";
 
 const copy = {
   en: {
-    back: "← back",
     kicker: "photos",
     title: "Moments",
     more: "More moments on the way.",
@@ -15,7 +14,6 @@ const copy = {
     hint: "tap or swipe the cards",
   },
   fr: {
-    back: "← retour",
     kicker: "photos",
     title: "Moments",
     more: "D'autres moments arrivent bientôt.",
@@ -241,7 +239,7 @@ function MomentCarousel({
 }
 
 export default function Photos() {
-  const [lang, , toggle] = useLang();
+  const [lang] = useLang();
   const c = copy[lang];
 
   return (
@@ -251,10 +249,7 @@ export default function Photos() {
         <div className="blob blob-1 absolute bottom-[5%] left-[-8%] w-[400px] h-[400px] rounded-full bg-turq-600/15 blur-[120px] will-change-transform" />
       </div>
 
-      <nav className="fixed top-0 w-full z-50 px-8 py-5 flex justify-between items-center border-b border-white/[0.06] backdrop-blur-md bg-[#04100f]/75">
-        <Link href="/" className="font-mono text-sm text-white/55 hover:text-turq-300 transition-colors tracking-widest uppercase">{c.back}</Link>
-        <LangToggle lang={lang} toggle={toggle} />
-      </nav>
+      <SiteNav />
 
       <section className="page-enter relative z-10 max-w-5xl mx-auto px-8 pt-32 pb-24">
         <p className="font-mono text-cyan-400/80 text-xs tracking-[0.3em] uppercase mb-5">{c.kicker}</p>
