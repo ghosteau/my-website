@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { useLang, LangToggle } from "../../components/lang";
+import { useLang } from "../../components/lang";
+import { SiteNav } from "../../components/nav";
 
 const chrome = {
   en: { back: "← blog", kicker: "writing — essay", langNote: "written in English" },
@@ -9,7 +10,7 @@ const chrome = {
 };
 
 export default function GenerativeAIEssay() {
-  const [lang, , toggle] = useLang();
+  const [lang] = useLang();
   const c = chrome[lang];
 
   return (
@@ -19,12 +20,10 @@ export default function GenerativeAIEssay() {
         <div className="blob blob-3 absolute bottom-[5%] right-[-8%] w-[400px] h-[400px] rounded-full bg-emerald-500/10 blur-[120px] will-change-transform" />
       </div>
 
-      <nav className="fixed top-0 w-full z-50 px-8 py-5 flex justify-between items-center border-b border-white/[0.06] backdrop-blur-md bg-[#04100f]/75">
-        <Link href="/blog" className="font-mono text-sm text-white/55 hover:text-turq-300 transition-colors tracking-widest uppercase">{c.back}</Link>
-        <LangToggle lang={lang} toggle={toggle} />
-      </nav>
+      <SiteNav />
 
       <article className="page-enter relative z-10 max-w-2xl mx-auto px-8 pt-32 pb-24">
+        <Link href="/blog" className="inline-block font-mono text-xs text-white/40 hover:text-turq-300 transition-colors tracking-widest uppercase mb-6">{c.back}</Link>
         <p className="font-mono text-cyan-400/80 text-xs tracking-[0.3em] uppercase mb-5">{c.kicker}</p>
 
         <h1 className="text-4xl md:text-5xl font-extralight tracking-tight leading-tight">
