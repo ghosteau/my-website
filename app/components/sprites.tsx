@@ -183,6 +183,7 @@ export function FlagIcon({
 export function PixelSkyline({ className = "" }: { className?: string }) {
   const B = "#0b2f29"; // silhouette
   const G = "#f2c14e"; // window gold
+  const MID = 240; // horizontal centre of the 480-wide viewBox
   const windows: { x: number; y: number; delay?: string }[] = [
     { x: 47, y: 40 }, { x: 55, y: 33, delay: "0.8s" }, { x: 104, y: 28 },
     { x: 112, y: 40, delay: "1.6s" }, { x: 122, y: 33 }, { x: 344, y: 40, delay: "0.4s" },
@@ -200,15 +201,16 @@ export function PixelSkyline({ className = "" }: { className?: string }) {
       <rect x="98" y="20" width="34" height="52" fill={B} />
       <rect x="98" y="20" width="34" height="3" fill="#123f38" />
       <rect x="136" y="40" width="18" height="32" fill={B} />
-      {/* suspension bridge — centered so it reads at any width */}
-      <rect x="154" y="58" width="152" height="4" fill={B} />
-      <rect x="186" y="26" width="5" height="36" fill={B} />
-      <rect x="268" y="26" width="5" height="36" fill={B} />
-      <path d="M154 58 Q171 30 188 28 Q229 52 270 28 Q287 30 306 58"
+      {/* suspension bridge — every part mirrors about MID (240 = viewBox center) */}
+      <rect x={MID - 76} y="58" width="152" height="4" fill={B} />
+      <rect x={MID - 43} y="26" width="5" height="36" fill={B} />
+      <rect x={MID + 38} y="26" width="5" height="36" fill={B} />
+      <path
+        d={`M${MID - 76} 58 Q${MID - 59} 30 ${MID - 41} 28 Q${MID} 52 ${MID + 41} 28 Q${MID + 59} 30 ${MID + 76} 58`}
         fill="none" stroke={B} strokeWidth="2.5" vectorEffect="non-scaling-stroke" />
-      {[199, 212, 225, 238, 251].map((x) => (
-        <rect key={x} x={x} y={40 + Math.abs(x - 229) * 0.12} width="1.5"
-          height={18 - Math.abs(x - 229) * 0.12} fill={B} />
+      {[-26, -13, 0, 13, 26].map((d) => (
+        <rect key={d} x={MID + d - 0.75} y={40 + Math.abs(d) * 0.12} width="1.5"
+          height={18 - Math.abs(d) * 0.12} fill={B} />
       ))}
       {/* right cluster */}
       <rect x="314" y="46" width="18" height="26" fill={B} />
