@@ -9,21 +9,23 @@ const EVT = "manny-lang-change";
 
 /** Language state shared across pages via localStorage + a window event. */
 export function useLang(): [Lang, (l: Lang) => void, () => void] {
-  const [lang, setLangState] = useState<Lang>(() => {
-    if (typeof window === "undefined") return "en";
-    return (localStorage.getItem(KEY) as Lang) === "fr" ? "fr" : "en";
-  });
+  // Always start at "en" — the same value the server renders. Reading
+  // localStorage during render (or in a lazy initializer) would make the
+  // first client paint disagree with the server HTML and break hydration.
+  const [lang, setLangState] = useState<Lang>("en");
 
   useEffect(() => {
-    const onChange = () => {
+    const read = () => {
       const next = (localStorage.getItem(KEY) as Lang) || "en";
       setLangState(next === "fr" ? "fr" : "en");
     };
-    window.addEventListener(EVT, onChange);
-    window.addEventListener("storage", onChange);
+    // Adopt the stored language after mount, once hydration has settled.
+    read();
+    window.addEventListener(EVT, read);
+    window.addEventListener("storage", read);
     return () => {
-      window.removeEventListener(EVT, onChange);
-      window.removeEventListener("storage", onChange);
+      window.removeEventListener(EVT, read);
+      window.removeEventListener("storage", read);
     };
   }, []);
 

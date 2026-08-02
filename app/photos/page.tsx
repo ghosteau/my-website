@@ -84,19 +84,10 @@ const moments: Moment[] = [
   },
 ];
 
-/* how each card sits in the stack, by distance from the front */
-const deckStyles = [
-  { x: 0, y: 0, rot: 0, scale: 1, zIndex: 40, opacity: 1 },
-  { x: 12, y: 9, rot: 2.4, scale: 0.97, zIndex: 30, opacity: 1 },
-  { x: -10, y: 16, rot: -2.8, scale: 0.94, zIndex: 20, opacity: 1 },
-  { x: 4, y: 22, rot: 1.2, scale: 0.91, zIndex: 10, opacity: 0.85 },
-];
-const DEEP = { x: 0, y: 26, rot: 0, scale: 0.89, zIndex: 0, opacity: 0 };
-
-/* Settle: cards ease into their slot. Toss: the released card flies off fast.
-   Deck positions are pure transform/opacity so the browser can composite them. */
-const SETTLE = "transform 0.62s cubic-bezier(0.2, 0.9, 0.25, 1), opacity 0.42s ease";
-const TOSS = "transform 0.4s cubic-bezier(0.4, 0, 0.9, 0.5), opacity 0.4s ease";
+/* One track, one axis. The whole strip slides by exactly one frame per step —
+   no stacking, rotation, or cross-fades, which is what made the old deck feel
+   fussy. Drag adds a live pixel offset on top of the frame position. */
+const SLIDE = "transform 0.5s cubic-bezier(0.22, 0.9, 0.24, 1)";
 
 function MomentCarousel({
   moment, lang, hint,
@@ -111,141 +102,101 @@ function MomentCarousel({
   const [idx, setIdx] = useState(0);
   const [dragX, setDragX] = useState(0);
   const [dragging, setDragging] = useState(false);
-  /* index of the card mid-throw + which way it left; it keeps rendering on top
-     until its flight ends, so the deck never "jumps" mid-motion */
-  const [flying, setFlying] = useState<{ i: number; dir: number } | null>(null);
+  const frameRef = useRef<HTMLDivElement>(null);
   const startX = useRef(0);
-  const maxMove = useRef(0);
-  const flightTimer = useRef<number | undefined>(undefined);
+  const startY = useRef(0);
+  const axis = useRef<"none" | "x" | "y">("none");
 
-  useEffect(() => () => window.clearTimeout(flightTimer.current), []);
-
-  /* toss the current card away, then bring the next one forward */
-  const go = useCallback((dir: number) => {
-    if (flying) return; // ignore input mid-throw
-    setDragging(false);
+  const clamp = useCallback((i: number) => Math.max(0, Math.min(n - 1, i)), [n]);
+  const go = useCallback((d: number) => {
     setDragX(0);
-    setFlying({ i: idx, dir });
-    window.clearTimeout(flightTimer.current);
-    flightTimer.current = window.setTimeout(() => {
-      setIdx((i) => (i + (dir > 0 ? 1 : -1) + n) % n);
-      setFlying(null);
-    }, 340);
-  }, [flying, idx, n]);
+    setIdx((i) => clamp(i + d));
+  }, [clamp]);
 
   const onDown = (e: React.PointerEvent) => {
-    if (flying) return;
+    if (n < 2) return;
     setDragging(true);
     startX.current = e.clientX;
-    maxMove.current = 0;
+    startY.current = e.clientY;
+    axis.current = "none";
     (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
   };
   const onMove = (e: React.PointerEvent) => {
-    if (!dragging || flying) return;
+    if (!dragging) return;
     const dx = e.clientX - startX.current;
-    maxMove.current = Math.max(maxMove.current, Math.abs(dx));
-    setDragX(dx);
+    const dy = e.clientY - startY.current;
+    // decide once whether this gesture is a horizontal swipe or a page scroll
+    if (axis.current === "none" && Math.abs(dx) + Math.abs(dy) > 8) {
+      axis.current = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
+    }
+    if (axis.current !== "x") return;
+    // resist at the ends so the strip feels bounded, not broken
+    const atEnd = (idx === 0 && dx > 0) || (idx === n - 1 && dx < 0);
+    setDragX(atEnd ? dx * 0.25 : dx);
   };
   const onUp = () => {
     if (!dragging) return;
     setDragging(false);
-    const threshold = 70;
-    if (dragX > threshold) go(-1);
-    else if (dragX < -threshold) go(1);
-    else if (maxMove.current < 6) go(1); // treat as a tap
-    else setDragX(0); // small drag → spring back
+    const w = frameRef.current?.offsetWidth ?? 320;
+    const threshold = Math.min(90, w * 0.22);
+    if (dragX <= -threshold) go(1);
+    else if (dragX >= threshold) go(-1);
+    else setDragX(0);
+    axis.current = "none";
   };
 
-  /* jump straight to a photo from the dots */
-  const jumpTo = (i: number) => {
-    if (flying || i === idx) return;
-    setDragX(0);
-    setIdx(i);
-  };
+  const jumpTo = (i: number) => { setDragX(0); setIdx(clamp(i)); };
 
   return (
     <div className="grid md:grid-cols-[minmax(0,400px)_1fr] gap-10 md:gap-14 items-start">
-      {/* stacked card deck */}
+      {/* filmstrip */}
       <div className="pb-2">
-        <div className="relative aspect-[3/4] select-none" role="group" aria-label={m[lang].caption}>
-          {m.images.map((src, i) => {
-            const isFlying = flying?.i === i;
-            /* while a card is in flight the rest have already taken their next
-               slot, so the deck cascades forward as one motion */
-            const shift = flying ? (flying.dir > 0 ? 1 : -1) : 0;
-            const pos = (i - idx - shift + n * 2) % n;
-            const base = deckStyles[pos] ?? DEEP;
-            const front = !flying && pos === 0;
-            const grabbable = front && n > 1;
-
-            let transform: string;
-            let transition: string;
-            let opacity: number;
-            let zIndex: number;
-
-            if (isFlying) {
-              // thrown off-screen in the swipe direction, tumbling as it goes
-              const dir = flying!.dir;
-              transform = `translate(${dir * 620}px, 40px) rotate(${dir * 26}deg) scale(0.95)`;
-              transition = TOSS;
-              opacity = 0;
-              zIndex = 50;
-            } else if (front && dragging) {
-              // 1:1 with the pointer — no transition so it tracks exactly
-              transform = `translate(${base.x + dragX}px, ${base.y + Math.abs(dragX) * 0.03}px) rotate(${base.rot + dragX * 0.05}deg) scale(${base.scale})`;
-              transition = "none";
-              opacity = base.opacity;
-              zIndex = base.zIndex;
-            } else {
-              transform = `translate(${base.x}px, ${base.y}px) rotate(${base.rot}deg) scale(${base.scale})`;
-              transition = SETTLE;
-              opacity = base.opacity;
-              zIndex = base.zIndex;
-            }
-
-            return (
-              <div
-                key={src}
-                onPointerDown={grabbable ? onDown : undefined}
-                onPointerMove={grabbable ? onMove : undefined}
-                onPointerUp={grabbable ? onUp : undefined}
-                onPointerCancel={grabbable ? onUp : undefined}
-                className={`absolute inset-0 rounded-sm overflow-hidden border bg-[#0a1f1c] shadow-2xl shadow-black/50 ${pos === 0 ? "border-white/25" : "border-white/10"} ${grabbable ? "cursor-grab active:cursor-grabbing" : ""}`}
-                style={{
-                  transform,
-                  zIndex,
-                  opacity,
-                  transition,
-                  willChange: "transform, opacity",
-                  touchAction: "pan-y",
-                  backfaceVisibility: "hidden",
-                }}
-                aria-hidden={pos !== 0}
-              >
+        <div
+          ref={frameRef}
+          onPointerDown={onDown}
+          onPointerMove={onMove}
+          onPointerUp={onUp}
+          onPointerCancel={onUp}
+          className={`relative aspect-[3/4] overflow-hidden rounded-sm border border-white/15 bg-[#0a1f1c] shadow-2xl shadow-black/50 select-none ${n > 1 ? "cursor-grab active:cursor-grabbing" : ""}`}
+          style={{ touchAction: "pan-y" }}
+          role="group"
+          aria-label={m[lang].caption}
+        >
+          <div
+            className="flex h-full"
+            style={{
+              width: `${n * 100}%`,
+              transform: `translate3d(calc(${(-idx * 100) / n}% + ${dragX}px), 0, 0)`,
+              transition: dragging ? "none" : SLIDE,
+              willChange: "transform",
+            }}
+          >
+            {m.images.map((src, i) => (
+              <div key={src} className="relative h-full" style={{ width: `${100 / n}%` }} aria-hidden={i !== idx}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={src}
-                  alt={pos === 0 ? `${photoAlt} ${i + 1}/${n}` : ""}
+                  alt={i === idx ? `${photoAlt} ${i + 1}/${n}` : ""}
                   loading={i === 0 ? "eager" : "lazy"}
                   draggable={false}
                   className="w-full h-full object-cover pointer-events-none"
                 />
-                {pos === 0 && n > 1 && (
-                  <span className="absolute top-3 right-3 font-mono text-[11px] text-white/85 bg-[#04100f]/65 border border-white/10 rounded-sm px-2 py-0.5 backdrop-blur-sm">
-                    {((i % n) + 1)} / {n}
-                  </span>
-                )}
               </div>
-            );
-          })}
+            ))}
+          </div>
+          {n > 1 && (
+            <span className="absolute top-3 right-3 font-mono text-[11px] text-white/85 bg-[#04100f]/65 border border-white/10 rounded-sm px-2 py-0.5 backdrop-blur-sm pointer-events-none">
+              {idx + 1} / {n}
+            </span>
+          )}
         </div>
 
         {/* controls under the deck — only when there's more than one photo */}
         {n > 1 && (
           <>
             <div className="flex items-center justify-center gap-4 mt-8">
-              <button onClick={() => go(-1)} aria-label="Previous photo"
-                className="w-8 h-8 flex items-center justify-center rounded-sm border border-white/15 text-white/60 hover:text-turq-300 hover:border-turq-500/50 transition-all duration-200">
+              <button onClick={() => go(-1)} disabled={idx === 0} aria-label="Previous photo"
+                className="w-8 h-8 flex items-center justify-center rounded-sm border border-white/15 text-white/60 enabled:hover:text-turq-300 enabled:hover:border-turq-500/50 disabled:opacity-25 disabled:cursor-default transition-all duration-200">
                 ‹
               </button>
               <div className="flex gap-2">
@@ -254,8 +205,8 @@ function MomentCarousel({
                     className={`w-2 h-2 rounded-full transition-all duration-200 ${i === idx ? "bg-turq-300 scale-110" : "bg-white/25 hover:bg-white/50"}`} />
                 ))}
               </div>
-              <button onClick={() => go(1)} aria-label="Next photo"
-                className="w-8 h-8 flex items-center justify-center rounded-sm border border-white/15 text-white/60 hover:text-turq-300 hover:border-turq-500/50 transition-all duration-200">
+              <button onClick={() => go(1)} disabled={idx === n - 1} aria-label="Next photo"
+                className="w-8 h-8 flex items-center justify-center rounded-sm border border-white/15 text-white/60 enabled:hover:text-turq-300 enabled:hover:border-turq-500/50 disabled:opacity-25 disabled:cursor-default transition-all duration-200">
                 ›
               </button>
             </div>
