@@ -206,6 +206,15 @@ export const ui = {
   en: {
     nav: { about: "about", experience: "experience", projects: "projects", research: "research", music: "music", resume: "résumé", blog: "blog", photos: "photos" },
     heroKicker: "Pittsburgh, PA · Pitt '27 · EN / FR",
+    heroRoles: [
+      "aspiring AI researcher",
+      "data & systems engineer",
+      "drummer & composer",
+      "poet at heart",
+      "LeetCode grinder",
+      "history & philosophy nerd",
+      "Pittsburgh faithful",
+    ],
     heroTagline:
       "Aspiring polymath. I work at the intersection of machine learning, systems, and data — but I'm equally drawn to math, history, philosophy, and more. I care about ideas as much as what you build with them.",
     quote: "Fortis imaginatio generat casum.",
@@ -218,7 +227,7 @@ export const ui = {
     aboutP1:
       "I'm Manny — a Data Science & Computer Science student at the University of Pittsburgh, with a minor in French. I spent last semester on exchange at ENSEA in Cergy, France, and I'm back in Pittsburgh now, currently interning at BNY. My work sits at the intersection of machine learning, systems programming, and data engineering — I'm drawn to problems that are both mathematically interesting and practically hard.",
     aboutP2:
-      "Outside of engineering I read research papers, philosophy and history, think seriously about physics and mathematics for their own sake, grind LeetCode for the pure joy of a clean algorithm, and make music. I find the connections between fields as interesting as the fields themselves.",
+      "Outside of engineering I read research papers, philosophy and history, think seriously about physics and mathematics for their own sake, grind LeetCode for the pure joy of a clean algorithm, write poetry, and make music. I find the connections between fields as interesting as the fields themselves.",
     facts: [
       { label: "Currently", value: "Back at Pitt, Pittsburgh PA · interning at BNY" },
       { label: "Studying", value: "Data Science + Computer Science @ Pitt · French minor" },
@@ -228,7 +237,8 @@ export const ui = {
       { label: "Languages", value: "English & French" },
       { label: "Algorithms", value: "LeetCode grinder — DP, graphs, the classics" },
       { label: "Goal", value: "Undergraduate → PhD / Masters → AI Research" },
-      { label: "Also", value: "Musician · Writer · All-Academic Athlete" },
+      { label: "Sports", value: "Pittsburgh faithful — black & gold, every season" },
+      { label: "Also", value: "Drummer · Poet · All-Academic Athlete" },
     ],
     rootsLabel: "Ties",
     coursework: "coursework",
@@ -251,6 +261,15 @@ export const ui = {
   fr: {
     nav: { about: "à propos", experience: "expérience", projects: "projets", research: "recherche", music: "musique", resume: "CV", blog: "blog", photos: "photos" },
     heroKicker: "Pittsburgh, PA · Pitt '27 · EN / FR",
+    heroRoles: [
+      "chercheur en IA en devenir",
+      "ingénieur données & systèmes",
+      "batteur & compositeur",
+      "poète dans l'âme",
+      "accro à LeetCode",
+      "passionné d'histoire & de philo",
+      "fidèle à Pittsburgh",
+    ],
     heroTagline:
       "Polymathe en devenir. Je travaille à l'intersection de l'apprentissage automatique, des systèmes et des données — mais les maths, l'histoire et la philosophie m'attirent tout autant. Je tiens aux idées autant qu'à ce qu'on en construit.",
     quote: "Fortis imaginatio generat casum.",
@@ -263,7 +282,7 @@ export const ui = {
     aboutP1:
       "Je m'appelle Manny — étudiant en science des données et informatique à l'Université de Pittsburgh, avec une mineure en français. J'ai passé le semestre dernier en échange à l'ENSEA de Cergy, en France, et je suis de retour à Pittsburgh, actuellement en stage chez BNY. Mon travail se situe à l'intersection de l'apprentissage automatique, de la programmation système et de l'ingénierie de données — j'aime les problèmes à la fois mathématiquement intéressants et concrètement difficiles.",
     aboutP2:
-      "En dehors de l'ingénierie, je lis des articles de recherche, de la philosophie et de l'histoire, je réfléchis sérieusement à la physique et aux mathématiques pour elles-mêmes, je m'entraîne sur LeetCode pour le pur plaisir d'un algorithme élégant, et je fais de la musique. Les liens entre les domaines m'intéressent autant que les domaines eux-mêmes.",
+      "En dehors de l'ingénierie, je lis des articles de recherche, de la philosophie et de l'histoire, je réfléchis sérieusement à la physique et aux mathématiques pour elles-mêmes, je m'entraîne sur LeetCode pour le pur plaisir d'un algorithme élégant, j'écris de la poésie et je fais de la musique. Les liens entre les domaines m'intéressent autant que les domaines eux-mêmes.",
     facts: [
       { label: "Actuellement", value: "De retour à Pitt, Pittsburgh PA · stage chez BNY" },
       { label: "Études", value: "Science des données + Informatique @ Pitt · mineure en français" },
@@ -273,7 +292,8 @@ export const ui = {
       { label: "Langues", value: "Anglais & Français" },
       { label: "Algorithmes", value: "Accro à LeetCode — prog. dynamique, graphes, les classiques" },
       { label: "Objectif", value: "Licence → Doctorat / Master → Recherche en IA" },
-      { label: "Aussi", value: "Musicien · Écrivain · Athlète académique" },
+      { label: "Sports", value: "Fidèle à Pittsburgh — noir et or, en toute saison" },
+      { label: "Aussi", value: "Batteur · Poète · Athlète académique" },
     ],
     rootsLabel: "Attaches",
     coursework: "cours suivis",

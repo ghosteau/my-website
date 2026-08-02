@@ -12,6 +12,7 @@ import {
   GameSprite,
   GitHubMark,
   LinkedInMark,
+  PixelSkyline,
 } from "./components/sprites";
 import {
   experience,
@@ -87,6 +88,28 @@ function FadeIn({ children, delay = 0, className = "" }: { children: React.React
     }}>
       {children}
     </div>
+  );
+}
+
+/* type → hold → erase → next; timers only, so no cascading renders */
+function Typewriter({ words }: { words: string[] }) {
+  const [wi, setWi] = useState(0);
+  const [len, setLen] = useState(0);
+  const [erasing, setErasing] = useState(false);
+  useEffect(() => {
+    const word = words[wi];
+    let t: number;
+    if (!erasing && len < word.length) t = window.setTimeout(() => setLen(len + 1), 55);
+    else if (!erasing) t = window.setTimeout(() => setErasing(true), 1700);
+    else if (len > 0) t = window.setTimeout(() => setLen(len - 1), 26);
+    else t = window.setTimeout(() => { setErasing(false); setWi((wi + 1) % words.length); }, 250);
+    return () => clearTimeout(t);
+  }, [len, erasing, wi, words]);
+  return (
+    <span>
+      {words[wi].slice(0, len)}
+      <span className="animate-blink text-turq-300/80">▌</span>
+    </span>
   );
 }
 
@@ -205,7 +228,7 @@ export default function Home() {
       </nav>
 
       {/* Hero */}
-      <section className="relative z-10 min-h-screen flex flex-col justify-center px-8 md:px-20 pt-24 pb-32">
+      <section className="relative z-10 min-h-screen flex flex-col justify-center px-8 md:px-20 pt-20 pb-28">
         <div className="max-w-4xl">
 
           <p className="font-mono text-cyan-400/80 text-sm tracking-[0.3em] uppercase mb-6"
@@ -213,7 +236,7 @@ export default function Home() {
             {t.heroKicker}
           </p>
 
-          <h1 className="text-6xl md:text-8xl font-extralight leading-[1.05] tracking-tight mb-6"
+          <h1 className="text-6xl md:text-8xl font-extralight leading-[1.05] tracking-tight mb-4"
             style={{ opacity: 0, animation: "fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.25s forwards" }}>
             Emmanuel
             <br />
@@ -226,13 +249,20 @@ export default function Home() {
             </span>
           </h1>
 
-          <p className="text-white/70 text-lg md:text-xl font-light leading-relaxed max-w-2xl mt-8"
-            style={{ opacity: 0, animation: "fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.4s forwards" }}>
+          {/* rotating identities */}
+          <p className="font-mono text-base md:text-lg text-turq-300/90 mt-2 h-7"
+            style={{ opacity: 0, animation: "fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.35s forwards" }}>
+            <span className="text-white/30">$ </span>
+            <Typewriter words={t.heroRoles} />
+          </p>
+
+          <p className="text-white/70 text-lg md:text-xl font-light leading-relaxed max-w-2xl mt-6"
+            style={{ opacity: 0, animation: "fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.45s forwards" }}>
             {t.heroTagline}
           </p>
 
           {/* Quote */}
-          <div className="mt-12 border-l-2 border-turq-500/25 pl-6"
+          <div className="mt-8 border-l-2 border-turq-500/25 pl-6"
             style={{ opacity: 0, animation: "fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.6s forwards" }}>
             <p className="text-white/70 text-base font-light italic leading-relaxed">
               &ldquo;{t.quote}&rdquo;
@@ -242,7 +272,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="flex flex-wrap gap-4 mt-12"
+          <div className="flex flex-wrap gap-4 mt-8"
             style={{ opacity: 0, animation: "fadeUp 0.9s cubic-bezier(0.16,1,0.3,1) 0.7s forwards" }}>
             {[
               { label: "GitHub", href: "https://github.com/ghosteau", icon: <GitHubMark className="w-4 h-4" />, cls: "border-white/20 text-white/70 hover:bg-white/5 hover:text-white hover:border-white/40" },
@@ -270,6 +300,15 @@ export default function Home() {
         >
           <div className="w-px h-8 bg-gradient-to-b from-transparent via-white/30 to-transparent animate-pulse-line" />
           {t.scroll}
+        </div>
+
+        {/* Pittsburgh — three rivers, black & gold, no logos needed */}
+        <div
+          className="absolute bottom-0 inset-x-0 pointer-events-none select-none"
+          style={{ opacity: 0, animation: "fadeUp 1.4s cubic-bezier(0.16,1,0.3,1) 0.9s forwards" }}
+        >
+          <PixelSkyline className="w-full h-20 md:h-28 opacity-[0.55]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#04100f] via-[#04100f]/25 to-transparent" />
         </div>
       </section>
 

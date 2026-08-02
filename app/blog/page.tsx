@@ -23,6 +23,23 @@ const copy = {
 
 const posts = [
   {
+    href: "/blog/ia-un-an-plus-tard",
+    date: "2026",
+    tags: ["FR", "essai", "IA"],
+    en: {
+      title: "L'intelligence artificielle, un an plus tard",
+      sub: "Efficacité, jetons, et la course mondiale",
+      blurb:
+        "A year on from my first essay on AI: why efficiency and token cost now drive the industry, where Claude and OpenAI stand, and how China reshaped the race. (Written in French.)",
+    },
+    fr: {
+      title: "L'intelligence artificielle, un an plus tard",
+      sub: "Efficacité, jetons, et la course mondiale",
+      blurb:
+        "Un an après mon premier essai sur l'IA : pourquoi l'efficacité et le coût des jetons dominent désormais l'industrie, où en sont Claude et OpenAI, et comment la Chine a redessiné la course.",
+    },
+  },
+  {
     href: "/blog/generative-ai",
     date: "April 9, 2025",
     tags: ["EN", "essay", "AI"],
