@@ -176,6 +176,62 @@ export function FlagIcon({
   );
 }
 
+/* ═══════════════ PITTSBURGH SKYLINE ═══════════════ */
+/* Original blocky silhouette of a three-rivers city: glass spires, a steel
+   slab, and a suspension bridge — with a few gold-lit windows. Black & gold
+   is Pittsburgh's palette in every season; no logos required. */
+export function PixelSkyline({ className = "" }: { className?: string }) {
+  const B = "#0b2f29"; // silhouette
+  const G = "#f2c14e"; // window gold
+  const MID = 240; // horizontal centre of the 480-wide viewBox
+  const windows: { x: number; y: number; delay?: string }[] = [
+    { x: 47, y: 40 }, { x: 55, y: 33, delay: "0.8s" }, { x: 104, y: 28 },
+    { x: 112, y: 40, delay: "1.6s" }, { x: 122, y: 33 }, { x: 356, y: 40, delay: "0.4s" },
+    { x: 430, y: 30 }, { x: 440, y: 42, delay: "1.2s" }, { x: 404, y: 46 },
+  ];
+  return (
+    // "meet" so the full width — bridge included — always fits, never cropped
+    <svg viewBox="0 0 480 72" preserveAspectRatio="none" aria-hidden className={className}>
+      {/* left cluster */}
+      <rect x="8" y="42" width="22" height="30" fill={B} />
+      {/* glass-castle spires */}
+      <polygon points="40,72 40,34 46,26 52,34 52,26 58,18 64,26 64,34 70,26 76,34 76,72" fill={B} />
+      <rect x="80" y="48" width="14" height="24" fill={B} />
+      {/* steel slab (tallest) */}
+      <rect x="98" y="20" width="34" height="52" fill={B} />
+      <rect x="98" y="20" width="34" height="3" fill="#123f38" />
+      {/* bridge's left abutment building — mirrors the one on the right */}
+      <rect x="136" y="44" width="24" height="28" fill={B} />
+      {/* suspension bridge — every part mirrors about MID (240 = viewBox center) */}
+      <rect x={MID - 76} y="58" width="152" height="4" fill={B} />
+      <rect x={MID - 43} y="26" width="5" height="36" fill={B} />
+      <rect x={MID + 38} y="26" width="5" height="36" fill={B} />
+      <path
+        d={`M${MID - 76} 58 Q${MID - 59} 30 ${MID - 41} 28 Q${MID} 52 ${MID + 41} 28 Q${MID + 59} 30 ${MID + 76} 58`}
+        fill="none" stroke={B} strokeWidth="2.5" vectorEffect="non-scaling-stroke" />
+      {[-26, -13, 0, 13, 26].map((d) => (
+        <rect key={d} x={MID + d - 0.75} y={40 + Math.abs(d) * 0.12} width="1.5"
+          height={18 - Math.abs(d) * 0.12} fill={B} />
+      ))}
+      {/* right cluster — mirrors the left: same 4-unit gap to the deck, same
+          152 width, and an identical abutment building so both approaches read
+          the same. Wider gaps made the bridge look like it floated in a moat. */}
+      <rect x="320" y="44" width="24" height="28" fill={B} />
+      <rect x="348" y="34" width="26" height="38" fill={B} />
+      <polygon points="378,72 378,44 385,36 392,44 392,72" fill={B} />
+      <rect x="396" y="40" width="22" height="32" fill={B} />
+      <rect x="422" y="24" width="30" height="48" fill={B} />
+      <rect x="456" y="48" width="16" height="24" fill={B} />
+      {/* gold windows — a few twinkle */}
+      {windows.map((w, i) => (
+        <rect key={i} x={w.x} y={w.y} width="3" height="3" fill={G}
+          opacity="0.75" className={w.delay ? "animate-twinkle" : undefined}
+          style={w.delay ? { animationDelay: w.delay } : undefined} />
+      ))}
+    </svg>
+  );
+}
+
 /* ═══════════════ BRAND MARKS ═══════════════ */
 /* monochrome logos — fill via currentColor so callers set the brand tint */
 

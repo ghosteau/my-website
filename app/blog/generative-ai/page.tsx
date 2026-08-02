@@ -4,12 +4,8 @@ import Link from "next/link";
 import { useLang, LangToggle } from "../../components/lang";
 
 const chrome = {
-  en: { back: "← blog", kicker: "writing — essay", langNote: null },
-  fr: {
-    back: "← blog",
-    kicker: "écriture — essai",
-    langNote: "Ce billet est rédigé en anglais.",
-  },
+  en: { back: "← blog", kicker: "writing — essay", langNote: "written in English" },
+  fr: { back: "← blog", kicker: "écriture — essai", langNote: "écrit en anglais" },
 };
 
 export default function GenerativeAIEssay() {
@@ -44,18 +40,19 @@ export default function GenerativeAIEssay() {
           <span className="font-mono text-xs text-white/50 tracking-wide">
             Manny McGrail · University of Pittsburgh · April 9, 2025
           </span>
+          <span className="text-white/25" aria-hidden>·</span>
+          <span className="flex items-center gap-1.5 text-white/40 text-xs italic">
+            <span aria-hidden className="not-italic opacity-70">✎</span>
+            {c.langNote}
+          </span>
         </div>
         <div className="flex flex-wrap gap-2 mb-12">
-          {["EN", "essay", "AI", "deep learning"].map((tag) => (
+          {["essay", "AI", "deep learning"].map((tag) => (
             <span key={tag} className="px-2.5 py-1 border border-turq-500/25 bg-turq-500/[0.05] rounded-sm text-[11px] font-mono text-turq-300/80 tracking-wide">
               {tag}
             </span>
           ))}
         </div>
-
-        {c.langNote && (
-          <p className="font-mono text-white/40 text-xs mb-10 border-l-2 border-white/10 pl-4">{c.langNote}</p>
-        )}
 
         <div className="flex flex-col gap-6 text-white/70 font-light leading-[1.85] text-[15px]">
           <p>
