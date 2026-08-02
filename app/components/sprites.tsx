@@ -186,8 +186,8 @@ export function PixelSkyline({ className = "" }: { className?: string }) {
   const MID = 240; // horizontal centre of the 480-wide viewBox
   const windows: { x: number; y: number; delay?: string }[] = [
     { x: 47, y: 40 }, { x: 55, y: 33, delay: "0.8s" }, { x: 104, y: 28 },
-    { x: 112, y: 40, delay: "1.6s" }, { x: 122, y: 33 }, { x: 344, y: 40, delay: "0.4s" },
-    { x: 428, y: 30 }, { x: 438, y: 42, delay: "1.2s" }, { x: 398, y: 46 },
+    { x: 112, y: 40, delay: "1.6s" }, { x: 122, y: 33 }, { x: 356, y: 40, delay: "0.4s" },
+    { x: 430, y: 30 }, { x: 440, y: 42, delay: "1.2s" }, { x: 404, y: 46 },
   ];
   return (
     // "meet" so the full width — bridge included — always fits, never cropped
@@ -212,12 +212,13 @@ export function PixelSkyline({ className = "" }: { className?: string }) {
         <rect key={d} x={MID + d - 0.75} y={40 + Math.abs(d) * 0.12} width="1.5"
           height={18 - Math.abs(d) * 0.12} fill={B} />
       ))}
-      {/* right cluster */}
-      <rect x="314" y="46" width="18" height="26" fill={B} />
-      <rect x="338" y="34" width="26" height="38" fill={B} />
-      <polygon points="368,72 368,44 375,36 382,44 382,72" fill={B} />
-      <rect x="390" y="40" width="22" height="32" fill={B} />
-      <rect x="420" y="24" width="30" height="48" fill={B} />
+      {/* right cluster — starts at 326 so the gap to the bridge (10) matches the
+          left side, and its 146 width mirrors the left cluster's */}
+      <rect x="326" y="46" width="18" height="26" fill={B} />
+      <rect x="348" y="34" width="26" height="38" fill={B} />
+      <polygon points="378,72 378,44 385,36 392,44 392,72" fill={B} />
+      <rect x="396" y="40" width="22" height="32" fill={B} />
+      <rect x="422" y="24" width="30" height="48" fill={B} />
       <rect x="456" y="48" width="16" height="24" fill={B} />
       {/* gold windows — a few twinkle */}
       {windows.map((w, i) => (
