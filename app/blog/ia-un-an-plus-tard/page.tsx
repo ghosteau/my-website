@@ -7,12 +7,12 @@ const chrome = {
   en: {
     back: "← blog",
     kicker: "writing — essay",
-    langNote: "This post is written in French.",
+    langNote: "written in French",
   },
   fr: {
     back: "← blog",
     kicker: "écriture — essai",
-    langNote: null,
+    langNote: "écrit en français",
   },
 };
 
@@ -50,18 +50,19 @@ export default function IAUnAnPlusTard() {
           <span className="font-mono text-xs text-white/50 tracking-wide">
             Manny McGrail · 2026
           </span>
+          <span className="text-white/25" aria-hidden>·</span>
+          <span className="flex items-center gap-1.5 text-white/40 text-xs italic">
+            <span aria-hidden className="not-italic opacity-70">✎</span>
+            {c.langNote}
+          </span>
         </div>
         <div className="flex flex-wrap gap-2 mb-12">
-          {["FR", "essai", "IA"].map((tag) => (
+          {["essai", "IA"].map((tag) => (
             <span key={tag} className="px-2.5 py-1 border border-turq-500/25 bg-turq-500/[0.05] rounded-sm text-[11px] font-mono text-turq-300/80 tracking-wide">
               {tag}
             </span>
           ))}
         </div>
-
-        {c.langNote && (
-          <p className="font-mono text-white/40 text-xs mb-10 border-l-2 border-white/10 pl-4">{c.langNote}</p>
-        )}
 
         <div className="flex flex-col gap-6 text-white/70 font-light leading-[1.85] text-[15px]">
           <p>

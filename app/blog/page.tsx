@@ -11,6 +11,8 @@ const copy = {
     title: "Notes & Essays",
     more: "More on the way — thoughts on math, algorithms, AI, and history.",
     read: "read →",
+    /* how the post's own language is announced, in the reader's language */
+    writtenIn: { en: "written in English", fr: "written in French" },
   },
   fr: {
     back: "← retour",
@@ -18,19 +20,28 @@ const copy = {
     title: "Notes & essais",
     more: "D'autres billets arrivent — réflexions sur les maths, les algorithmes, l'IA et l'histoire.",
     read: "lire →",
+    writtenIn: { en: "écrit en anglais", fr: "écrit en français" },
   },
 };
 
-const posts = [
+const posts: {
+  href: string;
+  date: string;
+  postLang: "en" | "fr";
+  tags: string[];
+  en: { title: string; sub: string; blurb: string };
+  fr: { title: string; sub: string; blurb: string };
+}[] = [
   {
     href: "/blog/ia-un-an-plus-tard",
     date: "2026",
-    tags: ["FR", "essai", "IA"],
+    postLang: "fr",
+    tags: ["essai", "IA"],
     en: {
       title: "L'intelligence artificielle, un an plus tard",
       sub: "Efficacité, jetons, et la course mondiale",
       blurb:
-        "A year on from my first essay on AI: why efficiency and token cost now drive the industry, where Claude and OpenAI stand, and how China reshaped the race. (Written in French.)",
+        "A year on from my first essay on AI: why efficiency and token cost now drive the industry, where Claude and OpenAI stand, and how China reshaped the race.",
     },
     fr: {
       title: "L'intelligence artificielle, un an plus tard",
@@ -42,7 +53,8 @@ const posts = [
   {
     href: "/blog/generative-ai",
     date: "April 9, 2025",
-    tags: ["EN", "essay", "AI"],
+    postLang: "en",
+    tags: ["essay", "AI"],
     en: {
       title: "The Vast World of Generative Artificial Intelligence",
       sub: "The Ascent of Deep Learning and Its Effects",
@@ -53,7 +65,7 @@ const posts = [
       title: "The Vast World of Generative Artificial Intelligence",
       sub: "The Ascent of Deep Learning and Its Effects",
       blurb:
-        "Comment fonctionnent réellement les modèles génératifs modernes — des premiers réseaux profonds de 1965 aux transformers — et les questions sociales et éthiques qu'ils soulèvent. (Billet en anglais.)",
+        "Comment fonctionnent réellement les modèles génératifs modernes — des premiers réseaux profonds de 1965 aux transformers — et les questions sociales et éthiques qu'ils soulèvent.",
     },
   },
 ];
@@ -97,7 +109,14 @@ export default function Blog() {
               </h2>
               <p className="text-white/50 text-sm font-light italic mt-1">{p[lang].sub}</p>
               <p className="text-white/60 text-sm font-light leading-relaxed mt-4">{p[lang].blurb}</p>
-              <p className="font-mono text-turq-300/70 group-hover:text-turq-300 text-xs mt-5 transition-colors duration-200">{c.read}</p>
+              <div className="flex items-baseline justify-between gap-4 mt-5">
+                <p className="font-mono text-turq-300/70 group-hover:text-turq-300 text-xs transition-colors duration-200">{c.read}</p>
+                {/* what language the piece itself is in */}
+                <p className="flex items-center gap-1.5 text-white/40 text-xs italic shrink-0">
+                  <span aria-hidden className="not-italic opacity-70">✎</span>
+                  {c.writtenIn[p.postLang]}
+                </p>
+              </div>
             </Link>
           ))}
         </div>
