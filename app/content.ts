@@ -205,7 +205,7 @@ export const research: {
 export const ui = {
   en: {
     nav: { about: "about", experience: "experience", projects: "projects", research: "research", music: "music", resume: "résumé", blog: "blog", photos: "photos" },
-    heroKicker: "Pittsburgh, PA · Pitt '27 · EN / FR",
+    heroKicker: "Pittsburgh, PA · Pitt '27",
     heroRoles: [
       "aspiring AI researcher",
       "data & systems engineer",
@@ -263,7 +263,7 @@ export const ui = {
   },
   fr: {
     nav: { about: "à propos", experience: "expérience", projects: "projets", research: "recherche", music: "musique", resume: "CV", blog: "blog", photos: "photos" },
-    heroKicker: "Pittsburgh, PA · Pitt '27 · EN / FR",
+    heroKicker: "Pittsburgh, PA · Pitt '27",
     heroRoles: [
       "chercheur en IA en devenir",
       "ingénieur données & systèmes",

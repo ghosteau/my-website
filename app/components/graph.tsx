@@ -12,26 +12,30 @@ type Node = { id: string; x: number; y: number; en: string; fr: string; hub?: bo
 const W = 640;
 const H = 250;
 
+/* Positions are deliberate: every edge has to reach its endpoints without
+   grazing a node it doesn't connect, or the picture implies links that
+   aren't there. (Music sat opposite maths with the line passing 1.5px from
+   the ML node, which read as "music → machine learning".) */
 const NODES: Node[] = [
-  { id: "math", x: 96, y: 62, en: "mathematics", fr: "mathématiques" },
-  { id: "algo", x: 320, y: 40, en: "algorithms", fr: "algorithmes", hub: true },
-  { id: "sys", x: 548, y: 62, en: "systems", fr: "systèmes" },
-  { id: "ml", x: 320, y: 132, en: "machine learning", fr: "apprentissage automatique", hub: true },
-  { id: "phil", x: 96, y: 200, en: "philosophy", fr: "philosophie" },
-  { id: "hist", x: 320, y: 224, en: "history", fr: "histoire" },
-  { id: "music", x: 548, y: 200, en: "music", fr: "musique" },
+  { id: "music", x: 60, y: 132, en: "music", fr: "musique" },
+  { id: "math", x: 186, y: 58, en: "mathematics", fr: "mathématiques" },
+  { id: "algo", x: 352, y: 36, en: "algorithms", fr: "algorithmes", hub: true },
+  { id: "sys", x: 556, y: 58, en: "systems", fr: "systèmes" },
+  { id: "ml", x: 352, y: 140, en: "machine learning", fr: "apprentissage automatique", hub: true },
+  { id: "phil", x: 150, y: 214, en: "philosophy", fr: "philosophie" },
+  { id: "hist", x: 356, y: 232, en: "history", fr: "histoire" },
 ];
 
 const EDGES: [string, string][] = [
+  ["math", "music"], // rhythm, harmony, counting
   ["math", "algo"],
   ["algo", "sys"],
   ["math", "ml"],
   ["algo", "ml"],
   ["sys", "ml"],
-  ["math", "phil"],
+  ["math", "phil"], // logic
+  ["phil", "ml"],   // the ethics essays
   ["phil", "hist"],
-  ["phil", "ml"],
-  ["math", "music"],
   ["hist", "music"],
 ];
 

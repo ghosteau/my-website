@@ -49,20 +49,20 @@ const moments: Moment[] = [
       "/photos/paris/6-montaigne.jpg",
       "/photos/paris/7-eiffel.jpg",
     ],
-    photoAlt: "Paris, France trip photo",
+    photoAlt: "Paris, France photo",
     aspect: "1/1",
     fit: "contain",
     en: {
       caption: "Paris, France",
-      date: "2026",
+      date: "January – May 2026",
       blurb:
-        "Concorde, the Jardin du Luxembourg, the generals of the Revolution inside the Panthéon, Les Invalides under a pink sky, Sacré-Cœur, and the Eiffel Tower over the Seine at dusk. Somewhere in there: Avenue Montaigne — named for the writer I quote up top.",
+        "Home for five months while I studied at ENSEA. Concorde, the Jardin du Luxembourg, the generals of the Revolution inside the Panthéon, Les Invalides under a pink sky, Sacré-Cœur, and the Eiffel Tower over the Seine at dusk. Somewhere in there: Avenue Montaigne — named for the writer I quote up top.",
     },
     fr: {
       caption: "Paris, France",
-      date: "2026",
+      date: "De janvier à mai 2026",
       blurb:
-        "La Concorde, le jardin du Luxembourg, les généraux de la Révolution au Panthéon, les Invalides sous un ciel rose, le Sacré-Cœur, et la tour Eiffel au-dessus de la Seine au crépuscule. Et quelque part là-dedans : l'avenue Montaigne — du nom de l'écrivain que je cite en haut de la page.",
+        "Cinq mois chez moi, pendant mes études à l'ENSEA. La Concorde, le jardin du Luxembourg, les généraux de la Révolution au Panthéon, les Invalides sous un ciel rose, le Sacré-Cœur, et la tour Eiffel au-dessus de la Seine au crépuscule. Et quelque part là-dedans : l'avenue Montaigne — du nom de l'écrivain que je cite en haut de la page.",
     },
     tags: [
       { key: "france", emoji: "🇫🇷", flag: "france", en: "France", fr: "France" },
