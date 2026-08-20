@@ -123,10 +123,21 @@ export function Flag({
 export function FlagIcon({
   kind, className = "", title,
 }: {
-  kind: "usa" | "france" | "quebec";
+  kind: "usa" | "france" | "quebec" | "sweden";
   className?: string;
   title?: string;
 }) {
+  if (kind === "sweden") {
+    // Nordic cross — offset toward the hoist, as on the real flag
+    return (
+      <svg viewBox="0 0 16 10" className={className} role="img" aria-label={title}>
+        {title ? <title>{title}</title> : null}
+        <rect width="16" height="10" fill="#005293" />
+        <rect y="4" width="16" height="2" fill="#FECB00" />
+        <rect x="5" width="2" height="10" fill="#FECB00" />
+      </svg>
+    );
+  }
   if (kind === "france") {
     return (
       <svg viewBox="0 0 3 2" className={className} role="img" aria-label={title}>

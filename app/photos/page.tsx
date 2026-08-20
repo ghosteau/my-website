@@ -25,16 +25,50 @@ const copy = {
 /* one "moment" = a set of photos sharing a caption, date, blurb, and tags.
    emoji = shown on devices that render the glyph; flag = pixel fallback
    (Windows renders country-flag emoji as letter codes, so those get a pixel flag). */
-type FlagKind = "usa" | "france" | "quebec";
+type FlagKind = "usa" | "france" | "quebec" | "sweden";
 type Moment = {
   images: string[];
   photoAlt: string;
+  /** frame shape — default 3/4. Mixed portrait+landscape sets read better square. */
+  aspect?: string;
+  /** "contain" letterboxes instead of cropping; use it when a set mixes orientations. */
+  fit?: "cover" | "contain";
   en: { caption: string; date: string; blurb: string };
   fr: { caption: string; date: string; blurb: string };
   tags: { key: string; emoji: string; flag: FlagKind | null; en: string; fr: string }[];
 };
 
 const moments: Moment[] = [
+  {
+    images: [
+      "/photos/stockholm/1-nordiska.jpg",
+      "/photos/stockholm/2-palace.jpg",
+      "/photos/stockholm/3-riksdag.jpg",
+      "/photos/stockholm/4-karl-xii.jpg",
+      "/photos/stockholm/5-night-ice.jpg",
+    ],
+    photoAlt: "Stockholm, Sweden trip photo",
+    aspect: "1/1",
+    fit: "contain", // the set mixes portrait and landscape — don't crop either
+    en: {
+      caption: "Stockholm, Sweden",
+      date: "Winter 2026",
+      blurb:
+        "The Nordiska museet, the Royal Palace, the Riksdag, Karl XII pointing over Kungsträdgården, and Riddarholmen glowing across the broken ice at night.",
+    },
+    fr: {
+      caption: "Stockholm, Suède",
+      date: "Hiver 2026",
+      blurb:
+        "Le Nordiska museet, le Palais royal, le Riksdag, Karl XII pointant au-dessus de Kungsträdgården, et Riddarholmen illuminé sur la glace brisée, la nuit.",
+    },
+    tags: [
+      { key: "sweden", emoji: "🇸🇪", flag: "sweden", en: "Sweden", fr: "Suède" },
+      { key: "europe", emoji: "🏛️", flag: null, en: "Architecture", fr: "Architecture" },
+      { key: "history", emoji: "📜", flag: null, en: "History", fr: "Histoire" },
+      { key: "winter", emoji: "❄️", flag: null, en: "Winter", fr: "Hiver" },
+    ],
+  },
   {
     images: [
       "/photos/quebec/parliament-1.jpg",
@@ -97,6 +131,8 @@ function MomentCarousel({
   const m = moment;
   const photoAlt = m.photoAlt;
   const n = m.images.length;
+  const aspect = m.aspect ?? "3/4";
+  const fitClass = m.fit === "contain" ? "object-contain" : "object-cover";
   const [idx, setIdx] = useState(0);
   const [dragX, setDragX] = useState(0);
   const [dragging, setDragging] = useState(false);
@@ -155,8 +191,8 @@ function MomentCarousel({
           onPointerMove={onMove}
           onPointerUp={onUp}
           onPointerCancel={onUp}
-          className={`relative aspect-[3/4] overflow-hidden rounded-sm border border-white/15 bg-[#0a1f1c] shadow-2xl shadow-black/50 select-none ${n > 1 ? "cursor-grab active:cursor-grabbing" : ""}`}
-          style={{ touchAction: "pan-y" }}
+          className={`relative overflow-hidden rounded-sm border border-white/15 bg-[#081a17] shadow-2xl shadow-black/50 select-none ${n > 1 ? "cursor-grab active:cursor-grabbing" : ""}`}
+          style={{ touchAction: "pan-y", aspectRatio: aspect }}
           role="group"
           aria-label={m[lang].caption}
         >
@@ -177,7 +213,7 @@ function MomentCarousel({
                   alt={i === idx ? `${photoAlt} ${i + 1}/${n}` : ""}
                   loading={i === 0 ? "eager" : "lazy"}
                   draggable={false}
-                  className="w-full h-full object-cover pointer-events-none"
+                  className={`w-full h-full ${fitClass} pointer-events-none`}
                 />
               </div>
             ))}
