@@ -152,7 +152,7 @@ export default function Home() {
     const paint = () => {
       raf = 0;
       if (spotlightRef.current)
-        spotlightRef.current.style.background = `radial-gradient(600px circle at ${lx}px ${ly}px, rgba(45,212,191,0.10), transparent 70%)`;
+        spotlightRef.current.style.background = `radial-gradient(600px circle at ${lx}px ${ly}px, rgba(40,174,196,0.13), transparent 70%)`;
     };
     const onMouse = (e: MouseEvent) => {
       lx = e.clientX; ly = e.clientY;

@@ -41,6 +41,38 @@ type Moment = {
 const moments: Moment[] = [
   {
     images: [
+      "/photos/paris/1-concorde.jpg",
+      "/photos/paris/2-luxembourg.jpg",
+      "/photos/paris/3-pantheon.jpg",
+      "/photos/paris/4-invalides.jpg",
+      "/photos/paris/5-sacre-coeur.jpg",
+      "/photos/paris/6-montaigne.jpg",
+      "/photos/paris/7-eiffel.jpg",
+    ],
+    photoAlt: "Paris, France trip photo",
+    aspect: "1/1",
+    fit: "contain",
+    en: {
+      caption: "Paris, France",
+      date: "2026",
+      blurb:
+        "Concorde, the Jardin du Luxembourg, the generals of the Revolution inside the Panthéon, Les Invalides under a pink sky, Sacré-Cœur, and the Eiffel Tower over the Seine at dusk. Somewhere in there: Avenue Montaigne — named for the writer I quote up top.",
+    },
+    fr: {
+      caption: "Paris, France",
+      date: "2026",
+      blurb:
+        "La Concorde, le jardin du Luxembourg, les généraux de la Révolution au Panthéon, les Invalides sous un ciel rose, le Sacré-Cœur, et la tour Eiffel au-dessus de la Seine au crépuscule. Et quelque part là-dedans : l'avenue Montaigne — du nom de l'écrivain que je cite en haut de la page.",
+    },
+    tags: [
+      { key: "france", emoji: "🇫🇷", flag: "france", en: "France", fr: "France" },
+      { key: "arch", emoji: "🏛️", flag: null, en: "Architecture", fr: "Architecture" },
+      { key: "history", emoji: "📜", flag: null, en: "History", fr: "Histoire" },
+      { key: "montaigne", emoji: "✍️", flag: null, en: "Montaigne", fr: "Montaigne" },
+    ],
+  },
+  {
+    images: [
       "/photos/stockholm/1-nordiska.jpg",
       "/photos/stockholm/2-palace.jpg",
       "/photos/stockholm/3-riksdag.jpg",
@@ -52,13 +84,13 @@ const moments: Moment[] = [
     fit: "contain", // the set mixes portrait and landscape — don't crop either
     en: {
       caption: "Stockholm, Sweden",
-      date: "Winter 2026",
+      date: "March 2026",
       blurb:
         "The Nordiska museet, the Royal Palace, the Riksdag, Karl XII pointing over Kungsträdgården, and Riddarholmen glowing across the broken ice at night.",
     },
     fr: {
       caption: "Stockholm, Suède",
-      date: "Hiver 2026",
+      date: "Mars 2026",
       blurb:
         "Le Nordiska museet, le Palais royal, le Riksdag, Karl XII pointant au-dessus de Kungsträdgården, et Riddarholmen illuminé sur la glace brisée, la nuit.",
     },
@@ -191,7 +223,7 @@ function MomentCarousel({
           onPointerMove={onMove}
           onPointerUp={onUp}
           onPointerCancel={onUp}
-          className={`relative overflow-hidden rounded-sm border border-white/15 bg-[#081a17] shadow-2xl shadow-black/50 select-none ${n > 1 ? "cursor-grab active:cursor-grabbing" : ""}`}
+          className={`relative overflow-hidden rounded-sm border border-white/15 bg-[#08181a] shadow-2xl shadow-black/50 select-none ${n > 1 ? "cursor-grab active:cursor-grabbing" : ""}`}
           style={{ touchAction: "pan-y", aspectRatio: aspect }}
           role="group"
           aria-label={m[lang].caption}
