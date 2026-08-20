@@ -21,7 +21,7 @@ const copy = {
     title: "Résumé",
     summaryHead: "Summary",
     summary:
-      "Data Science & Computer Science student at the University of Pittsburgh (French minor, GPA 3.76, graduating Spring 2027). Spent Spring 2026 on exchange at ENSEA in France; currently interning at BNY. Focused on machine learning, systems, and data engineering — aiming toward graduate study and AI research.",
+      "Data Science & Computer Science student at the University of Pittsburgh (French minor, GPA 3.76, graduating Spring 2027). Spent Spring 2026 on exchange at ENSEA in France; two summers engineering at BNY. Focused on machine learning, systems, and data engineering — aiming toward graduate study and AI research.",
     expHead: "Experience",
     projHead: "Selected Projects",
     eduHead: "Education",
@@ -47,7 +47,7 @@ const copy = {
     title: "CV",
     summaryHead: "Résumé",
     summary:
-      "Étudiant en science des données et informatique à l'Université de Pittsburgh (mineure en français, moyenne 3,76, diplôme prévu au printemps 2027). Semestre d'échange à l'ENSEA en France au printemps 2026 ; actuellement en stage chez BNY. Spécialisé en apprentissage automatique, systèmes et ingénierie de données — en route vers des études supérieures et la recherche en IA.",
+      "Étudiant en science des données et informatique à l'Université de Pittsburgh (mineure en français, moyenne 3,76, diplôme prévu au printemps 2027). Semestre d'échange à l'ENSEA en France au printemps 2026 ; deux étés en ingénierie chez BNY. Spécialisé en apprentissage automatique, systèmes et ingénierie de données — en route vers des études supérieures et la recherche en IA.",
     expHead: "Expérience",
     projHead: "Projets sélectionnés",
     eduHead: "Formation",

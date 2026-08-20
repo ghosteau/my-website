@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useLang } from "./components/lang";
 import { SiteNav } from "./components/nav";
+import { ConnectionsGraph } from "./components/graph";
 import {
   Flag,
   PixelGhost,
@@ -151,7 +152,7 @@ export default function Home() {
     const paint = () => {
       raf = 0;
       if (spotlightRef.current)
-        spotlightRef.current.style.background = `radial-gradient(600px circle at ${lx}px ${ly}px, rgba(45,212,191,0.10), transparent 70%)`;
+        spotlightRef.current.style.background = `radial-gradient(600px circle at ${lx}px ${ly}px, rgba(40,174,196,0.13), transparent 70%)`;
     };
     const onMouse = (e: MouseEvent) => {
       lx = e.clientX; ly = e.clientY;
@@ -359,30 +360,41 @@ export default function Home() {
           </FadeIn>
         </div>
 
-        <FadeIn delay={80} className="mt-20">
-          <p className="font-mono text-white/40 text-xs tracking-[0.3em] uppercase mb-5">{t.coursework}</p>
-          <div className="flex flex-wrap gap-2">
-            {courses.map((c) => (
-              <span key={c.en} className="px-3 py-1.5 border border-white/[0.07] bg-white/[0.02] rounded-sm text-xs font-mono text-white/60 hover:border-turq-500/40 hover:text-turq-300 hover:bg-turq-500/5 transition-all duration-200 cursor-default">
-                {c[lang]}
-              </span>
-            ))}
-          </div>
-        </FadeIn>
+        {/* coursework and games sit side by side — both answer "what is he into",
+            so pairing them keeps the games from floating in empty space */}
+        <div className="grid md:grid-cols-[1fr_auto] gap-12 md:gap-16 mt-20 items-start">
+          <FadeIn delay={80}>
+            <p className="font-mono text-white/40 text-xs tracking-[0.3em] uppercase mb-5">{t.coursework}</p>
+            <div className="flex flex-wrap gap-2">
+              {courses.map((c) => (
+                <span key={c.en} className="px-3 py-1.5 border border-white/[0.07] bg-white/[0.02] rounded-sm text-xs font-mono text-white/60 hover:border-turq-500/40 hover:text-turq-300 hover:bg-turq-500/5 transition-all duration-200 cursor-default">
+                  {c[lang]}
+                </span>
+              ))}
+            </div>
+          </FadeIn>
 
-        {/* games — original pixel homages, hover for the title */}
-        <FadeIn delay={120} className="mt-16">
-          <div className="flex items-center gap-3 mb-7">
-            <span title="me, geared up" className="cursor-default">
-              <PixelMannyHelm className="w-8 h-auto animate-bob" />
-            </span>
-            <p className="font-mono text-white/40 text-xs tracking-[0.3em] uppercase">{t.gamesHeading}</p>
-          </div>
-          <div className="flex flex-wrap items-end gap-7 sm:gap-9">
-            {games.map((g) => (
-              <GameSprite key={g.key} kind={g.key} label={g.label} className="w-9" />
-            ))}
-          </div>
+          {/* games — original pixel homages, hover for the title */}
+          <FadeIn delay={120}>
+            <div className="flex items-center gap-3 mb-5">
+              <span title="me, geared up" className="cursor-default">
+                <PixelMannyHelm className="w-7 h-auto animate-bob" />
+              </span>
+              <p className="font-mono text-white/40 text-xs tracking-[0.3em] uppercase">{t.gamesHeading}</p>
+            </div>
+            <div className="grid grid-cols-6 md:grid-cols-3 gap-x-6 gap-y-8 justify-items-center items-center">
+              {games.map((g) => (
+                <GameSprite key={g.key} kind={g.key} label={g.label} className="w-9" />
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+
+        {/* the interdisciplinary claim in aboutP2, drawn as an actual graph */}
+        <FadeIn delay={80} className="mt-20">
+          <p className="font-mono text-white/40 text-xs tracking-[0.3em] uppercase mb-2">{t.connectionsHeading}</p>
+          <p className="text-white/50 text-sm font-light mb-6 max-w-xl">{t.connectionsBlurb}</p>
+          <ConnectionsGraph lang={lang} />
         </FadeIn>
       </section>
 

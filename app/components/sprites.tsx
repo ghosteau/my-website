@@ -123,10 +123,21 @@ export function Flag({
 export function FlagIcon({
   kind, className = "", title,
 }: {
-  kind: "usa" | "france" | "quebec";
+  kind: "usa" | "france" | "quebec" | "sweden";
   className?: string;
   title?: string;
 }) {
+  if (kind === "sweden") {
+    // Nordic cross — offset toward the hoist, as on the real flag
+    return (
+      <svg viewBox="0 0 16 10" className={className} role="img" aria-label={title}>
+        {title ? <title>{title}</title> : null}
+        <rect width="16" height="10" fill="#005293" />
+        <rect y="4" width="16" height="2" fill="#FECB00" />
+        <rect x="5" width="2" height="10" fill="#FECB00" />
+      </svg>
+    );
+  }
   if (kind === "france") {
     return (
       <svg viewBox="0 0 3 2" className={className} role="img" aria-label={title}>
@@ -181,7 +192,7 @@ export function FlagIcon({
    slab, and a suspension bridge — with a few gold-lit windows. Black & gold
    is Pittsburgh's palette in every season; no logos required. */
 export function PixelSkyline({ className = "" }: { className?: string }) {
-  const B = "#0b2f29"; // silhouette
+  const B = "#0b2b2f"; // silhouette
   const G = "#f2c14e"; // window gold
   const MID = 240; // horizontal centre of the 480-wide viewBox
   const windows: { x: number; y: number; delay?: string }[] = [
@@ -199,7 +210,7 @@ export function PixelSkyline({ className = "" }: { className?: string }) {
       <rect x="80" y="48" width="14" height="24" fill={B} />
       {/* steel slab (tallest) */}
       <rect x="98" y="20" width="34" height="52" fill={B} />
-      <rect x="98" y="20" width="34" height="3" fill="#123f38" />
+      <rect x="98" y="20" width="34" height="3" fill="#123a3f" />
       {/* bridge's left abutment building — mirrors the one on the right */}
       <rect x="136" y="44" width="24" height="28" fill={B} />
       {/* suspension bridge — every part mirrors about MID (240 = viewBox center) */}
@@ -270,8 +281,8 @@ const GHOST_GRID = [
   " g    g   g ",
 ];
 const GHOST_PALETTE: Palette = {
-  o: "#04241f", g: "#5eead4", s: "#14b8a6",
-  w: "#ecfeff", e: "#04241f", m: "#04241f",
+  o: "#042024", g: "#4cd7e8", s: "#11879c",
+  w: "#e2f6ff", e: "#042024", m: "#042024",
 };
 export function PixelGhost({ className = "" }: { className?: string }) {
   return <GridSvg grid={GHOST_GRID} palette={GHOST_PALETTE} className={className} title="ghosteau" />;
@@ -291,8 +302,8 @@ const SLIME_GRID = [
   "oooooooooooooooo",
 ];
 const SLIME_PALETTE: Palette = {
-  o: "#04241f", b: "#14b8a6", l: "#5eead4", d: "#0d9488",
-  w: "#ecfeff", p: "#04241f", m: "#0a3d36",
+  o: "#042024", b: "#11879c", l: "#4cd7e8", d: "#0a6173",
+  w: "#e2f6ff", p: "#042024", m: "#0a363d",
 };
 export function PixelSlime({ className = "" }: { className?: string }) {
   return <GridSvg grid={SLIME_GRID} palette={SLIME_PALETTE} className={className} title="slime" />;
@@ -348,7 +359,7 @@ const POTION_GRID = [
   "obbbbbbo",
   " oooooo ",
 ];
-const POTION_PALETTE: Palette = { o: "#0a3d36", b: "#14b8a6", h: "#5eead4" };
+const POTION_PALETTE: Palette = { o: "#0a363d", b: "#11879c", h: "#4cd7e8" };
 export function PixelPotion({ className = "" }: { className?: string }) {
   return <GridSvg grid={POTION_GRID} palette={POTION_PALETTE} className={className} title="potion" />;
 }
@@ -364,7 +375,7 @@ const SPARKLE_GRID = [
   "    o    ",
   "    o    ",
 ];
-const SPARKLE_PALETTE: Palette = { o: "#a5f3ec" };
+const SPARKLE_PALETTE: Palette = { o: "#93e0f1" };
 export function PixelSparkle({ className = "" }: { className?: string }) {
   return <GridSvg grid={SPARKLE_GRID} palette={SPARKLE_PALETTE} className={className} title="sparkle" />;
 }

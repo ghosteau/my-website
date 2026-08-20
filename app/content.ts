@@ -22,13 +22,13 @@ export const experience: {
   fr: { role: string; bullets: string[] };
 }[] = [
   {
-    period: "May 2025 – Aug 2025 · May 2026 – Present",
+    period: "May 2025 – Aug 2025 · May 2026 – Aug 2026",
     org: "Bank of New York (BNY)",
     accent: "teal",
     en: {
       role: "Engineering Intern",
       bullets: [
-        "Leading a team of interns to design and build an SLA monitoring dashboard covering thousands of daily extract/feed file deliveries, backed by a configurable SLA rules engine and API — chosen to head the effort based on system expertise and team tenure.",
+        "Led a team of interns to design and build an SLA monitoring dashboard covering thousands of daily extract/feed file deliveries, backed by a configurable SLA rules engine and API — chosen to head the effort based on system expertise and team tenure.",
         "Engineered a data reprocessing algorithm via Spring and Kafka to automatically resolve failed enrichment pipeline messages, increasing system reliability.",
         "Optimized reconciliation workflows — $1.7M in cost savings and an 8x reduction in processing time.",
         "Migrated legacy data zones into a strategic architecture, improving cross-functional access for risk analysis teams.",
@@ -37,7 +37,7 @@ export const experience: {
     fr: {
       role: "Stagiaire ingénieur",
       bullets: [
-        "Direction d'une équipe de stagiaires pour concevoir et bâtir un tableau de bord de suivi des SLA couvrant des milliers de livraisons de fichiers quotidiennes, appuyé par un moteur de règles SLA configurable et une API — choisi pour piloter l'effort grâce à mon expertise du système et mon ancienneté dans l'équipe.",
+        "Direction d'une équipe de stagiaires pour concevoir et bâtir un tableau de bord de suivi des SLA couvrant des milliers de livraisons de fichiers quotidiennes, appuyé par un moteur de règles SLA configurable et une API — choisi pour piloter cet effort grâce à mon expertise du système et à mon ancienneté dans l'équipe.",
         "Développement d'un algorithme de retraitement de données avec Spring et Kafka pour résoudre automatiquement les messages d'enrichissement en échec, augmentant la fiabilité du système.",
         "Optimisation des flux de réconciliation — 1,7 M$ d'économies et temps de traitement divisé par 8.",
         "Migration de zones de données héritées vers une architecture stratégique, améliorant l'accès inter-équipes pour l'analyse de risque.",
@@ -205,7 +205,7 @@ export const research: {
 export const ui = {
   en: {
     nav: { about: "about", experience: "experience", projects: "projects", research: "research", music: "music", resume: "résumé", blog: "blog", photos: "photos" },
-    heroKicker: "Pittsburgh, PA · Pitt '27 · EN / FR",
+    heroKicker: "Pittsburgh, PA · Pitt '27",
     heroRoles: [
       "aspiring AI researcher",
       "data & systems engineer",
@@ -225,11 +225,11 @@ export const ui = {
     aboutHeadingTop: "Researcher by instinct,",
     aboutHeadingBottom: "generalist by design.",
     aboutP1:
-      "I'm Manny — a Data Science & Computer Science student at the University of Pittsburgh, with a minor in French. I spent last semester on exchange at ENSEA in Cergy, France, and I'm back in Pittsburgh now, currently interning at BNY. My work sits at the intersection of machine learning, systems programming, and data engineering — I'm drawn to problems that are both mathematically interesting and practically hard.",
+      "I'm Manny — a Data Science & Computer Science student at the University of Pittsburgh, with a minor in French. I spent last semester on exchange at ENSEA in Cergy, France, and I'm back in Pittsburgh now, having just wrapped a second summer engineering at BNY. My work sits at the intersection of machine learning, systems programming, and data engineering — I'm drawn to problems that are both mathematically interesting and practically hard.",
     aboutP2:
       "Outside of engineering I read research papers, philosophy and history, think seriously about physics and mathematics for their own sake, grind LeetCode for the pure joy of a clean algorithm, write poetry, and make music. I find the connections between fields as interesting as the fields themselves.",
     facts: [
-      { label: "Currently", value: "Back at Pitt, Pittsburgh PA · interning at BNY" },
+      { label: "Currently", value: "Back at Pitt, Pittsburgh PA · Pitt '27" },
       { label: "Studying", value: "Data Science + Computer Science @ Pitt · French minor" },
       { label: "GPA", value: "3.76 · Dean's List" },
       { label: "Research", value: "NLP, Computer Vision, Deep Learning" },
@@ -242,6 +242,9 @@ export const ui = {
     ],
     rootsLabel: "Ties",
     coursework: "coursework",
+    connectionsHeading: "how it connects",
+    connectionsBlurb:
+      "The fields I care about aren't separate tracks — they keep borrowing from each other. Here's the shape of it.",
     sectionExp: "02 — experience",
     sectionProj: "03 — projects",
     viewAll: "view all on github →",
@@ -260,7 +263,7 @@ export const ui = {
   },
   fr: {
     nav: { about: "à propos", experience: "expérience", projects: "projets", research: "recherche", music: "musique", resume: "CV", blog: "blog", photos: "photos" },
-    heroKicker: "Pittsburgh, PA · Pitt '27 · EN / FR",
+    heroKicker: "Pittsburgh, PA · Pitt '27",
     heroRoles: [
       "chercheur en IA en devenir",
       "ingénieur données & systèmes",
@@ -280,11 +283,11 @@ export const ui = {
     aboutHeadingTop: "Chercheur par instinct,",
     aboutHeadingBottom: "généraliste par choix.",
     aboutP1:
-      "Je m'appelle Manny — étudiant en science des données et informatique à l'Université de Pittsburgh, avec une mineure en français. J'ai passé le semestre dernier en échange à l'ENSEA de Cergy, en France, et je suis de retour à Pittsburgh, actuellement en stage chez BNY. Mon travail se situe à l'intersection de l'apprentissage automatique, de la programmation système et de l'ingénierie de données — j'aime les problèmes à la fois mathématiquement intéressants et concrètement difficiles.",
+      "Je m'appelle Manny — étudiant en science des données et informatique à l'Université de Pittsburgh, avec une mineure en français. J'ai passé le semestre dernier en échange à l'ENSEA de Cergy, en France, et je suis de retour à Pittsburgh, après un deuxième été en ingénierie chez BNY. Mon travail se situe à l'intersection de l'apprentissage automatique, de la programmation système et de l'ingénierie de données — j'aime les problèmes à la fois mathématiquement intéressants et concrètement difficiles.",
     aboutP2:
       "En dehors de l'ingénierie, je lis des articles de recherche, de la philosophie et de l'histoire, je réfléchis sérieusement à la physique et aux mathématiques pour elles-mêmes, je m'entraîne sur LeetCode pour le pur plaisir d'un algorithme élégant, j'écris de la poésie et je fais de la musique. Les liens entre les domaines m'intéressent autant que les domaines eux-mêmes.",
     facts: [
-      { label: "Actuellement", value: "De retour à Pitt, Pittsburgh PA · stage chez BNY" },
+      { label: "Actuellement", value: "De retour à Pitt, Pittsburgh PA · promo 2027" },
       { label: "Études", value: "Science des données + Informatique @ Pitt · mineure en français" },
       { label: "Moyenne", value: "3,76 · Dean's List" },
       { label: "Recherche", value: "TAL, vision par ordinateur, apprentissage profond" },
@@ -297,6 +300,9 @@ export const ui = {
     ],
     rootsLabel: "Attaches",
     coursework: "cours suivis",
+    connectionsHeading: "les liens",
+    connectionsBlurb:
+      "Les domaines qui me tiennent à cœur ne sont pas des voies séparées — ils s'empruntent constamment les uns aux autres. Voici la forme que ça prend.",
     sectionExp: "02 — expérience",
     sectionProj: "03 — projets",
     viewAll: "voir tout sur github →",

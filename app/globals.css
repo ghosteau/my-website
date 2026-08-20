@@ -4,17 +4,19 @@
   --font-sans: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
 
-  /* turquoise core palette — deep, not too light */
-  --color-turq-50: #ecfeff;
-  --color-turq-100: #cffafe;
-  --color-turq-200: #a5f3ec;
-  --color-turq-300: #5eead4;
-  --color-turq-400: #2dd4bf;
-  --color-turq-500: #14b8a6;
-  --color-turq-600: #0d9488;
-  --color-turq-700: #0f766e;
-  --color-turq-800: #115e59;
-  --color-turq-900: #134e4a;
+  /* Turquoise core palette — deeper and bluer than the stock teal ramp:
+     hue pushed ~16° toward cyan, lightness pulled down. The text-bearing
+     steps (300/400) darken less so they stay ≥7:1 on the page background. */
+  --color-turq-50: #e2f6ff;
+  --color-turq-100: #c5eafe;
+  --color-turq-200: #93e0f1;
+  --color-turq-300: #4cd7e8;
+  --color-turq-400: #28aec4;
+  --color-turq-500: #11879c;
+  --color-turq-600: #0a6173;
+  --color-turq-700: #0b4856;
+  --color-turq-800: #0c3540;
+  --color-turq-900: #0c2a31;
 }
 
 * {
@@ -161,20 +163,20 @@ body {
 .pixelated { image-rendering: pixelated; image-rendering: crisp-edges; }
 
 /* selection */
-::selection { background: rgba(45,212,191,0.25); color: #fff; }
+::selection { background: rgba(40,174,196,0.30); color: #fff; }
 
 /* scrollbar */
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: #04100f; }
-::-webkit-scrollbar-thumb { background: #0f766e; border-radius: 5px; }
-::-webkit-scrollbar-thumb:hover { background: #14b8a6; }
+::-webkit-scrollbar-thumb { background: #0b4856; border-radius: 5px; }
+::-webkit-scrollbar-thumb:hover { background: #11879c; }
 
 /* gentle entrance when navigating between pages */
 .page-enter { animation: fadeUp 0.55s cubic-bezier(0.16, 1, 0.3, 1) both; }
 
 /* visible focus for keyboard users */
 a:focus-visible, button:focus-visible {
-  outline: 2px solid rgba(45, 212, 191, 0.7);
+  outline: 2px solid rgba(76, 215, 232, 0.75);
   outline-offset: 3px;
   border-radius: 2px;
 }
