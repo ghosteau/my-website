@@ -44,7 +44,7 @@ export function useLang(): [Lang, (l: Lang) => void, () => void] {
   return [lang, setLang, toggle];
 }
 
-/** Small EN / FR pill toggle. */
+/** Small EN / FR control. Language is adopted after hydration to keep SSR stable. */
 export function LangToggle({
   lang,
   toggle,
@@ -57,8 +57,9 @@ export function LangToggle({
   return (
     <button
       onClick={toggle}
-      aria-label="Toggle language"
-      className={`group relative font-mono text-xs tracking-widest uppercase border border-turq-500/30 rounded-sm px-2 py-1 flex items-center gap-1 hover:border-turq-400/70 hover:bg-turq-500/10 transition-all duration-200 ${className}`}
+      aria-label={lang === "en" ? "Passer au français" : "Switch to English"}
+      title={lang === "en" ? "Passer au français" : "Switch to English"}
+      className={`group relative flex items-center gap-1 rounded-full border border-turq-400/20 bg-turq-400/[0.04] px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.13em] transition-all duration-200 hover:border-turq-300/55 hover:bg-turq-400/[0.09] ${className}`}
     >
       <span className={lang === "en" ? "text-turq-300" : "text-white/30"}>EN</span>
       <span className="text-white/15">/</span>

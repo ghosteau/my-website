@@ -1,41 +1,38 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useLang } from "../components/lang";
+import { useLang, type Lang } from "../components/lang";
 import { SiteNav } from "../components/nav";
-import { FlagIcon, PixelSparkle } from "../components/sprites";
+import { PixelGhost, PixelSparkle } from "../components/sprites";
 
 const copy = {
   en: {
     kicker: "photos",
     title: "Moments",
+    intro: "A visual journal of places I have lived, places I keep returning to, and trips that stayed with me long after I came home.",
     more: "More moments on the way.",
-    photoAlt: "Québec Parliament trip photo",
-    hint: "tap or swipe the cards",
+    hint: "Swipe, use the arrows, or choose a frame",
+    choose: "Choose a place",
   },
   fr: {
     kicker: "photos",
     title: "Moments",
-    more: "D'autres moments arrivent bientôt.",
-    photoAlt: "Photo du voyage au parlement du Québec",
-    hint: "touchez ou balayez les cartes",
+    intro: "Un journal visuel des lieux où j’ai vécu, de ceux où je reviens et des voyages qui me sont restés longtemps après le retour.",
+    more: "D’autres moments arrivent bientôt.",
+    hint: "Balayez, utilisez les flèches ou choisissez une image",
+    choose: "Choisir un lieu",
   },
 };
 
-/* one "moment" = a set of photos sharing a caption, date, blurb, and tags.
-   emoji = shown on devices that render the glyph; flag = pixel fallback
-   (Windows renders country-flag emoji as letter codes, so those get a pixel flag). */
-type FlagKind = "usa" | "france" | "quebec" | "sweden";
 type Moment = {
   images: string[];
   photoAlt: string;
-  /** frame shape — default 3/4. Mixed portrait+landscape sets read better square. */
   aspect?: string;
-  /** "contain" letterboxes instead of cropping; use it when a set mixes orientations. */
   fit?: "cover" | "contain";
   en: { caption: string; date: string; blurb: string };
   fr: { caption: string; date: string; blurb: string };
-  tags: { key: string; emoji: string; flag: FlagKind | null; en: string; fr: string }[];
+  tags: { key: string; emoji: string; en: string; fr: string }[];
 };
 
 const moments: Moment[] = [
@@ -49,26 +46,58 @@ const moments: Moment[] = [
       "/photos/paris/6-montaigne.jpg",
       "/photos/paris/7-eiffel.jpg",
     ],
-    photoAlt: "Paris, France photo",
-    aspect: "1/1",
+    photoAlt: "Paris and Île-de-France",
+    aspect: "1 / 1",
     fit: "contain",
     en: {
-      caption: "Paris, France",
-      date: "January – May 2026",
+      caption: "Paris & Île-de-France",
+      date: "January — May 2026",
       blurb:
-        "Home for five months while I studied at ENSEA. Concorde, the Jardin du Luxembourg, the generals of the Revolution inside the Panthéon, Les Invalides under a pink sky, Sacré-Cœur, and the Eiffel Tower over the Seine at dusk. Somewhere in there: Avenue Montaigne — named for the writer I quote up top.",
+        "For five months, Île-de-France became ordinary life. Cergy was home base; Paris was the wider orbit—the RER to ENSEA, long walks after class, bad directions, better conversations, and a growing list of places I wanted to understand rather than merely photograph.",
     },
     fr: {
-      caption: "Paris, France",
+      caption: "Paris & Île-de-France",
       date: "De janvier à mai 2026",
       blurb:
-        "Cinq mois chez moi, pendant mes études à l'ENSEA. La Concorde, le jardin du Luxembourg, les généraux de la Révolution au Panthéon, les Invalides sous un ciel rose, le Sacré-Cœur, et la tour Eiffel au-dessus de la Seine au crépuscule. Et quelque part là-dedans : l'avenue Montaigne — du nom de l'écrivain que je cite en haut de la page.",
+        "Pendant cinq mois, l’Île-de-France est devenue mon quotidien. Cergy était mon point d’ancrage ; Paris, mon horizon plus large—le RER vers l’ENSEA, les longues marches après les cours, de mauvaises directions, de meilleures conversations et une liste toujours plus longue de lieux à comprendre plutôt qu’à simplement photographier.",
     },
     tags: [
-      { key: "france", emoji: "🇫🇷", flag: "france", en: "France", fr: "France" },
-      { key: "arch", emoji: "🏛️", flag: null, en: "Architecture", fr: "Architecture" },
-      { key: "history", emoji: "📜", flag: null, en: "History", fr: "Histoire" },
-      { key: "montaigne", emoji: "✍️", flag: null, en: "Montaigne", fr: "Montaigne" },
+      { key: "france", emoji: "🇫🇷", en: "France", fr: "France" },
+      { key: "architecture", emoji: "🏛️", en: "Architecture", fr: "Architecture" },
+      { key: "history", emoji: "📜", en: "History", fr: "Histoire" },
+      { key: "montaigne", emoji: "✒️", en: "Montaigne", fr: "Montaigne" },
+    ],
+  },
+  {
+    images: [
+      "/photos/south-france/1-saint-raphael-bonaparte.jpg",
+      "/photos/south-france/2-saint-raphael-waterfront.jpg",
+      "/photos/south-france/3-calanques-vista.jpg",
+      "/photos/south-france/4-calanques-cove.jpg",
+      "/photos/south-france/5-avignon-palais.jpg",
+      "/photos/south-france/6-villefranche-sur-mer.jpg",
+      "/photos/south-france/7-nice-overlook.jpg",
+    ],
+    photoAlt: "Grand Tour du Sud in France",
+    aspect: "1 / 1",
+    fit: "contain",
+    en: {
+      caption: "Grand Tour du Sud",
+      date: "Spring 2026",
+      blurb:
+        "From Bonaparte’s landing marker in Saint-Raphaël to the heights of the Calanques, the Palais des Papes in Avignon, and the coast around Villefranche-sur-Mer and Nice. History was everywhere, but so was the light—which is probably why I came home with far too many photographs.",
+    },
+    fr: {
+      caption: "Grand Tour du Sud",
+      date: "Printemps 2026",
+      blurb:
+        "Du monument rappelant le débarquement de Bonaparte à Saint-Raphaël jusqu’aux hauteurs des Calanques, au Palais des Papes d’Avignon et à la côte de Villefranche-sur-Mer et de Nice. L’histoire était partout, mais la lumière aussi—ce qui explique sans doute le nombre déraisonnable de photos rapportées.",
+    },
+    tags: [
+      { key: "france", emoji: "🇫🇷", en: "France", fr: "France" },
+      { key: "mediterranean", emoji: "🌊", en: "Mediterranean", fr: "Méditerranée" },
+      { key: "history", emoji: "📜", en: "History", fr: "Histoire" },
+      { key: "grand-tour", emoji: "🧭", en: "Grand Tour", fr: "Grand Tour" },
     ],
   },
   {
@@ -79,26 +108,26 @@ const moments: Moment[] = [
       "/photos/stockholm/4-karl-xii.jpg",
       "/photos/stockholm/5-night-ice.jpg",
     ],
-    photoAlt: "Stockholm, Sweden trip photo",
-    aspect: "1/1",
-    fit: "contain", // the set mixes portrait and landscape — don't crop either
+    photoAlt: "Stockholm, Sweden",
+    aspect: "1 / 1",
+    fit: "contain",
     en: {
       caption: "Stockholm, Sweden",
       date: "March 2026",
       blurb:
-        "The Nordiska museet, the Royal Palace, the Riksdag, Karl XII pointing over Kungsträdgården, and Riddarholmen glowing across the broken ice at night.",
+        "A brief March trip, not a place I lived—and perhaps that is why it remains so sharply framed: the Nordiska museet, the Royal Palace, the Riksdag, Karl XII above Kungsträdgården, and Riddarholmen glowing across broken ice at night.",
     },
     fr: {
       caption: "Stockholm, Suède",
       date: "Mars 2026",
       blurb:
-        "Le Nordiska museet, le Palais royal, le Riksdag, Karl XII pointant au-dessus de Kungsträdgården, et Riddarholmen illuminé sur la glace brisée, la nuit.",
+        "Un bref voyage en mars, et non un lieu où j’ai vécu—ce qui explique peut-être la netteté du souvenir : le Nordiska museet, le Palais royal, le Riksdag, Karl XII au-dessus de Kungsträdgården et Riddarholmen illuminé sur la glace brisée.",
     },
     tags: [
-      { key: "sweden", emoji: "🇸🇪", flag: "sweden", en: "Sweden", fr: "Suède" },
-      { key: "europe", emoji: "🏛️", flag: null, en: "Architecture", fr: "Architecture" },
-      { key: "history", emoji: "📜", flag: null, en: "History", fr: "Histoire" },
-      { key: "winter", emoji: "❄️", flag: null, en: "Winter", fr: "Hiver" },
+      { key: "sweden", emoji: "🇸🇪", en: "Sweden", fr: "Suède" },
+      { key: "architecture", emoji: "🏛️", en: "Architecture", fr: "Architecture" },
+      { key: "history", emoji: "📜", en: "History", fr: "Histoire" },
+      { key: "winter", emoji: "❄️", en: "Winter", fr: "Hiver" },
     ],
   },
   {
@@ -107,201 +136,229 @@ const moments: Moment[] = [
       "/photos/quebec/parliament-2.jpg",
       "/photos/quebec/parliament-3.jpg",
       "/photos/quebec/parliament-4.jpg",
+      "/photos/quebec/quebec-city-overlook.jpg",
     ],
-    photoAlt: "Québec Parliament trip photo",
+    photoAlt: "Québec City",
     en: {
-      caption: "My visit to the Québec Parliament!",
+      caption: "Québec City",
       date: "May 27, 2026",
-      blurb: "Stained glass, the National Assembly chamber, and the building that keeps Québec's story alive.",
+      blurb: "I arrived curious about the Parliament and left thinking about language, memory, and the particular way Québec tells its own story. The city makes those questions tangible: political history, French in public life, and a culture that feels entirely its own.",
     },
     fr: {
-      caption: "Ma visite au parlement du Québec !",
+      caption: "Ville de Québec",
       date: "Le 27 mai 2026",
-      blurb: "Des vitraux, la salle de l'Assemblée nationale, et l'édifice qui fait vivre l'histoire du Québec.",
+      blurb: "Je suis entré au Parlement curieux de l’institution et j’en suis ressorti en réfléchissant à la langue, à la mémoire et à la manière singulière dont le Québec raconte sa propre histoire. La ville rend ces questions concrètes : l’histoire politique, le français dans la vie publique et une culture pleinement distincte.",
     },
     tags: [
-      { key: "quebec", emoji: "⚜️", flag: null, en: "Québec", fr: "Québec" },
-      { key: "canada", emoji: "🍁", flag: null, en: "Canada", fr: "Canada" },
-      { key: "french", emoji: "🇫🇷", flag: "france", en: "French", fr: "Français" },
-      { key: "gov", emoji: "🏛️", flag: null, en: "Government", fr: "Gouvernement" },
+      { key: "quebec", emoji: "⚜️", en: "Québec", fr: "Québec" },
+      { key: "canada", emoji: "🍁", en: "Canada", fr: "Canada" },
+      { key: "french", emoji: "🗣️", en: "French", fr: "Français" },
+      { key: "government", emoji: "🏛️", en: "Government", fr: "Gouvernement" },
+    ],
+  },
+  {
+    images: [
+      "/photos/stowe/1-summit-flag.jpg",
+      "/photos/stowe/2-ski-selfie.jpg",
+      "/photos/stowe/3-fresh-tracks.jpg",
+    ],
+    photoAlt: "Skiing in Stowe, Vermont",
+    aspect: "3 / 4",
+    fit: "contain",
+    en: {
+      caption: "Stowe, Vermont",
+      date: "January 2025",
+      blurb: "Bluebird cold on Mount Mansfield: ice on the rails, fresh tracks, and the American flag holding its ground above the clouds. Skiing is one of the rare things that empties my head completely—there is only the mountain and the next turn.",
+    },
+    fr: {
+      caption: "Stowe, Vermont",
+      date: "Janvier 2025",
+      blurb: "Un froid limpide sur le mont Mansfield : du givre sur les rampes, des traces fraîches et le drapeau américain au-dessus des nuages. Le ski est l’une des rares activités qui vide complètement l’esprit—il ne reste que la montagne et le prochain virage.",
+    },
+    tags: [
+      { key: "usa", emoji: "🇺🇸", en: "United States", fr: "États-Unis" },
+      { key: "skiing", emoji: "⛷️", en: "Skiing", fr: "Ski" },
+      { key: "vermont", emoji: "🏔️", en: "Vermont", fr: "Vermont" },
+      { key: "winter", emoji: "❄️", en: "Winter", fr: "Hiver" },
     ],
   },
   {
     images: ["/photos/dc/rochambeau-1.jpg", "/photos/dc/capitol.jpg"],
-    photoAlt: "Washington, D.C. trip photo",
+    photoAlt: "Washington, D.C.",
     en: {
       caption: "Washington, D.C.",
       date: "November 17, 2025",
-      blurb: "At the Rochambeau Memorial — the French general who helped America win its independence — and the U.S. Capitol. A fitting stop for someone with ties on both sides of the Atlantic (and yes, repping Pitt).",
+      blurb:
+        "At the Rochambeau Memorial—the French general who helped America win its independence—and the U.S. Capitol. A fitting stop for someone with ties on both sides of the Atlantic (and yes, repping Pitt).",
     },
     fr: {
       caption: "Washington, D.C.",
       date: "Le 17 novembre 2025",
-      blurb: "Au mémorial de Rochambeau — le général français qui a aidé l'Amérique à gagner son indépendance — et au Capitole. Un bel arrêt pour quelqu'un avec des attaches des deux côtés de l'Atlantique (et oui, aux couleurs de Pitt).",
+      blurb:
+        "Au mémorial de Rochambeau—le général français qui a aidé l’Amérique à gagner son indépendance—et au Capitole. Un bel arrêt pour quelqu’un avec des attaches des deux côtés de l’Atlantique (et oui, aux couleurs de Pitt).",
     },
     tags: [
-      { key: "usa", emoji: "🇺🇸", flag: "usa", en: "United States", fr: "États-Unis" },
-      { key: "french", emoji: "🇫🇷", flag: "france", en: "French", fr: "Français" },
-      { key: "history", emoji: "📜", flag: null, en: "History", fr: "Histoire" },
-      { key: "pitt", emoji: "🎓", flag: null, en: "Pitt", fr: "Pitt" },
+      { key: "usa", emoji: "🇺🇸", en: "United States", fr: "États-Unis" },
+      { key: "franco-american", emoji: "🤝", en: "Franco-American history", fr: "Histoire franco-américaine" },
+      { key: "history", emoji: "📜", en: "History", fr: "Histoire" },
+      { key: "pitt", emoji: "💙", en: "Pitt", fr: "Pitt" },
     ],
   },
 ];
 
-/* One track, one axis. The whole strip slides by exactly one frame per step —
-   no stacking, rotation, or cross-fades, which is what made the old deck feel
-   fussy. Drag adds a live pixel offset on top of the frame position. */
-const SLIDE = "transform 0.5s cubic-bezier(0.22, 0.9, 0.24, 1)";
-
-function MomentCarousel({
-  moment, lang, hint,
+function MomentViewer({
+  moment,
+  lang,
+  hint,
 }: {
   moment: Moment;
-  lang: "en" | "fr";
+  lang: Lang;
   hint: string;
 }) {
-  const m = moment;
-  const photoAlt = m.photoAlt;
-  const n = m.images.length;
-  const aspect = m.aspect ?? "3/4";
-  const fitClass = m.fit === "contain" ? "object-contain" : "object-cover";
-  const [idx, setIdx] = useState(0);
-  const [dragX, setDragX] = useState(0);
-  const [dragging, setDragging] = useState(false);
-  const frameRef = useRef<HTMLDivElement>(null);
+  const count = moment.images.length;
+  const [index, setIndex] = useState(0);
   const startX = useRef(0);
-  const startY = useRef(0);
-  const axis = useRef<"none" | "x" | "y">("none");
+  const currentX = useRef(0);
+  const isDragging = useRef(false);
+  const fitClass = moment.fit === "cover" ? "object-cover" : "object-contain";
+  const clamp = useCallback((value: number) => Math.max(0, Math.min(count - 1, value)), [count]);
+  const go = useCallback((direction: number) => setIndex((value) => clamp(value + direction)), [clamp]);
 
-  const clamp = useCallback((i: number) => Math.max(0, Math.min(n - 1, i)), [n]);
-  const go = useCallback((d: number) => {
-    setDragX(0);
-    setIdx((i) => clamp(i + d));
-  }, [clamp]);
+  useEffect(() => {
+    const neighbors = [index - 1, index + 1].filter((candidate) => candidate >= 0 && candidate < count);
+    neighbors.forEach((candidate) => {
+      const preload = new window.Image();
+      preload.src = moment.images[candidate];
+    });
+  }, [count, index, moment.images]);
 
-  const onDown = (e: React.PointerEvent) => {
-    if (n < 2) return;
-    setDragging(true);
-    startX.current = e.clientX;
-    startY.current = e.clientY;
-    axis.current = "none";
-    (e.currentTarget as HTMLElement).setPointerCapture?.(e.pointerId);
-  };
-  const onMove = (e: React.PointerEvent) => {
-    if (!dragging) return;
-    const dx = e.clientX - startX.current;
-    const dy = e.clientY - startY.current;
-    // decide once whether this gesture is a horizontal swipe or a page scroll
-    if (axis.current === "none" && Math.abs(dx) + Math.abs(dy) > 8) {
-      axis.current = Math.abs(dx) > Math.abs(dy) ? "x" : "y";
-    }
-    if (axis.current !== "x") return;
-    // resist at the ends so the strip feels bounded, not broken
-    const atEnd = (idx === 0 && dx > 0) || (idx === n - 1 && dx < 0);
-    setDragX(atEnd ? dx * 0.25 : dx);
-  };
-  const onUp = () => {
-    if (!dragging) return;
-    setDragging(false);
-    const w = frameRef.current?.offsetWidth ?? 320;
-    const threshold = Math.min(90, w * 0.22);
-    if (dragX <= -threshold) go(1);
-    else if (dragX >= threshold) go(-1);
-    else setDragX(0);
-    axis.current = "none";
+  const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (count < 2) return;
+    if ((event.target as HTMLElement).closest("button")) return;
+    isDragging.current = true;
+    startX.current = event.clientX;
+    currentX.current = event.clientX;
+    event.currentTarget.setPointerCapture?.(event.pointerId);
   };
 
-  const jumpTo = (i: number) => { setDragX(0); setIdx(clamp(i)); };
+  const onPointerUp = () => {
+    if (!isDragging.current) return;
+    isDragging.current = false;
+    const delta = currentX.current - startX.current;
+    if (delta < -48) go(1);
+    if (delta > 48) go(-1);
+  };
 
   return (
-    <div className="grid md:grid-cols-[minmax(0,400px)_1fr] gap-10 md:gap-14 items-start">
-      {/* filmstrip */}
-      <div className="pb-2">
+    <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(280px,.55fr)] lg:gap-10">
+      <div>
         <div
-          ref={frameRef}
-          onPointerDown={onDown}
-          onPointerMove={onMove}
-          onPointerUp={onUp}
-          onPointerCancel={onUp}
-          className={`relative overflow-hidden rounded-sm border border-white/15 bg-[#08181a] shadow-2xl shadow-black/50 select-none ${n > 1 ? "cursor-grab active:cursor-grabbing" : ""}`}
-          style={{ touchAction: "pan-y", aspectRatio: aspect }}
+          onPointerDown={onPointerDown}
+          onPointerMove={(event) => { currentX.current = event.clientX; }}
+          onPointerUp={onPointerUp}
+          onPointerCancel={() => { isDragging.current = false; }}
+          onKeyDown={(event) => {
+            if (event.key === "ArrowLeft") go(-1);
+            if (event.key === "ArrowRight") go(1);
+          }}
+          tabIndex={0}
+          className="photo-stage surface group relative select-none rounded-[1.5rem] focus:outline-none"
+          style={{ touchAction: "pan-y", aspectRatio: moment.aspect ?? "4 / 3" }}
           role="group"
-          aria-label={m[lang].caption}
+          aria-label={moment[lang].caption}
         >
-          <div
-            className="flex h-full"
-            style={{
-              width: `${n * 100}%`,
-              transform: `translate3d(calc(${(-idx * 100) / n}% + ${dragX}px), 0, 0)`,
-              transition: dragging ? "none" : SLIDE,
-              willChange: "transform",
-            }}
-          >
-            {m.images.map((src, i) => (
-              <div key={src} className="relative h-full" style={{ width: `${100 / n}%` }} aria-hidden={i !== idx}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={src}
-                  alt={i === idx ? `${photoAlt} ${i + 1}/${n}` : ""}
-                  loading={i === 0 ? "eager" : "lazy"}
-                  draggable={false}
-                  className={`w-full h-full ${fitClass} pointer-events-none`}
-                />
-              </div>
-            ))}
-          </div>
-          {n > 1 && (
-            <span className="absolute top-3 right-3 font-mono text-[11px] text-white/85 bg-[#04100f]/65 border border-white/10 rounded-sm px-2 py-0.5 backdrop-blur-sm pointer-events-none">
-              {idx + 1} / {n}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            key={moment.images[index]}
+            src={moment.images[index]}
+            alt={moment.photoAlt + " " + String(index + 1) + "/" + String(count)}
+            draggable={false}
+            loading="eager"
+            decoding="async"
+            className={"photo-enter h-full w-full pointer-events-none " + fitClass}
+          />
+          <div className="pointer-events-none absolute inset-x-5 bottom-5 z-10 flex items-end justify-between gap-4">
+            <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/72">
+              {moment[lang].caption}
+            </p>
+            <span
+              aria-atomic="true"
+              aria-live="polite"
+              className="rounded-full border border-white/15 bg-[#040b14]/60 px-2.5 py-1 font-mono text-[10px] text-white/70 backdrop-blur-md"
+            >
+              {String(index + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
             </span>
+          </div>
+
+          {count > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={(event) => { event.stopPropagation(); go(-1); }}
+                onPointerDown={(event) => event.stopPropagation()}
+                onPointerUp={(event) => event.stopPropagation()}
+                disabled={index === 0}
+                aria-label="Previous photo"
+                className="absolute left-4 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-[#040b14]/64 text-lg text-white/80 opacity-100 backdrop-blur-md transition-all enabled:hover:border-turq-300/50 enabled:hover:text-turq-200 disabled:hidden md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
+              >
+                ←
+              </button>
+              <button
+                type="button"
+                onClick={(event) => { event.stopPropagation(); go(1); }}
+                onPointerDown={(event) => event.stopPropagation()}
+                onPointerUp={(event) => event.stopPropagation()}
+                disabled={index === count - 1}
+                aria-label="Next photo"
+                className="absolute right-4 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-[#040b14]/64 text-lg text-white/80 opacity-100 backdrop-blur-md transition-all enabled:hover:border-turq-300/50 enabled:hover:text-turq-200 disabled:hidden md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
+              >
+                →
+              </button>
+            </>
           )}
         </div>
 
-        {/* controls under the deck — only when there's more than one photo */}
-        {n > 1 && (
-          <>
-            <div className="flex items-center justify-center gap-4 mt-8">
-              <button onClick={() => go(-1)} disabled={idx === 0} aria-label="Previous photo"
-                className="w-8 h-8 flex items-center justify-center rounded-sm border border-white/15 text-white/60 enabled:hover:text-turq-300 enabled:hover:border-turq-500/50 disabled:opacity-25 disabled:cursor-default transition-all duration-200">
-                ‹
-              </button>
-              <div className="flex gap-2">
-                {m.images.map((_, i) => (
-                  <button key={i} onClick={() => jumpTo(i)} aria-label={`Photo ${i + 1}`}
-                    className={`w-2 h-2 rounded-full transition-all duration-200 ${i === idx ? "bg-turq-300 scale-110" : "bg-white/25 hover:bg-white/50"}`} />
-                ))}
-              </div>
-              <button onClick={() => go(1)} disabled={idx === n - 1} aria-label="Next photo"
-                className="w-8 h-8 flex items-center justify-center rounded-sm border border-white/15 text-white/60 enabled:hover:text-turq-300 enabled:hover:border-turq-500/50 disabled:opacity-25 disabled:cursor-default transition-all duration-200">
-                ›
-              </button>
+        {count > 1 && (
+          <div className="mt-4">
+            <div className="flex gap-2 overflow-x-auto pb-2">
+              {moment.images.map((src, imageIndex) => (
+                <button
+                  type="button"
+                  key={src}
+                  onClick={() => setIndex(imageIndex)}
+                  aria-label={"Photo " + String(imageIndex + 1)}
+                  aria-current={imageIndex === index ? "true" : undefined}
+                  className={"relative h-14 w-20 shrink-0 overflow-hidden rounded-lg border transition-all " + (imageIndex === index ? "border-turq-300/65 opacity-100" : "border-white/10 opacity-45 hover:opacity-80")}
+                >
+                  <Image
+                    src={src}
+                    alt=""
+                    fill
+                    sizes="80px"
+                    quality={72}
+                    className="object-cover"
+                  />
+                </button>
+              ))}
             </div>
-            <p className="text-center font-mono text-white/35 text-[11px] tracking-wide mt-3">{hint}</p>
-          </>
+            <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.14em] text-white/28">{hint}</p>
+          </div>
         )}
       </div>
 
-      {/* caption panel */}
-      <div className="md:pt-4">
-        <h2 className="text-2xl font-extralight text-white/90 leading-snug">{m[lang].caption}</h2>
-        {m[lang].date && <p className="font-mono text-turq-400/85 text-xs tracking-wide mt-3">{m[lang].date}</p>}
-        <div className="flex flex-wrap gap-2 mt-6">
-          {m.tags.map((tag) => (
-            <span key={tag.key}
-              className="flex items-center gap-2 px-2.5 py-1.5 border border-white/[0.1] bg-white/[0.02] rounded-sm text-xs font-mono text-white/65">
-              {tag.flag ? (
-                <FlagIcon kind={tag.flag} title={tag[lang]} className="h-3.5 w-auto rounded-[1px]" />
-              ) : (
-                <span aria-hidden className="text-sm leading-none">{tag.emoji}</span>
-              )}
+      <aside className="surface rounded-[1.4rem] p-7 lg:sticky lg:top-24 lg:p-8">
+        <p className="eyebrow">{moment[lang].date}</p>
+        <h2 className="editorial-title mt-5 text-4xl leading-[1.02] text-white">{moment[lang].caption}</h2>
+        <p className="mt-6 text-sm font-light leading-7 text-white/58">{moment[lang].blurb}</p>
+        <div className="mt-8 flex flex-wrap gap-2 border-t border-white/[0.08] pt-6">
+          {moment.tags.map((tag) => (
+            <span key={tag.key} className="chip gap-2">
+              <span aria-hidden className="text-sm leading-none">{tag.emoji}</span>
               {tag[lang]}
             </span>
           ))}
         </div>
-        <p className="text-white/50 text-sm font-light leading-relaxed mt-8 max-w-sm">
-          {m[lang].blurb}
-        </p>
-      </div>
+      </aside>
     </div>
   );
 }
@@ -309,34 +366,47 @@ function MomentCarousel({
 export default function Photos() {
   const [lang] = useLang();
   const c = copy[lang];
+  const [activeMoment, setActiveMoment] = useState(0);
+  const active = moments[activeMoment];
 
   return (
-    <main className="min-h-screen bg-[#04100f] text-white">
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="blob blob-2 absolute top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-cyan-500/12 blur-[140px] will-change-transform" />
-        <div className="blob blob-1 absolute bottom-[5%] left-[-8%] w-[400px] h-[400px] rounded-full bg-turq-600/15 blur-[120px] will-change-transform" />
-      </div>
-
+    <main className="site-canvas text-white">
+      <div className="site-noise" aria-hidden />
       <SiteNav />
 
-      <section className="page-enter relative z-10 max-w-5xl mx-auto px-8 pt-32 pb-24">
-        <p className="font-mono text-cyan-400/80 text-xs tracking-[0.3em] uppercase mb-5">{c.kicker}</p>
-        <h1 className="text-5xl font-extralight tracking-tight mb-16">
-          <span className="bg-gradient-to-r from-turq-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">{c.title}</span>
-        </h1>
-
-        <div>
-          {moments.map((moment, i) => (
-            <div key={moment.images[0]} className={i > 0 ? "mt-20 pt-20 border-t border-white/[0.06]" : ""}>
-              <MomentCarousel moment={moment} lang={lang} hint={c.hint} />
-            </div>
-          ))}
+      <section className="content-rail page-enter relative z-10 pb-24 pt-32 md:pt-40">
+        <div className="grid items-end gap-8 border-b border-white/[0.08] pb-10 md:grid-cols-[1fr_.7fr]">
+          <div>
+            <p className="eyebrow">{c.kicker} / visual archive</p>
+            <h1 className="editorial-title mt-5 text-6xl md:text-8xl">{c.title}</h1>
+          </div>
+          <p className="max-w-xl text-sm leading-7 text-white/55 md:justify-self-end">{c.intro}</p>
         </div>
 
-        {/* more coming */}
-        <div className="flex items-center gap-3 mt-16 pl-1">
-          <PixelSparkle className="w-4 h-4 animate-twinkle opacity-70" />
-          <p className="text-white/50 text-sm font-light">{c.more}</p>
+        <div className="mt-8">
+          <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.16em] text-white/28">{c.choose}</p>
+          <div className="flex gap-2 overflow-x-auto pb-3">
+            {moments.map((moment, index) => (
+              <button
+                type="button"
+                key={moment.images[0]}
+                onClick={() => setActiveMoment(index)}
+                className={"shrink-0 rounded-full border px-4 py-2 text-xs transition-all " + (index === activeMoment ? "border-turq-300/55 bg-turq-300/[0.09] text-turq-100" : "border-white/10 text-white/45 hover:border-white/20 hover:text-white/75")}
+              >
+                {moment[lang].caption}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-9">
+          <MomentViewer key={active.images[0]} moment={active} lang={lang} hint={c.hint} />
+        </div>
+
+        <div className="mt-16 flex items-center gap-3 border-t border-white/[0.07] pt-8">
+          <PixelSparkle className="w-4 animate-twinkle opacity-70" />
+          <p className="text-sm text-white/45">{c.more}</p>
+          <PixelGhost className="ml-auto w-7 opacity-55" />
         </div>
       </section>
     </main>
