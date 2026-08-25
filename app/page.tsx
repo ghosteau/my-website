@@ -408,14 +408,15 @@ export default function Home() {
 
         <div className="relative mx-auto w-full max-w-[490px] opacity-0 [animation:fade-up_1s_.38s_forwards] lg:ml-auto">
           <div className="absolute -inset-5 -z-10 rounded-[2.2rem] border border-turq-400/[0.07]" />
-          <figure className="photo-stage surface relative aspect-[4/5] rounded-[1.7rem]">
+          <figure className="photo-stage surface relative aspect-[780/598] rounded-[1.7rem]">
             <Image
               src="/photos/me/fontainebleau-window.jpg"
               alt={lang === "en" ? "Manny looking through a window at Château de Fontainebleau" : "Manny regardant par une fenêtre au château de Fontainebleau"}
               fill
               priority
               sizes="(max-width: 1024px) 90vw, 38vw"
-              className="object-cover object-center transition-transform duration-700 hover:scale-[1.025]"
+              quality={90}
+              className="object-contain object-center"
             />
             <figcaption className="absolute inset-x-5 bottom-5 z-10 flex items-end justify-between gap-4">
               <div>
@@ -613,28 +614,28 @@ export default function Home() {
 
           <Reveal className="lg:col-span-2">
             <article className="surface grid overflow-hidden rounded-[1.4rem] md:grid-cols-[0.9fr_1fr]">
-              <div className="grid min-h-[24rem] grid-cols-[1.05fr_.95fr] gap-px bg-white/[0.07] md:min-h-full">
-                <figure className="relative overflow-hidden">
+              <div className="grid grid-cols-2 items-center gap-2 bg-[#030a12] p-2 md:gap-3 md:p-3">
+                <figure className="relative aspect-[3/4] overflow-hidden rounded-xl border border-white/[0.08]">
                   <Image
                     src="/photos/pittsburgh/steelers-snow.jpg"
                     alt={lang === "en" ? "Manny at a snowy football game in Pittsburgh" : "Manny lors d’un match de football enneigé à Pittsburgh"}
                     fill
                     sizes="(max-width: 768px) 48vw, 28vw"
                     quality={90}
-                    className="object-cover object-center"
+                    className="object-contain object-center"
                   />
                   <figcaption className="absolute inset-x-3 bottom-3 rounded-lg border border-white/12 bg-[#040b14]/70 px-3 py-2 font-mono text-[8px] uppercase tracking-[0.12em] text-white/72 backdrop-blur-md">
                     {c.personalCards.home.stadium}
                   </figcaption>
                 </figure>
-                <figure className="relative overflow-hidden">
+                <figure className="relative aspect-[3/4] overflow-hidden rounded-xl border border-white/[0.08]">
                   <Image
                     src="/photos/pittsburgh/pnc-park.jpg"
                     alt={lang === "en" ? "PNC Park and the Pittsburgh skyline" : "Le PNC Park et la silhouette de Pittsburgh"}
                     fill
                     sizes="(max-width: 768px) 42vw, 24vw"
                     quality={90}
-                    className="object-cover object-center"
+                    className="object-contain object-center"
                   />
                   <figcaption className="absolute inset-x-3 bottom-3 rounded-lg border border-white/12 bg-[#040b14]/70 px-3 py-2 font-mono text-[8px] uppercase tracking-[0.12em] text-white/72 backdrop-blur-md">
                     {c.personalCards.home.ballpark}

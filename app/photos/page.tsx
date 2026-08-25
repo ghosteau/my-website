@@ -220,7 +220,7 @@ function MomentViewer({
   const startX = useRef(0);
   const currentX = useRef(0);
   const isDragging = useRef(false);
-  const fitClass = moment.fit === "contain" ? "object-contain" : "object-cover";
+  const fitClass = moment.fit === "cover" ? "object-cover" : "object-contain";
   const clamp = useCallback((value: number) => Math.max(0, Math.min(count - 1, value)), [count]);
   const go = useCallback((direction: number) => setIndex((value) => clamp(value + direction)), [clamp]);
 
