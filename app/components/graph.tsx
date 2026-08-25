@@ -76,7 +76,7 @@ export function ConnectionsGraph({ lang }: { lang: "en" | "fr" }) {
           <line
             key={`${a}-${b}`}
             x1={p.x} y1={p.y} x2={q.x} y2={q.y}
-            stroke="#28aec4"
+            stroke="#34c3df"
             strokeWidth="1"
             strokeOpacity="0.32"
             strokeDasharray={len}
@@ -97,8 +97,8 @@ export function ConnectionsGraph({ lang }: { lang: "en" | "fr" }) {
             transition: `opacity 0.5s ease ${i * 90}ms, transform 0.5s cubic-bezier(0.34,1.4,0.5,1) ${i * 90}ms`,
           }}
         >
-          <circle cx={n.x} cy={n.y} r={n.hub ? 6 : 4.5} fill="#04100f" stroke="#4cd7e8" strokeWidth="1.5" />
-          {n.hub && <circle cx={n.x} cy={n.y} r="2" fill="#4cd7e8" />}
+          <circle cx={n.x} cy={n.y} r={n.hub ? 6 : 4.5} fill="#040b14" stroke="#72dff4" strokeWidth="1.5" />
+          {n.hub && <circle cx={n.x} cy={n.y} r="2" fill="#72dff4" />}
           <text
             x={n.x}
             y={n.y - 13}

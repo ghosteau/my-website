@@ -111,8 +111,8 @@ export const projects: {
     tech: "Java · Python · PyTorch · ONNX · SpigotAPI",
     href: "https://github.com/ghosteau/generative-terrain",
     accent: "cyan",
-    en: "Spatial Terrain Engineering & Voxel Embedding — a Minecraft plugin that generates terrain in under 3 seconds per chunk via a custom Voxel Neural Network (ONNX inference), with an in-game API for collecting and labeling live chunk data. Evolved from my GenerativeTerrain project.",
-    fr: "Spatial Terrain Engineering & Voxel Embedding — un plugin Minecraft qui génère du terrain en moins de 3 secondes par chunk grâce à un réseau de neurones voxel sur mesure (inférence ONNX), avec une API en jeu pour collecter et annoter des données de chunks en direct. Évolution de mon projet GenerativeTerrain.",
+    en: "Spatial Terrain Engineering & Voxel Embedding — a conditional VAE that generates complete 16 × 384 × 16 Minecraft chunks in one ONNX forward pass. Its 4.6M-parameter U-Net learns from roughly 200M voxels across 22 biomes, while a lightweight FiLM system lets people fine-tune new terrain styles without retraining the base model.",
+    fr: "Spatial Terrain Engineering & Voxel Embedding — un VAE conditionnel qui génère des chunks Minecraft complets de 16 × 384 × 16 en un seul passage ONNX. Son U-Net de 4,6 millions de paramètres apprend sur environ 200 millions de voxels répartis entre 22 biomes, tandis qu’un système FiLM léger permet d’ajuster de nouveaux styles sans réentraîner le modèle de base.",
     links: [
       { label: "STEVE-1 model", href: "https://huggingface.co/ghosteau/STEVE-1" },
       { label: "chunk dataset", href: "https://huggingface.co/datasets/ghosteau/minecraft-chunks" },
