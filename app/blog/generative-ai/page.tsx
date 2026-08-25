@@ -14,7 +14,8 @@ export default function GenerativeAIEssay() {
   const c = chrome[lang];
 
   return (
-    <main className="min-h-screen bg-[#04100f] text-white">
+    <main className="site-canvas text-white">
+      <div className="site-noise" aria-hidden />
       <div className="fixed inset-0 pointer-events-none z-0">
         <div className="blob blob-1 absolute top-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-turq-600/15 blur-[140px] will-change-transform" />
         <div className="blob blob-3 absolute bottom-[5%] right-[-8%] w-[400px] h-[400px] rounded-full bg-emerald-500/10 blur-[120px] will-change-transform" />
@@ -22,12 +23,12 @@ export default function GenerativeAIEssay() {
 
       <SiteNav />
 
-      <article className="page-enter relative z-10 max-w-2xl mx-auto px-8 pt-32 pb-24">
+      <article className="page-enter relative z-10 mx-auto max-w-3xl px-6 pb-24 pt-32 md:pt-40">
         <Link href="/blog" className="inline-block font-mono text-xs text-white/40 hover:text-turq-300 transition-colors tracking-widest uppercase mb-6">{c.back}</Link>
-        <p className="font-mono text-cyan-400/80 text-xs tracking-[0.3em] uppercase mb-5">{c.kicker}</p>
+        <p className="eyebrow mb-5">{c.kicker}</p>
 
-        <h1 className="text-4xl md:text-5xl font-extralight tracking-tight leading-tight">
-          <span className="bg-gradient-to-r from-turq-400 via-cyan-300 to-emerald-400 bg-clip-text text-transparent">
+        <h1 className="editorial-title text-5xl leading-[1.02] md:text-7xl">
+          <span className="text-white">
             The Vast World of Generative Artificial Intelligence
           </span>
         </h1>
@@ -53,7 +54,7 @@ export default function GenerativeAIEssay() {
           ))}
         </div>
 
-        <div className="flex flex-col gap-6 text-white/70 font-light leading-[1.85] text-[15px]">
+        <div className="flex flex-col gap-7 text-[16px] font-light leading-[1.95] text-white/68">
           <p>
             The words &ldquo;artificial intelligence&rdquo; have been used in many contexts (and oftentimes ambiguously so) over the past few years, with generative artificial intelligence particularly becoming more powerful by the day. New research and engineering around the globe are sparking a seismic wave of new models that could have serious benefits to humanity, while also sounding the alarm for a large number of individuals due to its inherent ethical concerns and social factors. Furthermore, many people lack the necessary technical understanding of what is going on under the hood of these complex models, causing many people to develop falsehoods regarding how modern generative platforms work. This essay will discuss some of the aforementioned social and ethical factors from a holistic point of view, while also clearing up some of the common misconceptions, questions, and concerns regarding what is going on behind the scenes of many artificial intelligence models and tools being used today.
           </p>

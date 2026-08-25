@@ -3,191 +3,212 @@
 import { useLang } from "../components/lang";
 import { SiteNav } from "../components/nav";
 import { GitHubMark, LinkedInMark } from "../components/sprites";
-import { experience, projects, courses, ui, type Accent } from "../content";
-
-const dot: Record<Accent, string> = {
-  teal: "bg-turq-400/60",
-  cyan: "bg-cyan-400/60",
-  emerald: "bg-emerald-400/60",
-};
-const period: Record<Accent, string> = {
-  teal: "text-turq-400/85",
-  cyan: "text-cyan-400/85",
-  emerald: "text-emerald-400/85",
-};
+import { courses, experience, projects } from "../content";
 
 const copy = {
   en: {
-    title: "Résumé",
-    summaryHead: "Summary",
+    kicker: "résumé / curriculum vitae",
+    title: "Engineer, builder, research-minded generalist.",
     summary:
-      "Data Science & Computer Science student at the University of Pittsburgh (French minor, GPA 3.76, graduating Spring 2027). Spent Spring 2026 on exchange at ENSEA in France; two summers engineering at BNY. Focused on machine learning, systems, and data engineering — aiming toward graduate study and AI research.",
-    expHead: "Experience",
-    projHead: "Selected Projects",
-    eduHead: "Education",
-    edu: [
+      "Data Science and Computer Science student at the University of Pittsburgh, pursuing a French minor and graduating in Spring 2027. Two summers engineering at BNY, production data work with Pitt Athletics, and undergraduate AI research—with a focus on machine learning, systems, and high-performance computing.",
+    download: "Download PDF",
+    experience: "Experience",
+    projects: "Selected projects",
+    education: "Education",
+    coursework: "Coursework",
+    toolkit: "Technical toolkit",
+    recognition: "Recognition",
+    schools: [
       {
-        main: "University of Pittsburgh — B.S. Data Science, B.S. Computer Science, Minor in French",
-        sub: "Pittsburgh, PA · GPA 3.76 · Graduating Spring 2027",
+        name: "University of Pittsburgh",
+        degree: "B.S. Data Science · B.S. Computer Science · Minor in French",
+        meta: "Pittsburgh, PA · GPA 3.76 · Spring 2027",
       },
       {
-        main: "ENSEA (École Nationale Supérieure de l'Électronique)",
-        sub: "Cergy, France · Engineering Study Abroad · Spring 2026",
+        name: "ENSEA",
+        degree: "Engineering study abroad",
+        meta: "Cergy, France · Spring 2026",
       },
     ],
-    courseHead: "Selected Coursework",
-    skillsHead: "Skills",
     skills:
-      "Python · C++ · Java · R · C# · C · SQL · PyTorch · CUDA · ONNX Runtime · Transformers · scikit-learn · SciPy · Pandas · NumPy · Spring · Kafka · Spark · Snowflake · AWS (Lambda, Step Functions, Athena, S3) · Git",
-    awardsHead: "Awards & Honors",
-    awards: "Dean's List · French Dedication Award · EU Economic Project Award · All-Academic Athlete",
-    download: "Download PDF ↓",
+      "Python · C++ · Java · R · C# · C · SQL · PyTorch · CUDA · ONNX Runtime · Transformers · scikit-learn · SciPy · Pandas · NumPy · Spring · Kafka · Spark · Snowflake · AWS",
+    awards: "Dean’s List · French Dedication Award · EU Economic Project Award · All-Academic Athlete",
   },
   fr: {
-    title: "CV",
-    summaryHead: "Résumé",
+    kicker: "CV / parcours",
+    title: "Ingénieur, créateur et généraliste tourné vers la recherche.",
     summary:
-      "Étudiant en science des données et informatique à l'Université de Pittsburgh (mineure en français, moyenne 3,76, diplôme prévu au printemps 2027). Semestre d'échange à l'ENSEA en France au printemps 2026 ; deux étés en ingénierie chez BNY. Spécialisé en apprentissage automatique, systèmes et ingénierie de données — en route vers des études supérieures et la recherche en IA.",
-    expHead: "Expérience",
-    projHead: "Projets sélectionnés",
-    eduHead: "Formation",
-    edu: [
+      "Étudiant en science des données et informatique à l’Université de Pittsburgh, avec une mineure en français et un diplôme prévu au printemps 2027. Deux étés en ingénierie chez BNY, des systèmes de données en production pour Pitt Athletics et une expérience de recherche de premier cycle en IA—avec un intérêt marqué pour l’apprentissage automatique, les systèmes et le calcul haute performance.",
+    download: "Télécharger le PDF",
+    experience: "Expérience",
+    projects: "Projets choisis",
+    education: "Formation",
+    coursework: "Cours suivis",
+    toolkit: "Outils techniques",
+    recognition: "Distinctions",
+    schools: [
       {
-        main: "Université de Pittsburgh — Licence science des données, Licence informatique, mineure en français",
-        sub: "Pittsburgh, PA · Moyenne 3,76 · Diplôme prévu au printemps 2027",
+        name: "Université de Pittsburgh",
+        degree: "Licence en science des données · Licence en informatique · Mineure en français",
+        meta: "Pittsburgh, PA · Moyenne 3,76 · Printemps 2027",
       },
       {
-        main: "ENSEA (École Nationale Supérieure de l'Électronique)",
-        sub: "Cergy, France · Échange en ingénierie · Printemps 2026",
+        name: "ENSEA",
+        degree: "Échange en ingénierie",
+        meta: "Cergy, France · Printemps 2026",
       },
     ],
-    courseHead: "Cours suivis",
-    skillsHead: "Compétences",
     skills:
-      "Python · C++ · Java · R · C# · C · SQL · PyTorch · CUDA · ONNX Runtime · Transformers · scikit-learn · SciPy · Pandas · NumPy · Spring · Kafka · Spark · Snowflake · AWS (Lambda, Step Functions, Athena, S3) · Git",
-    awardsHead: "Distinctions",
-    awards: "Dean's List · Prix de dévouement au français · Prix du projet économique de l'UE · Athlète académique",
-    download: "Télécharger le PDF ↓",
+      "Python · C++ · Java · R · C# · C · SQL · PyTorch · CUDA · ONNX Runtime · Transformers · scikit-learn · SciPy · Pandas · NumPy · Spring · Kafka · Spark · Snowflake · AWS",
+    awards: "Dean’s List · Prix de dévouement au français · Prix du projet économique de l’UE · Athlète académique",
   },
 };
 
+function ResumeSection({
+  index,
+  title,
+  children,
+}: {
+  index: string;
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="border-t border-white/[0.09] py-10 md:grid md:grid-cols-[11rem_1fr] md:gap-10 md:py-12">
+      <div className="mb-7 md:mb-0">
+        <p className="project-index">{index}</p>
+        <h2 className="mt-3 text-sm font-medium text-white/74">{title}</h2>
+      </div>
+      <div>{children}</div>
+    </section>
+  );
+}
+
 export default function Resume() {
   const [lang] = useLang();
-  const t = ui[lang];
   const c = copy[lang];
+  const selectedProjects = [projects[0], projects[1], projects[5]];
 
   return (
-    <main className="min-h-screen bg-[#04100f] text-white">
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="blob blob-1 absolute top-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full bg-turq-600/15 blur-[140px]" />
-        <div className="blob blob-2 absolute bottom-[5%] right-[-8%] w-[400px] h-[400px] rounded-full bg-cyan-500/10 blur-[120px]" />
-      </div>
-
+    <main className="site-canvas text-white">
+      <div className="site-noise" aria-hidden />
       <SiteNav />
 
-      <article className="page-enter relative z-10 max-w-3xl mx-auto px-8 pt-32 pb-24">
-        <header className="mb-12">
-          <h1 className="text-5xl font-extralight tracking-tight">
-            Emmanuel{" "}
-            <span className="bg-gradient-to-r from-turq-400 to-cyan-300 bg-clip-text text-transparent font-light">McGrail</span>
-          </h1>
-          <p className="font-mono text-white/55 text-sm mt-3 tracking-wide">
-            {c.title} · Pittsburgh, PA · mcgrailmanny@gmail.com
-          </p>
-          <div className="flex gap-4 mt-5 text-xs font-mono flex-wrap">
-            <a href="/resume.pdf" download className="text-turq-300/80 hover:text-turq-300 border border-turq-500/30 hover:border-turq-400/60 rounded-sm px-3 py-1.5 transition-all">{c.download}</a>
-            <a href="https://www.linkedin.com/in/manny-mcgrail/" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-cyan-300/80 hover:text-cyan-300 border border-cyan-500/30 hover:border-cyan-400/60 rounded-sm px-3 py-1.5 transition-all"><LinkedInMark className="w-3.5 h-3.5" />LinkedIn ↗</a>
-            <a href="https://github.com/ghosteau" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-white/60 hover:text-white border border-white/15 hover:border-white/30 rounded-sm px-3 py-1.5 transition-all"><GitHubMark className="w-3.5 h-3.5" />GitHub ↗</a>
-            <a href="https://huggingface.co/ghosteau" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-yellow-300/90 hover:text-yellow-300 border border-yellow-500/30 hover:border-yellow-400/60 rounded-sm px-3 py-1.5 transition-all"><span aria-hidden>🤗</span>Hugging Face ↗</a>
+      <article className="content-rail page-enter relative z-10 pb-24 pt-32 md:pt-40">
+        <header className="pb-12 md:pb-16">
+          <p className="eyebrow">{c.kicker}</p>
+          <div className="mt-6 grid gap-8 md:grid-cols-[1fr_.65fr] md:items-end">
+            <div>
+              <h1 className="editorial-title max-w-4xl text-5xl leading-[0.98] md:text-7xl">{c.title}</h1>
+              <p className="mt-7 max-w-3xl text-sm leading-7 text-white/58 md:text-base">{c.summary}</p>
+            </div>
+            <div className="flex flex-wrap gap-2 md:justify-end">
+              <a href="/resume.pdf" download className="button-primary">{c.download} <span aria-hidden>↓</span></a>
+              <a href="mailto:mcgrailmanny@gmail.com" className="button-secondary">Email <span aria-hidden>↗</span></a>
+            </div>
+          </div>
+
+          <div className="mt-10 flex flex-wrap gap-2 border-t border-white/[0.08] pt-6">
+            <a
+              href="https://github.com/ghosteau"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-white/12 px-3 py-2 font-mono text-[10px] text-white/58 transition-colors hover:text-white"
+            >
+              <GitHubMark className="h-3.5 w-3.5" /> GitHub ↗
+            </a>
+            <a
+              href="https://www.linkedin.com/in/manny-mcgrail/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-sky-400/20 px-3 py-2 font-mono text-[10px] text-sky-300/75 transition-colors hover:text-sky-200"
+            >
+              <LinkedInMark className="h-3.5 w-3.5" /> LinkedIn ↗
+            </a>
+            <a
+              href="https://huggingface.co/ghosteau"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full border border-yellow-400/20 px-3 py-2 font-mono text-[10px] text-yellow-300/80 transition-colors hover:text-yellow-200"
+            >
+              <span aria-hidden>🤗</span> Hugging Face ↗
+            </a>
           </div>
         </header>
 
-        <Section title={c.summaryHead}>
-          <p className="text-white/70 font-light leading-relaxed">{c.summary}</p>
-        </Section>
-
-        <Section title={c.expHead}>
-          <div className="flex flex-col gap-8">
-            {experience.map((e) => (
-              <div key={e.en.role}>
-                <div className="flex flex-wrap justify-between items-baseline gap-2">
-                  <h3 className="text-white/90 font-light">{e[lang].role}</h3>
-                  <span className={`font-mono text-xs ${period[e.accent]}`}>{e.period}</span>
+        <ResumeSection index="01" title={c.experience}>
+          <div className="space-y-10">
+            {experience.map((item) => (
+              <div key={item.org + item.period}>
+                <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-5">
+                  <h3 className="editorial-title text-2xl text-white/92">{item[lang].role}</h3>
+                  <span className="font-mono text-[10px] tracking-wide text-turq-200/62">{item.period}</span>
                 </div>
-                <p className="text-white/50 text-sm font-light mb-2">{e.org}</p>
-                <ul className="flex flex-col gap-1.5">
-                  {e[lang].bullets.map((b, j) => (
-                    <li key={j} className="flex gap-3 text-white/65 text-sm font-light leading-relaxed">
-                      <span className={`mt-1.5 w-1 h-1 rounded-full shrink-0 ${dot[e.accent]}`} />
-                      {b}
+                <p className="mt-1 text-sm text-white/42">{item.org}</p>
+                <ul className="mt-4 space-y-2.5">
+                  {item[lang].bullets.map((bullet) => (
+                    <li key={bullet} className="flex gap-3 text-sm leading-6 text-white/56">
+                      <span className="mt-3 h-px w-3 shrink-0 bg-turq-300/45" />
+                      {bullet}
                     </li>
                   ))}
                 </ul>
               </div>
             ))}
           </div>
-        </Section>
+        </ResumeSection>
 
-        <Section title={c.projHead}>
-          <div className="flex flex-col gap-4">
-            {projects.map((p) => (
-              <div key={p.name}>
-                <div className="flex flex-wrap justify-between items-baseline gap-2">
-                  <a href={p.href} target="_blank" rel="noopener noreferrer" className="font-mono text-turq-300/90 hover:text-turq-300 transition-colors text-sm">{p.name} ↗</a>
-                  <span className="font-mono text-white/50 text-xs">{p.tech}</span>
+        <ResumeSection index="02" title={c.projects}>
+          <div className="grid gap-4">
+            {selectedProjects.map((project) => (
+              <article key={project.name} className="rounded-xl border border-white/[0.08] bg-white/[0.018] p-5">
+                <div className="flex flex-wrap items-baseline justify-between gap-3">
+                  <a href={project.href} target="_blank" rel="noopener noreferrer" className="font-mono text-sm text-turq-100/85 hover:text-turq-100">
+                    {project.name} ↗
+                  </a>
+                  <span className="font-mono text-[9px] tracking-wide text-white/35">{project.tech}</span>
                 </div>
-                <p className="text-white/65 text-sm font-light leading-relaxed mt-1">{p[lang]}</p>
-                {p.links && (
-                  <div className="flex flex-wrap gap-3 mt-1.5">
-                    {p.links.map((l) => (
-                      <a key={l.href} href={l.href} target="_blank" rel="noopener noreferrer"
-                        className="font-mono text-[11px] text-cyan-300/70 hover:text-cyan-300 transition-colors">
-                        {l.label} ↗
+                <p className="mt-3 text-sm leading-6 text-white/55">{project[lang]}</p>
+                {project.links && (
+                  <div className="mt-4 flex flex-wrap gap-4">
+                    {project.links.map((link) => (
+                      <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="link-arrow">
+                        {link.label} ↗
                       </a>
                     ))}
                   </div>
                 )}
-              </div>
+              </article>
             ))}
           </div>
-        </Section>
+        </ResumeSection>
 
-        <Section title={c.eduHead}>
-          <div className="flex flex-col gap-4">
-            {c.edu.map((ed) => (
-              <div key={ed.main}>
-                <h3 className="text-white/90 font-light">{ed.main}</h3>
-                <p className="text-white/55 text-sm font-light mt-1">{ed.sub}</p>
-              </div>
+        <ResumeSection index="03" title={c.education}>
+          <div className="grid gap-4 sm:grid-cols-2">
+            {c.schools.map((school) => (
+              <article key={school.name} className="surface rounded-xl p-6">
+                <h3 className="editorial-title text-2xl">{school.name}</h3>
+                <p className="mt-3 text-sm leading-6 text-white/62">{school.degree}</p>
+                <p className="mt-3 font-mono text-[10px] leading-relaxed tracking-wide text-turq-200/55">{school.meta}</p>
+              </article>
             ))}
           </div>
-        </Section>
+        </ResumeSection>
 
-        <Section title={c.courseHead}>
+        <ResumeSection index="04" title={c.coursework}>
           <div className="flex flex-wrap gap-2">
-            {courses.map((co) => (
-              <span key={co.en} className="px-2.5 py-1 border border-white/[0.08] bg-white/[0.02] rounded-sm text-xs font-mono text-white/60">{co[lang]}</span>
-            ))}
+            {courses.map((course) => <span key={course.en} className="chip">{course[lang]}</span>)}
           </div>
-        </Section>
+        </ResumeSection>
 
-        <Section title={c.skillsHead}>
-          <p className="font-mono text-white/65 text-sm leading-relaxed">{c.skills}</p>
-        </Section>
+        <ResumeSection index="05" title={c.toolkit}>
+          <p className="font-mono text-xs leading-7 text-white/58">{c.skills}</p>
+        </ResumeSection>
 
-        <Section title={c.awardsHead}>
-          <p className="text-white/65 text-sm font-light leading-relaxed">{c.awards}</p>
-        </Section>
+        <ResumeSection index="06" title={c.recognition}>
+          <p className="text-sm leading-7 text-white/58">{c.awards}</p>
+        </ResumeSection>
       </article>
     </main>
-  );
-}
-
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
-  return (
-    <section className="mb-10">
-      <h2 className="font-mono text-turq-400/80 text-xs tracking-[0.3em] uppercase mb-4 border-b border-white/[0.06] pb-2">{title}</h2>
-      {children}
-    </section>
   );
 }
