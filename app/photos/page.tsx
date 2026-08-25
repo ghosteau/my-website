@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLang, type Lang } from "../components/lang";
 import { SiteNav } from "../components/nav";
@@ -350,8 +351,14 @@ function MomentViewer({
                   aria-current={imageIndex === index ? "true" : undefined}
                   className={"relative h-14 w-20 shrink-0 overflow-hidden rounded-lg border transition-all " + (imageIndex === index ? "border-turq-300/65 opacity-100" : "border-white/10 opacity-45 hover:opacity-80")}
                 >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={src} alt="" loading="lazy" className="h-full w-full object-cover" />
+                  <Image
+                    src={src}
+                    alt=""
+                    fill
+                    sizes="80px"
+                    quality={72}
+                    className="object-cover"
+                  />
                 </button>
               ))}
             </div>
