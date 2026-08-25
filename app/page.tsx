@@ -76,7 +76,7 @@ const homeCopy = {
       moments: {
         eyebrow: "visual journal / 2025—2026",
         title: "Places that changed the frame.",
-        body: "Five months living in Île-de-France, Québec through language and culture, Pittsburgh winters, Vermont powder, and the trips in between—an evolving visual archive of the life behind the résumé.",
+        body: "Five months living in Île-de-France, Québec through language and culture, Vermont powder, and the trips in between—an evolving visual archive of the life behind the résumé.",
         link: "Open the photo atlas",
       },
       music: {
@@ -89,6 +89,8 @@ const homeCopy = {
         eyebrow: "home / Pittsburgh",
         title: "The city is part of the operating system.",
         body: "Pittsburgh is not a palette I borrowed for the site. It is Steelers snow, Pirates evenings, Pitt Saturdays, bridges in every direction, and the place I keep returning to.",
+        stadium: "North Shore · December 24, 2022",
+        ballpark: "PNC Park · Pittsburgh",
       },
       offClock: {
         eyebrow: "off the clock",
@@ -153,7 +155,7 @@ const homeCopy = {
       moments: {
         eyebrow: "journal visuel / 2025—2026",
         title: "Les lieux qui changent le regard.",
-        body: "Cinq mois en Île-de-France, le Québec par sa langue et sa culture, les hivers de Pittsburgh, la neige du Vermont et les voyages entre les quatre—une archive visuelle de la vie derrière le CV.",
+        body: "Cinq mois en Île-de-France, le Québec par sa langue et sa culture, la neige du Vermont et les voyages entre les trois—une archive visuelle de la vie derrière le CV.",
         link: "Ouvrir l’atlas photo",
       },
       music: {
@@ -166,6 +168,8 @@ const homeCopy = {
         eyebrow: "chez moi / Pittsburgh",
         title: "La ville fait partie du système.",
         body: "Pittsburgh n’est pas une palette empruntée pour ce site. Ce sont les matchs des Steelers sous la neige, les soirs au PNC Park, les samedis à Pitt, des ponts dans toutes les directions et la ville où je reviens toujours.",
+        stadium: "North Shore · Le 24 décembre 2022",
+        ballpark: "PNC Park · Pittsburgh",
       },
       offClock: {
         eyebrow: "hors ligne",
@@ -608,15 +612,34 @@ export default function Home() {
           </Reveal>
 
           <Reveal className="lg:col-span-2">
-            <article className="surface grid overflow-hidden rounded-[1.4rem] md:grid-cols-[0.64fr_1fr]">
-              <div className="relative min-h-[25rem] overflow-hidden">
-                <Image
-                  src="/photos/pittsburgh/steelers-snow.jpg"
-                  alt={lang === "en" ? "Manny at a snowy Steelers game in Pittsburgh" : "Manny lors d’un match enneigé des Steelers à Pittsburgh"}
-                  fill
-                  sizes="(max-width: 768px) 90vw, 38vw"
-                  className="object-cover object-center"
-                />
+            <article className="surface grid overflow-hidden rounded-[1.4rem] md:grid-cols-[0.9fr_1fr]">
+              <div className="grid min-h-[24rem] grid-cols-[1.05fr_.95fr] gap-px bg-white/[0.07] md:min-h-full">
+                <figure className="relative overflow-hidden">
+                  <Image
+                    src="/photos/pittsburgh/steelers-snow.jpg"
+                    alt={lang === "en" ? "Manny at a snowy football game in Pittsburgh" : "Manny lors d’un match de football enneigé à Pittsburgh"}
+                    fill
+                    sizes="(max-width: 768px) 48vw, 28vw"
+                    quality={90}
+                    className="object-cover object-center"
+                  />
+                  <figcaption className="absolute inset-x-3 bottom-3 rounded-lg border border-white/12 bg-[#040b14]/70 px-3 py-2 font-mono text-[8px] uppercase tracking-[0.12em] text-white/72 backdrop-blur-md">
+                    {c.personalCards.home.stadium}
+                  </figcaption>
+                </figure>
+                <figure className="relative overflow-hidden">
+                  <Image
+                    src="/photos/pittsburgh/pnc-park.jpg"
+                    alt={lang === "en" ? "PNC Park and the Pittsburgh skyline" : "Le PNC Park et la silhouette de Pittsburgh"}
+                    fill
+                    sizes="(max-width: 768px) 42vw, 24vw"
+                    quality={90}
+                    className="object-cover object-center"
+                  />
+                  <figcaption className="absolute inset-x-3 bottom-3 rounded-lg border border-white/12 bg-[#040b14]/70 px-3 py-2 font-mono text-[8px] uppercase tracking-[0.12em] text-white/72 backdrop-blur-md">
+                    {c.personalCards.home.ballpark}
+                  </figcaption>
+                </figure>
               </div>
               <div className="p-7 md:p-10">
                 <p className="eyebrow">{c.personalCards.home.eyebrow}</p>

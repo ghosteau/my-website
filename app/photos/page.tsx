@@ -157,27 +157,6 @@ const moments: Moment[] = [
     ],
   },
   {
-    images: ["/photos/pittsburgh/steelers-snow.jpg", "/photos/pittsburgh/pnc-park.jpg"],
-    photoAlt: "Snowy Steelers game in Pittsburgh",
-    aspect: "3 / 4",
-    en: {
-      caption: "A very Pittsburgh Christmas",
-      date: "December 24, 2022",
-      blurb: "Cold enough to frost the camera, loud enough that nobody cared. This is the Pittsburgh part of the site in one frame: not a color palette or a sports logo, just home—and the night Kenny Pickett saved Christmas.",
-    },
-    fr: {
-      caption: "Un Noël très Pittsburgh",
-      date: "Le 24 décembre 2022",
-      blurb: "Assez froid pour givrer l’appareil, assez bruyant pour que personne ne s’en soucie. Voilà Pittsburgh en une image : non pas une palette de couleurs ou un logo sportif, mais chez moi—et la nuit où Kenny Pickett a sauvé Noël.",
-    },
-    tags: [
-      { key: "pittsburgh", emoji: "🌉", en: "Pittsburgh", fr: "Pittsburgh" },
-      { key: "football", emoji: "🏈", en: "Football", fr: "Football américain" },
-      { key: "home", emoji: "🏠", en: "Home", fr: "Chez moi" },
-      { key: "winter", emoji: "❄️", en: "Winter", fr: "Hiver" },
-    ],
-  },
-  {
     images: [
       "/photos/stowe/1-summit-flag.jpg",
       "/photos/stowe/2-ski-selfie.jpg",
