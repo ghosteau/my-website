@@ -232,7 +232,7 @@ function Reveal({
   return (
     <div
       ref={ref}
-      className={[className, visible ? "reveal-visible" : "reveal-ready"].join(" ")}
+      className={["min-w-0", className, visible ? "reveal-visible" : "reveal-ready"].join(" ")}
       style={{ transitionDelay: String(delay) + "ms" }}
     >
       {children}
@@ -552,7 +552,7 @@ export default function Home() {
 
       <section className="content-rail relative z-10 py-24 md:py-32">
         <SectionHeading eyebrow={c.sections.personal[0]} title={c.sections.personal[1]} body={c.sections.personal[2]} />
-        <div className="grid gap-5 lg:grid-cols-2">
+        <div className="grid min-w-0 gap-5 lg:grid-cols-2">
           <Reveal>
             <Link href="/blog" className="surface surface-interactive group block h-full rounded-[1.4rem] p-7 md:p-9">
               <p className="eyebrow">{c.personalCards.writing.eyebrow}</p>
@@ -583,7 +583,7 @@ export default function Home() {
           </Reveal>
 
           <Reveal className="lg:col-span-2">
-            <article className="surface grid overflow-hidden rounded-[1.4rem] lg:grid-cols-[0.72fr_1fr]">
+            <article className="surface grid min-w-0 overflow-hidden rounded-[1.4rem] lg:grid-cols-[0.72fr_1fr]">
               <div className="p-7 md:p-10">
                 <p className="eyebrow">{c.personalCards.music.eyebrow}</p>
                 <h3 className="editorial-title mt-8 text-4xl leading-tight">{c.personalCards.music.title}</h3>
@@ -597,7 +597,7 @@ export default function Home() {
                   {c.personalCards.music.link} <span aria-hidden>↗</span>
                 </a>
               </div>
-              <div className="border-t border-white/[0.07] bg-black/16 p-4 lg:border-l lg:border-t-0 lg:p-6">
+              <div className="min-w-0 border-t border-white/[0.07] bg-black/16 p-4 lg:border-l lg:border-t-0 lg:p-6">
                 <iframe
                   title="Vigilance — Spotify album"
                   src={"https://open.spotify.com/embed/album/" + SPOTIFY_ALBUM_ID + "?utm_source=generator&theme=0"}
@@ -606,7 +606,7 @@ export default function Home() {
                   frameBorder="0"
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                   loading="lazy"
-                  className="rounded-xl"
+                  className="block min-w-0 rounded-xl"
                 />
               </div>
             </article>
@@ -651,7 +651,7 @@ export default function Home() {
                   <p className="eyebrow">{c.personalCards.offClock.eyebrow}</p>
                   <h4 className="editorial-title mt-4 text-2xl">{c.personalCards.offClock.title}</h4>
                   <p className="mt-3 max-w-2xl text-sm leading-7 text-white/50">{c.personalCards.offClock.body}</p>
-                  <div className="mt-6 flex w-fit items-end gap-4 rounded-2xl border border-white/[0.06] bg-[#030a12]/55 px-5 py-4">
+                  <div className="mt-6 grid w-fit grid-cols-3 items-end gap-x-5 gap-y-4 rounded-2xl border border-white/[0.06] bg-[#030a12]/55 px-5 py-4 sm:flex sm:gap-4">
                     {games.map((game) => (
                       <GameSprite key={game.key} kind={game.key} label={game.label} className="w-7 sm:w-9" />
                     ))}

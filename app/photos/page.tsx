@@ -250,8 +250,8 @@ function MomentViewer({
   };
 
   return (
-    <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(280px,.55fr)] lg:gap-10">
-      <div>
+    <div className="grid min-w-0 items-start gap-6 sm:gap-8 lg:grid-cols-[minmax(0,1.45fr)_minmax(280px,.55fr)] lg:gap-10">
+      <div className="min-w-0">
         <div
           onPointerDown={onPointerDown}
           onPointerMove={(event) => { currentX.current = event.clientX; }}
@@ -262,7 +262,7 @@ function MomentViewer({
             if (event.key === "ArrowRight") go(1);
           }}
           tabIndex={0}
-          className="photo-stage surface group relative select-none rounded-[1.5rem] focus:outline-none"
+          className="photo-stage surface group relative w-full min-w-0 max-w-full select-none rounded-[1.15rem] focus:outline-none sm:rounded-[1.5rem]"
           style={{ touchAction: "pan-y", aspectRatio: moment.aspect ?? "4 / 3" }}
           role="group"
           aria-label={moment[lang].caption}
@@ -275,9 +275,9 @@ function MomentViewer({
             draggable={false}
             loading="eager"
             decoding="async"
-            className={"photo-enter h-full w-full pointer-events-none " + fitClass}
+            className={"photo-enter block h-full w-full min-w-0 max-w-full pointer-events-none " + fitClass}
           />
-          <div className="pointer-events-none absolute inset-x-5 bottom-5 z-10 flex items-end justify-between gap-4">
+          <div className="pointer-events-none absolute inset-x-3 bottom-3 z-10 flex items-end justify-between gap-3 sm:inset-x-5 sm:bottom-5 sm:gap-4">
             <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/72">
               {moment[lang].caption}
             </p>
@@ -299,7 +299,7 @@ function MomentViewer({
                 onPointerUp={(event) => event.stopPropagation()}
                 disabled={index === 0}
                 aria-label="Previous photo"
-                className="absolute left-4 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-[#040b14]/64 text-lg text-white/80 opacity-100 backdrop-blur-md transition-all enabled:hover:border-turq-300/50 enabled:hover:text-turq-200 disabled:hidden md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
+                className="absolute left-2 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-[#040b14]/72 text-lg text-white/85 opacity-100 backdrop-blur-md transition-all enabled:hover:border-turq-300/50 enabled:hover:text-turq-200 disabled:hidden sm:left-4 sm:h-11 sm:w-11 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
               >
                 ←
               </button>
@@ -310,7 +310,7 @@ function MomentViewer({
                 onPointerUp={(event) => event.stopPropagation()}
                 disabled={index === count - 1}
                 aria-label="Next photo"
-                className="absolute right-4 top-1/2 z-20 grid h-11 w-11 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-[#040b14]/64 text-lg text-white/80 opacity-100 backdrop-blur-md transition-all enabled:hover:border-turq-300/50 enabled:hover:text-turq-200 disabled:hidden md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
+                className="absolute right-2 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-[#040b14]/72 text-lg text-white/85 opacity-100 backdrop-blur-md transition-all enabled:hover:border-turq-300/50 enabled:hover:text-turq-200 disabled:hidden sm:right-4 sm:h-11 sm:w-11 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
               >
                 →
               </button>
@@ -320,7 +320,7 @@ function MomentViewer({
 
         {count > 1 && (
           <div className="mt-4">
-            <div className="flex gap-2 overflow-x-auto pb-2">
+            <div className="gallery-strip flex snap-x snap-mandatory gap-2 overflow-x-auto pb-2">
               {moment.images.map((src, imageIndex) => (
                 <button
                   type="button"
@@ -328,7 +328,7 @@ function MomentViewer({
                   onClick={() => setIndex(imageIndex)}
                   aria-label={"Photo " + String(imageIndex + 1)}
                   aria-current={imageIndex === index ? "true" : undefined}
-                  className={"relative h-14 w-20 shrink-0 overflow-hidden rounded-lg border transition-all " + (imageIndex === index ? "border-turq-300/65 opacity-100" : "border-white/10 opacity-45 hover:opacity-80")}
+                  className={"relative h-14 w-20 shrink-0 snap-start overflow-hidden rounded-lg border transition-all " + (imageIndex === index ? "border-turq-300/65 opacity-100" : "border-white/10 opacity-45 hover:opacity-80")}
                 >
                   <Image
                     src={src}
@@ -346,7 +346,7 @@ function MomentViewer({
         )}
       </div>
 
-      <aside className="surface rounded-[1.4rem] p-7 lg:sticky lg:top-24 lg:p-8">
+      <aside className="surface min-w-0 rounded-[1.15rem] p-5 sm:rounded-[1.4rem] sm:p-7 lg:sticky lg:top-24 lg:p-8">
         <p className="eyebrow">{moment[lang].date}</p>
         <h2 className="editorial-title mt-5 text-4xl leading-[1.02] text-white">{moment[lang].caption}</h2>
         <p className="mt-6 text-sm font-light leading-7 text-white/58">{moment[lang].blurb}</p>
@@ -378,20 +378,20 @@ export default function Photos() {
         <div className="grid items-end gap-8 border-b border-white/[0.08] pb-10 md:grid-cols-[1fr_.7fr]">
           <div>
             <p className="eyebrow">{c.kicker} / visual archive</p>
-            <h1 className="editorial-title mt-5 text-6xl md:text-8xl">{c.title}</h1>
+            <h1 className="editorial-title mt-5 text-5xl sm:text-6xl md:text-8xl">{c.title}</h1>
           </div>
           <p className="max-w-xl text-sm leading-7 text-white/55 md:justify-self-end">{c.intro}</p>
         </div>
 
         <div className="mt-8">
           <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.16em] text-white/28">{c.choose}</p>
-          <div className="flex gap-2 overflow-x-auto pb-3">
+          <div className="gallery-strip flex snap-x snap-mandatory gap-2 overflow-x-auto pb-3">
             {moments.map((moment, index) => (
               <button
                 type="button"
                 key={moment.images[0]}
                 onClick={() => setActiveMoment(index)}
-                className={"shrink-0 rounded-full border px-4 py-2 text-xs transition-all " + (index === activeMoment ? "border-turq-300/55 bg-turq-300/[0.09] text-turq-100" : "border-white/10 text-white/45 hover:border-white/20 hover:text-white/75")}
+                className={"shrink-0 snap-start rounded-full border px-4 py-2 text-xs transition-all " + (index === activeMoment ? "border-turq-300/55 bg-turq-300/[0.09] text-turq-100" : "border-white/10 text-white/45 hover:border-white/20 hover:text-white/75")}
               >
                 {moment[lang].caption}
               </button>
