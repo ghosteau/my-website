@@ -192,6 +192,12 @@ const projectMeta: Record<string, { value: string; label: { en: string; fr: stri
     { value: "22", label: { en: "training biomes", fr: "biomes d’entraînement" } },
     { value: "1.8%", label: { en: "weights tuned per style", fr: "des poids ajustés par style" } },
   ],
+  "Embeddings Visualizer": [
+    { value: "3D", label: { en: "interactive UMAP explorer", fr: "explorateur UMAP interactif" } },
+    { value: "6,000", label: { en: "tokens per projection", fr: "tokens par projection" } },
+    { value: "33", label: { en: "offline backend tests", fr: "tests backend hors ligne" } },
+    { value: "HF", label: { en: "custom model support", fr: "modèles personnalisés" } },
+  ],
   fastdist: [{ value: "~2.5×", label: { en: "GPU speedup", fr: "accélération GPU" } }],
   PittAPI: [{ value: "100+", label: { en: "GitHub stars", fr: "étoiles GitHub" } }],
 };
@@ -360,7 +366,7 @@ export default function Home() {
   const [lang] = useLang();
   const t = ui[lang];
   const c = homeCopy[lang];
-  const selectedProjects = [projects[1], projects[0], projects[5]];
+  const selectedProjects = [projects[1], projects[2], projects[0], projects[5]];
 
   return (
     <main className="site-canvas text-white">
@@ -447,8 +453,17 @@ export default function Home() {
         <SectionHeading eyebrow={c.sections.work[0]} title={c.sections.work[1]} body={c.sections.work[2]} />
         <div className="grid gap-4 lg:grid-cols-2">
           {selectedProjects.map((project, index) => (
-            <Reveal key={project.name} delay={index * 80} className={index === 0 ? "lg:col-span-2" : ""}>
-              <ProjectCard project={project} index={index} lang={lang} featured={index === 0} />
+            <Reveal
+              key={project.name}
+              delay={index * 80}
+              className={project.name === "STEVE" || project.name === "Embeddings Visualizer" ? "lg:col-span-2" : ""}
+            >
+              <ProjectCard
+                project={project}
+                index={index}
+                lang={lang}
+                featured={project.name === "STEVE" || project.name === "Embeddings Visualizer"}
+              />
             </Reveal>
           ))}
         </div>
