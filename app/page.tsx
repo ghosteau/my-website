@@ -199,7 +199,7 @@ const projectMeta: Record<string, { value: string; label: { en: string; fr: stri
   "Embeddings Visualizer": [
     { value: "Any", label: { en: "Hugging Face checkpoint", fr: "checkpoint Hugging Face" } },
     { value: "3D", label: { en: "live UMAP exploration", fr: "exploration UMAP en direct" } },
-    { value: "4", label: { en: "analysis modes: search, neighbours, pairwise, export", fr: "modes d’analyse : recherche, voisins, paires, export" } },
+    { value: "4", label: { en: "analysis modes: search, neighbors, pairwise, export", fr: "modes d’analyse : recherche, voisins, paires, export" } },
   ],
   fastdist: [
     { value: "~2.5×", label: { en: "faster than standard libraries", fr: "plus rapide que les bibliothèques standard" } },

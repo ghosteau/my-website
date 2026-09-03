@@ -14,7 +14,7 @@ const H = 250;
 
 /* Positions are deliberate: every edge has to reach its endpoints without
    grazing a node it doesn't connect, or the picture implies links that
-   aren't there. (Music sat opposite maths with the line passing 1.5px from
+   aren't there. (Music sat opposite math with the line passing 1.5px from
    the ML node, which read as "music → machine learning".) */
 const NODES: Node[] = [
   { id: "music", x: 60, y: 132, en: "music", fr: "musique" },

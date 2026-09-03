@@ -194,7 +194,7 @@ export function FlagIcon({
 export function PixelSkyline({ className = "" }: { className?: string }) {
   const B = "#0b2b2f"; // silhouette
   const G = "#f2c14e"; // window gold
-  const MID = 240; // horizontal centre of the 480-wide viewBox
+  const MID = 240; // horizontal center of the 480-wide viewBox
   const windows: { x: number; y: number; delay?: string }[] = [
     { x: 47, y: 40 }, { x: 55, y: 33, delay: "0.8s" }, { x: 104, y: 28 },
     { x: 112, y: 40, delay: "1.6s" }, { x: 122, y: 33 }, { x: 356, y: 40, delay: "0.4s" },
