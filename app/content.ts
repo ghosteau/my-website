@@ -147,8 +147,8 @@ export const projects: {
     tech: "Python · BeautifulSoup · Requests",
     href: "https://github.com/pittcsc/PittAPI",
     accent: "emerald",
-    en: "Open-source Python library (100+ stars, on PyPI) for programmatic access to Pitt course, dining, library, and shuttle data. Shipped full study room reservation support end-to-end.",
-    fr: "Bibliothèque Python open-source (100+ étoiles, sur PyPI) pour un accès programmatique aux données de cours, restauration, bibliothèque et navettes de Pitt. Ajout complet de la réservation de salles d'étude, de bout en bout.",
+    en: "Open-source Python library (100+ GitHub stars) for programmatic access to Pitt course, dining, library, and shuttle data. Shipped full study room reservation support end-to-end.",
+    fr: "Bibliothèque Python open-source (100+ étoiles GitHub) pour un accès programmatique aux données de cours, restauration, bibliothèque et navettes de Pitt. Ajout complet de la réservation de salles d'étude, de bout en bout.",
   },
 ];
 

@@ -185,21 +185,30 @@ const homeCopy = {
   },
 };
 
+/* Metrics should say something a reader can't infer from the description:
+   scale, speed, efficiency, or public adoption. Deliberately not here —
+   test counts, render caps, and restated constants (98,304 is just
+   16 × 384 × 16), which measure effort rather than impact. */
 const projectMeta: Record<string, { value: string; label: { en: string; fr: string } }[]> = {
   STEVE: [
-    { value: "4.6M", label: { en: "model parameters", fr: "paramètres" } },
-    { value: "98,304", label: { en: "voxels per chunk", fr: "voxels par chunk" } },
-    { value: "22", label: { en: "training biomes", fr: "biomes d’entraînement" } },
-    { value: "1.8%", label: { en: "weights tuned per style", fr: "des poids ajustés par style" } },
+    { value: "200M", label: { en: "voxels learned from", fr: "voxels d’apprentissage" } },
+    { value: "4.6M", label: { en: "model parameters", fr: "paramètres du modèle" } },
+    { value: "1", label: { en: "forward pass per full chunk", fr: "passage avant par chunk complet" } },
+    { value: "22", label: { en: "biomes covered", fr: "biomes couverts" } },
   ],
   "Embeddings Visualizer": [
-    { value: "3D", label: { en: "interactive UMAP explorer", fr: "explorateur UMAP interactif" } },
-    { value: "6,000", label: { en: "tokens per projection", fr: "tokens par projection" } },
-    { value: "33", label: { en: "offline backend tests", fr: "tests backend hors ligne" } },
-    { value: "HF", label: { en: "custom model support", fr: "modèles personnalisés" } },
+    { value: "Any", label: { en: "Hugging Face checkpoint", fr: "checkpoint Hugging Face" } },
+    { value: "3D", label: { en: "live UMAP exploration", fr: "exploration UMAP en direct" } },
+    { value: "4", label: { en: "analysis modes: search, neighbours, pairwise, export", fr: "modes d’analyse : recherche, voisins, paires, export" } },
   ],
-  fastdist: [{ value: "~2.5×", label: { en: "GPU speedup", fr: "accélération GPU" } }],
-  PittAPI: [{ value: "100+", label: { en: "GitHub stars", fr: "étoiles GitHub" } }],
+  fastdist: [
+    { value: "~2.5×", label: { en: "faster than standard libraries", fr: "plus rapide que les bibliothèques standard" } },
+    { value: "GPU", label: { en: "CUDA kernels behind a Python API", fr: "noyaux CUDA derrière une API Python" } },
+  ],
+  PittAPI: [
+    { value: "100+", label: { en: "GitHub stars", fr: "étoiles GitHub" } },
+    { value: "4", label: { en: "university data domains covered", fr: "domaines de données couverts" } },
+  ],
 };
 
 function useInView() {
@@ -336,11 +345,19 @@ function ProjectCard({
 
       <div className={"mt-9 flex flex-col justify-between gap-7 " + (featured ? "lg:mt-0 lg:border-l lg:border-white/[0.08] lg:pl-10" : "")}>
         {metrics && (
-          <div className={featured ? "grid grid-cols-2 gap-x-7 gap-y-8" : ""}>
+          /* Two columns only when there are enough metrics to fill them —
+             otherwise a short list leaves a big empty gap beside the card. */
+          <div
+            className={
+              featured
+                ? `grid gap-x-7 gap-y-6 ${metrics.length >= 4 ? "grid-cols-2" : "grid-cols-1"}`
+                : "grid gap-y-5"
+            }
+          >
             {metrics.map((metric) => (
-              <div key={metric.label.en} className={featured ? "border-t border-white/[0.08] pt-4" : ""}>
-                <p className={featured ? "editorial-title text-3xl text-white md:text-4xl" : "metric"}>{metric.value}</p>
-                <p className="mt-2 font-mono text-[9px] uppercase leading-relaxed tracking-[0.13em] text-white/38">
+              <div key={metric.label.en} className="border-t border-white/[0.08] pt-3.5">
+                <p className={featured ? "metric metric-lg" : "metric"}>{metric.value}</p>
+                <p className="mt-1.5 font-mono text-[10px] uppercase leading-relaxed tracking-[0.11em] text-white/42">
                   {metric.label[lang]}
                 </p>
               </div>
