@@ -119,12 +119,12 @@ export const projects: {
     ],
   },
   {
-    name: "embeddings-visualizer",
-    tech: "Python · LLMs · Web",
+    name: "Embeddings Visualizer",
+    tech: "Python · FastAPI · React · TypeScript · Three.js · UMAP",
     href: "https://github.com/ghosteau/embeddings-visualizer",
     accent: "emerald",
-    en: "Web application for visualizing LLM embeddings and token representations interactively.",
-    fr: "Application web pour visualiser de manière interactive les embeddings et les représentations de tokens des LLM.",
+    en: "Full-stack research interface for exploring token embeddings from transformer models as interactive 3D UMAP projections. It supports GPT-2, BERT, RoBERTa, and custom Hugging Face models, with token search, nearest-neighbor analysis, pairwise comparison, and JSON export. A FastAPI backend manages model-keyed LRU and projection caches while React and Three.js render up to 6,000 projected tokens.",
+    fr: "Interface de recherche complète pour explorer les représentations vectorielles de tokens issues de modèles Transformer sous forme de projections UMAP 3D interactives. Elle prend en charge GPT-2, BERT, RoBERTa et des modèles Hugging Face personnalisés, avec recherche de tokens, analyse des plus proches voisins, comparaison par paire et export JSON. Un backend FastAPI gère les caches LRU par modèle et les projections, tandis que React et Three.js affichent jusqu’à 6 000 tokens projetés.",
   },
   {
     name: "overlord-discord-bot",
@@ -147,8 +147,8 @@ export const projects: {
     tech: "Python · BeautifulSoup · Requests",
     href: "https://github.com/pittcsc/PittAPI",
     accent: "emerald",
-    en: "Open-source Python library (100+ stars, on PyPI) for programmatic access to Pitt course, dining, library, and shuttle data. Shipped full study room reservation support end-to-end.",
-    fr: "Bibliothèque Python open-source (100+ étoiles, sur PyPI) pour un accès programmatique aux données de cours, restauration, bibliothèque et navettes de Pitt. Ajout complet de la réservation de salles d'étude, de bout en bout.",
+    en: "Open-source Python library (100+ GitHub stars) for programmatic access to Pitt course, dining, library, and shuttle data. Shipped full study room reservation support end-to-end.",
+    fr: "Bibliothèque Python open-source (100+ étoiles GitHub) pour un accès programmatique aux données de cours, restauration, bibliothèque et navettes de Pitt. Ajout complet de la réservation de salles d'étude, de bout en bout.",
   },
 ];
 

@@ -276,12 +276,18 @@ a { color: inherit; }
   background: linear-gradient(180deg, transparent 55%, rgba(2, 9, 15, 0.78));
 }
 
+/* One scale for every metric, so a small card can't out-shout a featured one.
+   The old value topped out at 4.7rem, which dwarfed the featured cards. */
 .metric {
   font-family: Georgia, "Times New Roman", serif;
   color: white;
-  font-size: clamp(2.6rem, 5vw, 4.7rem);
-  letter-spacing: -0.05em;
-  line-height: 0.9;
+  font-size: clamp(1.85rem, 3.2vw, 2.4rem);
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.metric-lg {
+  font-size: clamp(2.05rem, 3.6vw, 2.75rem);
 }
 
 .project-index {
