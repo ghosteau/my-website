@@ -87,7 +87,7 @@ function ResumeSection({
 export default function Resume() {
   const [lang] = useLang();
   const c = copy[lang];
-  const selectedProjects = [projects[0], projects[1], projects[5]];
+  const selectedProjects = [projects[1], projects[2], projects[0], projects[5]];
 
   return (
     <main className="site-canvas text-white">
