@@ -22,9 +22,28 @@ export const experience: {
   fr: { role: string; bullets: string[] };
 }[] = [
   {
+    period: "Aug 2026 – Present",
+    org: "Pitt School of Computing",
+    accent: "teal",
+    en: {
+      role: "Undergraduate Researcher — Computer Vision",
+      bullets: [
+        "Studying how CLIP, Janus, and other vision-language models interact with board games.",
+        "Probing what these models actually recover from a board position, and where their visual representations fall short.",
+      ],
+    },
+    fr: {
+      role: "Chercheur de premier cycle — vision par ordinateur",
+      bullets: [
+        "Étude de la façon dont CLIP, Janus et d'autres modèles vision-langage interagissent avec les jeux de plateau.",
+        "Analyse de ce que ces modèles parviennent réellement à extraire d'une position de jeu, et des limites de leurs représentations visuelles.",
+      ],
+    },
+  },
+  {
     period: "May 2025 – Aug 2025 · May 2026 – Aug 2026",
     org: "Bank of New York (BNY)",
-    accent: "teal",
+    accent: "cyan",
     en: {
       role: "Engineering Intern",
       bullets: [
@@ -47,7 +66,7 @@ export const experience: {
   {
     period: "Sept 2024 – Dec 2026",
     org: "University of Pittsburgh Athletics",
-    accent: "cyan",
+    accent: "emerald",
     en: {
       role: "Data Engineering Intern",
       bullets: [
@@ -68,7 +87,7 @@ export const experience: {
   {
     period: "Sept 2024 – June 2025",
     org: "Pitt School of Computing",
-    accent: "emerald",
+    accent: "teal",
     en: {
       role: "Undergraduate Researcher — NLP & AI",
       bullets: [
