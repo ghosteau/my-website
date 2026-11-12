@@ -76,9 +76,9 @@ export function ConnectionsGraph({ lang }: { lang: "en" | "fr" }) {
           <line
             key={`${a}-${b}`}
             x1={p.x} y1={p.y} x2={q.x} y2={q.y}
-            stroke="#34c3df"
+            stroke="var(--signal)"
             strokeWidth="1"
-            strokeOpacity="0.32"
+            strokeOpacity="0.4"
             strokeDasharray={len}
             strokeDashoffset={on ? 0 : len}
             style={{ transition: `stroke-dashoffset 0.7s cubic-bezier(0.4,0,0.2,1) ${260 + i * 85}ms` }}
@@ -94,19 +94,19 @@ export function ConnectionsGraph({ lang }: { lang: "en" | "fr" }) {
             opacity: on ? 1 : 0,
             transform: on ? "scale(1)" : "scale(0.6)",
             transformOrigin: `${n.x}px ${n.y}px`,
-            transition: `opacity 0.5s ease ${i * 90}ms, transform 0.5s cubic-bezier(0.34,1.4,0.5,1) ${i * 90}ms`,
+            transition: `opacity 0.5s ease ${i * 90}ms, transform 0.5s cubic-bezier(0.22,1,0.36,1) ${i * 90}ms`,
           }}
         >
-          <circle cx={n.x} cy={n.y} r={n.hub ? 6 : 4.5} fill="#040b14" stroke="#72dff4" strokeWidth="1.5" />
-          {n.hub && <circle cx={n.x} cy={n.y} r="2" fill="#72dff4" />}
+          <circle cx={n.x} cy={n.y} r={n.hub ? 6 : 4.5} fill="var(--canvas)" stroke="var(--signal)" strokeWidth="1.5" />
+          {n.hub && <circle cx={n.x} cy={n.y} r="2" fill="var(--signal)" />}
           <text
             x={n.x}
             y={n.y - 13}
             textAnchor="middle"
             className="font-mono"
             fontSize="11.5"
-            fill="#ffffff"
-            fillOpacity="0.62"
+            fill="var(--ink)"
+            fillOpacity="0.78"
           >
             {n[lang]}
           </text>

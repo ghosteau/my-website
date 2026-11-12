@@ -3,19 +3,24 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint ."
+    "dev": "node scripts/check-node.mjs && next dev",
+    "build": "node scripts/check-node.mjs && next build",
+    "start": "node scripts/check-node.mjs && next start",
+    "lint": "eslint .",
+    "test:runtime": "node --test scripts/check-node.test.mjs"
   },
   "dependencies": {
-    "next": "^15.3.3",
+    "@mdx-js/loader": "^3.1.1",
+    "@mdx-js/react": "^3.1.1",
+    "@next/mdx": "^15.5.29",
+    "next": "^15.5.29",
     "react": "^19.1.0",
     "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.5",
     "@tailwindcss/postcss": "^4.1.8",
+    "@types/mdx": "^2.0.14",
     "@types/node": "^20.17.50",
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.5",
@@ -23,5 +28,8 @@
     "eslint-config-next": "^16.2.9",
     "tailwindcss": "^4.1.8",
     "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=24.22.1 <25"
   }
 }

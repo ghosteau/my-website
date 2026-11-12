@@ -18,6 +18,7 @@ export function useLang(): [Lang, (l: Lang) => void, () => void] {
     const read = () => {
       const next = (localStorage.getItem(KEY) as Lang) || "en";
       setLangState(next === "fr" ? "fr" : "en");
+      document.documentElement.lang = next === "fr" ? "fr" : "en";
     };
     // Adopt the stored language after mount, once hydration has settled.
     read();
@@ -61,9 +62,9 @@ export function LangToggle({
       title={lang === "en" ? "Passer au français" : "Switch to English"}
       className={`group relative flex items-center gap-1 rounded-full border border-turq-400/20 bg-turq-400/[0.04] px-2.5 py-1.5 font-mono text-[10px] uppercase tracking-[0.13em] transition-all duration-200 hover:border-turq-300/55 hover:bg-turq-400/[0.09] ${className}`}
     >
-      <span className={lang === "en" ? "text-turq-300" : "text-white/30"}>EN</span>
-      <span className="text-white/15">/</span>
-      <span className={lang === "fr" ? "text-turq-300" : "text-white/30"}>FR</span>
+      <span className={lang === "en" ? "text-teal-800" : "text-ink/65"}>EN</span>
+      <span className="text-ink/15">/</span>
+      <span className={lang === "fr" ? "text-teal-800" : "text-ink/65"}>FR</span>
     </button>
   );
 }

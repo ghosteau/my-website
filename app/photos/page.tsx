@@ -4,7 +4,6 @@ import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLang, type Lang } from "../components/lang";
 import { SiteNav } from "../components/nav";
-import { PixelGhost, PixelSparkle } from "../components/sprites";
 
 const copy = {
   en: {
@@ -32,7 +31,7 @@ type Moment = {
   fit?: "cover" | "contain";
   en: { caption: string; date: string; blurb: string };
   fr: { caption: string; date: string; blurb: string };
-  tags: { key: string; emoji: string; en: string; fr: string }[];
+  tags: { key: string; en: string; fr: string }[];
 };
 
 const moments: Moment[] = [
@@ -62,10 +61,10 @@ const moments: Moment[] = [
         "Pendant cinq mois, l’Île-de-France est devenue mon quotidien. Cergy était mon point d’ancrage ; Paris, mon horizon plus large—le RER vers l’ENSEA, les longues marches après les cours, de mauvaises directions, de meilleures conversations et une liste toujours plus longue de lieux à comprendre plutôt qu’à simplement photographier.",
     },
     tags: [
-      { key: "france", emoji: "🇫🇷", en: "France", fr: "France" },
-      { key: "architecture", emoji: "🏛️", en: "Architecture", fr: "Architecture" },
-      { key: "history", emoji: "📜", en: "History", fr: "Histoire" },
-      { key: "montaigne", emoji: "✒️", en: "Montaigne", fr: "Montaigne" },
+      { key: "france", en: "France", fr: "France" },
+      { key: "architecture", en: "Architecture", fr: "Architecture" },
+      { key: "history", en: "History", fr: "Histoire" },
+      { key: "montaigne", en: "Montaigne", fr: "Montaigne" },
     ],
   },
   {
@@ -94,10 +93,10 @@ const moments: Moment[] = [
         "Du monument rappelant le débarquement de Bonaparte à Saint-Raphaël jusqu’aux hauteurs des Calanques, au Palais des Papes d’Avignon et à la côte de Villefranche-sur-Mer et de Nice. L’histoire était partout, mais la lumière aussi—ce qui explique sans doute le nombre déraisonnable de photos rapportées.",
     },
     tags: [
-      { key: "france", emoji: "🇫🇷", en: "France", fr: "France" },
-      { key: "mediterranean", emoji: "🌊", en: "Mediterranean", fr: "Méditerranée" },
-      { key: "history", emoji: "📜", en: "History", fr: "Histoire" },
-      { key: "grand-tour", emoji: "🧭", en: "Grand Tour", fr: "Grand Tour" },
+      { key: "france", en: "France", fr: "France" },
+      { key: "mediterranean", en: "Mediterranean", fr: "Méditerranée" },
+      { key: "history", en: "History", fr: "Histoire" },
+      { key: "grand-tour", en: "Grand Tour", fr: "Grand Tour" },
     ],
   },
   {
@@ -124,10 +123,10 @@ const moments: Moment[] = [
         "Un bref voyage en mars, et non un lieu où j’ai vécu—ce qui explique peut-être la netteté du souvenir : le Nordiska museet, le Palais royal, le Riksdag, Karl XII au-dessus de Kungsträdgården et Riddarholmen illuminé sur la glace brisée.",
     },
     tags: [
-      { key: "sweden", emoji: "🇸🇪", en: "Sweden", fr: "Suède" },
-      { key: "architecture", emoji: "🏛️", en: "Architecture", fr: "Architecture" },
-      { key: "history", emoji: "📜", en: "History", fr: "Histoire" },
-      { key: "winter", emoji: "❄️", en: "Winter", fr: "Hiver" },
+      { key: "sweden", en: "Sweden", fr: "Suède" },
+      { key: "architecture", en: "Architecture", fr: "Architecture" },
+      { key: "history", en: "History", fr: "Histoire" },
+      { key: "winter", en: "Winter", fr: "Hiver" },
     ],
   },
   {
@@ -150,10 +149,10 @@ const moments: Moment[] = [
       blurb: "Je suis entré au Parlement curieux de l’institution et j’en suis ressorti en réfléchissant à la langue, à la mémoire et à la manière singulière dont le Québec raconte sa propre histoire. La ville rend ces questions concrètes : l’histoire politique, le français dans la vie publique et une culture pleinement distincte.",
     },
     tags: [
-      { key: "quebec", emoji: "⚜️", en: "Québec", fr: "Québec" },
-      { key: "canada", emoji: "🍁", en: "Canada", fr: "Canada" },
-      { key: "french", emoji: "🗣️", en: "French", fr: "Français" },
-      { key: "government", emoji: "🏛️", en: "Government", fr: "Gouvernement" },
+      { key: "quebec", en: "Québec", fr: "Québec" },
+      { key: "canada", en: "Canada", fr: "Canada" },
+      { key: "french", en: "French", fr: "Français" },
+      { key: "government", en: "Government", fr: "Gouvernement" },
     ],
   },
   {
@@ -176,10 +175,10 @@ const moments: Moment[] = [
       blurb: "Un froid limpide sur le mont Mansfield : du givre sur les rampes, des traces fraîches et le drapeau américain au-dessus des nuages. Le ski est l’une des rares activités qui vide complètement l’esprit—il ne reste que la montagne et le prochain virage.",
     },
     tags: [
-      { key: "usa", emoji: "🇺🇸", en: "United States", fr: "États-Unis" },
-      { key: "skiing", emoji: "⛷️", en: "Skiing", fr: "Ski" },
-      { key: "vermont", emoji: "🏔️", en: "Vermont", fr: "Vermont" },
-      { key: "winter", emoji: "❄️", en: "Winter", fr: "Hiver" },
+      { key: "usa", en: "United States", fr: "États-Unis" },
+      { key: "skiing", en: "Skiing", fr: "Ski" },
+      { key: "vermont", en: "Vermont", fr: "Vermont" },
+      { key: "winter", en: "Winter", fr: "Hiver" },
     ],
   },
   {
@@ -198,13 +197,33 @@ const moments: Moment[] = [
         "Au mémorial de Rochambeau—le général français qui a aidé l’Amérique à gagner son indépendance—et au Capitole. Un bel arrêt pour quelqu’un avec des attaches des deux côtés de l’Atlantique (et oui, aux couleurs de Pitt).",
     },
     tags: [
-      { key: "usa", emoji: "🇺🇸", en: "United States", fr: "États-Unis" },
-      { key: "franco-american", emoji: "🤝", en: "Franco-American history", fr: "Histoire franco-américaine" },
-      { key: "history", emoji: "📜", en: "History", fr: "Histoire" },
-      { key: "pitt", emoji: "💙", en: "Pitt", fr: "Pitt" },
+      { key: "usa", en: "United States", fr: "États-Unis" },
+      { key: "franco-american", en: "Franco-American history", fr: "Histoire franco-américaine" },
+      { key: "history", en: "History", fr: "Histoire" },
+      { key: "pitt", en: "Pitt", fr: "Pitt" },
     ],
   },
 ];
+
+// Keep the current photo visible until its replacement has fully decoded.
+function PhotoFrame({ src, alt, fitClass }: { src: string; alt: string; fitClass: string }) {
+  const [frame, setFrame] = useState({ src, alt, previous: "" });
+  useEffect(() => {
+    let cancelled = false;
+    const next = new window.Image();
+    next.src = src;
+    next.decode().then(() => {
+      if (!cancelled) setFrame(current => current.src === src ? current : { src, alt, previous: current.src });
+    }).catch(() => { /* Retain the last usable image if the next request fails. */ });
+    return () => { cancelled = true; };
+  }, [src, alt]);
+
+  return <>
+    {frame.previous && <img src={frame.previous} alt="" aria-hidden draggable={false} className={"absolute inset-0 h-full w-full pointer-events-none " + fitClass} /> /* eslint-disable-line @next/next/no-img-element */}
+    {/* eslint-disable-next-line @next/next/no-img-element */}
+    <img key={frame.src} src={frame.src} alt={frame.alt} draggable={false} decoding="async" className={"photo-enter relative block h-full w-full pointer-events-none " + fitClass} />
+  </>;
+}
 
 function MomentViewer({
   moment,
@@ -262,29 +281,24 @@ function MomentViewer({
             if (event.key === "ArrowRight") go(1);
           }}
           tabIndex={0}
-          className="photo-stage surface group relative w-full min-w-0 max-w-full select-none rounded-[1.15rem] focus:outline-none sm:rounded-[1.5rem]"
+          className="photo-stage inverse-surface surface group relative w-full min-w-0 max-w-full select-none rounded-[1.15rem] focus:outline-none sm:rounded-[1.5rem]"
           style={{ touchAction: "pan-y", aspectRatio: moment.aspect ?? "4 / 3" }}
           role="group"
           aria-label={moment[lang].caption}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            key={moment.images[index]}
+          <PhotoFrame
             src={moment.images[index]}
             alt={moment.photoAlt + " " + String(index + 1) + "/" + String(count)}
-            draggable={false}
-            loading="eager"
-            decoding="async"
-            className={"photo-enter block h-full w-full min-w-0 max-w-full pointer-events-none " + fitClass}
+            fitClass={fitClass}
           />
           <div className="pointer-events-none absolute inset-x-3 bottom-3 z-10 flex items-end justify-between gap-3 sm:inset-x-5 sm:bottom-5 sm:gap-4">
-            <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-white/72">
+            <p className="font-mono text-[10px] uppercase tracking-[0.15em] text-ink/72">
               {moment[lang].caption}
             </p>
             <span
               aria-atomic="true"
               aria-live="polite"
-              className="rounded-full border border-white/15 bg-[#040b14]/60 px-2.5 py-1 font-mono text-[10px] text-white/70 backdrop-blur-md"
+              className="rounded-full border border-ink/15 bg-[#040b14]/60 px-2.5 py-1 font-mono text-[10px] text-ink/70 backdrop-blur-md"
             >
               {String(index + 1).padStart(2, "0")} / {String(count).padStart(2, "0")}
             </span>
@@ -299,7 +313,7 @@ function MomentViewer({
                 onPointerUp={(event) => event.stopPropagation()}
                 disabled={index === 0}
                 aria-label="Previous photo"
-                className="absolute left-2 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-[#040b14]/72 text-lg text-white/85 opacity-100 backdrop-blur-md transition-all enabled:hover:border-turq-300/50 enabled:hover:text-turq-200 disabled:hidden sm:left-4 sm:h-11 sm:w-11 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
+                className="absolute left-2 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-ink/15 bg-[#040b14]/72 text-lg text-ink/85 opacity-100 backdrop-blur-md transition-all enabled:hover:border-turq-300/50 enabled:hover:text-teal-800 disabled:hidden sm:left-4 sm:h-11 sm:w-11 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
               >
                 ←
               </button>
@@ -310,7 +324,7 @@ function MomentViewer({
                 onPointerUp={(event) => event.stopPropagation()}
                 disabled={index === count - 1}
                 aria-label="Next photo"
-                className="absolute right-2 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-[#040b14]/72 text-lg text-white/85 opacity-100 backdrop-blur-md transition-all enabled:hover:border-turq-300/50 enabled:hover:text-turq-200 disabled:hidden sm:right-4 sm:h-11 sm:w-11 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
+                className="absolute right-2 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-ink/15 bg-[#040b14]/72 text-lg text-ink/85 opacity-100 backdrop-blur-md transition-all enabled:hover:border-turq-300/50 enabled:hover:text-teal-800 disabled:hidden sm:right-4 sm:h-11 sm:w-11 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
               >
                 →
               </button>
@@ -328,32 +342,31 @@ function MomentViewer({
                   onClick={() => setIndex(imageIndex)}
                   aria-label={"Photo " + String(imageIndex + 1)}
                   aria-current={imageIndex === index ? "true" : undefined}
-                  className={"relative h-14 w-20 shrink-0 snap-start overflow-hidden rounded-lg border transition-all " + (imageIndex === index ? "border-turq-300/65 opacity-100" : "border-white/10 opacity-45 hover:opacity-80")}
+                  className={"relative h-14 w-20 shrink-0 snap-start overflow-hidden border transition-[opacity,border-color,box-shadow] duration-200 " + (imageIndex === index ? "border-[var(--signal)] opacity-100 ring-1 ring-[var(--signal)]" : "border-ink/15 opacity-55 hover:opacity-90")}
                 >
                   <Image
                     src={src}
                     alt=""
                     fill
                     sizes="80px"
-                    quality={72}
+                    quality={90}
                     className="object-cover"
                   />
                 </button>
               ))}
             </div>
-            <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.14em] text-white/28">{hint}</p>
+            <p className="mt-2 font-mono text-[9px] uppercase tracking-[0.14em] text-ink/75">{hint}</p>
           </div>
         )}
       </div>
 
       <aside className="surface min-w-0 rounded-[1.15rem] p-5 sm:rounded-[1.4rem] sm:p-7 lg:sticky lg:top-24 lg:p-8">
         <p className="eyebrow">{moment[lang].date}</p>
-        <h2 className="editorial-title mt-5 text-4xl leading-[1.02] text-white">{moment[lang].caption}</h2>
-        <p className="mt-6 text-sm font-light leading-7 text-white/58">{moment[lang].blurb}</p>
-        <div className="mt-8 flex flex-wrap gap-2 border-t border-white/[0.08] pt-6">
+        <h2 className="editorial-title mt-5 text-4xl leading-[1.02] text-ink">{moment[lang].caption}</h2>
+        <p className="mt-6 text-sm font-normal leading-7 text-ink/75">{moment[lang].blurb}</p>
+        <div className="mt-8 flex flex-wrap gap-2 border-t border-ink/[0.08] pt-6">
           {moment.tags.map((tag) => (
             <span key={tag.key} className="chip gap-2">
-              <span aria-hidden className="text-sm leading-none">{tag.emoji}</span>
               {tag[lang]}
             </span>
           ))}
@@ -370,28 +383,29 @@ export default function Photos() {
   const active = moments[activeMoment];
 
   return (
-    <main className="site-canvas text-white">
+    <main className="site-canvas text-ink">
       <div className="site-noise" aria-hidden />
       <SiteNav />
 
-      <section className="content-rail page-enter relative z-10 pb-24 pt-32 md:pt-40">
-        <div className="grid items-end gap-8 border-b border-white/[0.08] pb-10 md:grid-cols-[1fr_.7fr]">
+      <section className="content-rail page-enter relative z-10 pb-24 pt-14 md:pt-16">
+        <div className="grid items-end gap-8 border-b border-ink/[0.08] pb-10 md:grid-cols-[1fr_.7fr]">
           <div>
             <p className="eyebrow">{c.kicker} / visual archive</p>
             <h1 className="editorial-title mt-5 text-5xl sm:text-6xl md:text-8xl">{c.title}</h1>
           </div>
-          <p className="max-w-xl text-sm leading-7 text-white/55 md:justify-self-end">{c.intro}</p>
+          <p className="max-w-xl text-sm leading-7 text-ink/75 md:justify-self-end">{c.intro}</p>
         </div>
 
         <div className="mt-8">
-          <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.16em] text-white/28">{c.choose}</p>
+          <p className="mb-3 font-mono text-[9px] uppercase tracking-[0.16em] text-ink/75">{c.choose}</p>
           <div className="gallery-strip flex snap-x snap-mandatory gap-2 overflow-x-auto pb-3">
             {moments.map((moment, index) => (
               <button
                 type="button"
                 key={moment.images[0]}
                 onClick={() => setActiveMoment(index)}
-                className={"shrink-0 snap-start rounded-full border px-4 py-2 text-xs transition-all " + (index === activeMoment ? "border-turq-300/55 bg-turq-300/[0.09] text-turq-100" : "border-white/10 text-white/45 hover:border-white/20 hover:text-white/75")}
+                aria-pressed={index === activeMoment}
+                className="photo-place shrink-0 snap-start transition-colors"
               >
                 {moment[lang].caption}
               </button>
@@ -403,10 +417,8 @@ export default function Photos() {
           <MomentViewer key={active.images[0]} moment={active} lang={lang} hint={c.hint} />
         </div>
 
-        <div className="mt-16 flex items-center gap-3 border-t border-white/[0.07] pt-8">
-          <PixelSparkle className="w-4 animate-twinkle opacity-70" />
-          <p className="text-sm text-white/45">{c.more}</p>
-          <PixelGhost className="ml-auto w-7 opacity-55" />
+        <div className="mt-16 flex items-center gap-3 border-t border-ink/[0.07] pt-8">
+          <p className="text-sm text-ink/75">{c.more}</p>
         </div>
       </section>
     </main>

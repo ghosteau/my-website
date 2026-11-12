@@ -28,15 +28,17 @@ export const experience: {
     en: {
       role: "Undergraduate Researcher — Computer Vision",
       bullets: [
-        "Studying how CLIP, Janus, and other vision-language models interact with board games.",
-        "Probing what these models actually recover from a board position, and where their visual representations fall short.",
+        "Investigating whether vision-language models such as OpenAI’s CLIP recognize a record label’s visual identity in its album covers, or are really responding to genre, decade, or one designer the label kept hiring.",
+        "Built the dataset from open sources: 8,783 albums across 24 labels from MusicBrainz, with covers from the Cover Art Archive and album descriptions from Wikipedia.",
+        "Comparing CLIP with generative models like Qwen2.5-VL against shuffled-label baselines, with label names masked from all text so a model can’t simply read the answer.",
       ],
     },
     fr: {
       role: "Chercheur de premier cycle — vision par ordinateur",
       bullets: [
-        "Étude de la façon dont CLIP, Janus et d'autres modèles vision-langage interagissent avec les jeux de plateau.",
-        "Analyse de ce que ces modèles parviennent réellement à extraire d'une position de jeu, et des limites de leurs représentations visuelles.",
+        "Étude visant à déterminer si des modèles vision-langage comme CLIP d’OpenAI reconnaissent l’identité visuelle d’un label à travers ses pochettes d’album, ou s’ils réagissent plutôt au genre, à la décennie ou à un graphiste que le label engageait régulièrement.",
+        "Constitution du jeu de données à partir de sources ouvertes : 8 783 albums de 24 labels issus de MusicBrainz, avec les pochettes du Cover Art Archive et des descriptions d’albums tirées de Wikipédia.",
+        "Comparaison de CLIP et de modèles génératifs comme Qwen2.5-VL à des références où les labels sont attribués au hasard, les noms de labels étant masqués dans tous les textes pour qu’un modèle ne puisse pas simplement lire la réponse.",
       ],
     },
   },
@@ -113,6 +115,8 @@ export const projects: {
   tech: string;
   href: string;
   accent: Accent;
+  /** Timeline as stated on the résumé PDF; omitted where the résumé doesn't list one. */
+  dates?: { en: string; fr: string };
   en: string;
   fr: string;
   links?: { label: string; href: string }[];
@@ -122,6 +126,7 @@ export const projects: {
     tech: "C++ · CUDA · PyBind11 · Python",
     href: "https://github.com/ghosteau/fastdist",
     accent: "teal",
+    dates: { en: "Dec 2025 – Present", fr: "Déc. 2025 – aujourd’hui" },
     en: "High-performance ABI for probabilistic computation in C++ and Python. ~2.5x GPU speedup over standard libraries via optimized kernel execution.",
     fr: "ABI haute performance pour le calcul probabiliste en C++ et Python. Accélération GPU d'environ 2,5x par rapport aux bibliothèques standard grâce à des noyaux optimisés.",
   },
@@ -130,6 +135,7 @@ export const projects: {
     tech: "Java · Python · PyTorch · ONNX · SpigotAPI",
     href: "https://github.com/ghosteau/generative-terrain",
     accent: "cyan",
+    dates: { en: "June 2025 – Present", fr: "Juin 2025 – aujourd’hui" },
     en: "Spatial Terrain Engineering & Voxel Embedding — a conditional VAE that generates complete 16 × 384 × 16 Minecraft chunks in one ONNX forward pass. Its 4.6M-parameter U-Net learns from roughly 200M voxels across 22 biomes, while a lightweight FiLM system lets people fine-tune new terrain styles without retraining the base model.",
     fr: "Spatial Terrain Engineering & Voxel Embedding — un VAE conditionnel qui génère des chunks Minecraft complets de 16 × 384 × 16 en un seul passage ONNX. Son U-Net de 4,6 millions de paramètres apprend sur environ 200 millions de voxels répartis entre 22 biomes, tandis qu’un système FiLM léger permet d’ajuster de nouveaux styles sans réentraîner le modèle de base.",
     links: [
@@ -166,6 +172,7 @@ export const projects: {
     tech: "Python · BeautifulSoup · Requests",
     href: "https://github.com/pittcsc/PittAPI",
     accent: "emerald",
+    dates: { en: "May 2024 – Present", fr: "Mai 2024 – aujourd’hui" },
     en: "Open-source Python library (100+ GitHub stars) for programmatic access to Pitt course, dining, library, and shuttle data. Shipped full study room reservation support end-to-end.",
     fr: "Bibliothèque Python open-source (100+ étoiles GitHub) pour un accès programmatique aux données de cours, restauration, bibliothèque et navettes de Pitt. Ajout complet de la réservation de salles d'étude, de bout en bout.",
   },
@@ -351,3 +358,18 @@ export const games: { key: string; label: string }[] = [
 ];
 
 export const SPOTIFY_ALBUM_ID = "05v0il6BwD1Pge2k69NQVa";
+
+/* ── newsletter ──
+   Leave `provider` null until a list exists: the signup block then says the
+   newsletter is coming and points to RSS instead of showing a form that
+   goes nowhere. To launch, set one of:
+     { provider: "substack",   handle: "yourname" }  → yourname.substack.com
+     { provider: "buttondown", handle: "yourname" }  → buttondown.com/yourname */
+export const newsletter: { provider: "substack" | "buttondown" | null; handle: string } = {
+  provider: "substack",
+  handle: "fantomee",
+};
+
+/* ── video ──
+   Null until the channel exists; the /watch page shows "coming soon". */
+export const youtubeChannel: string | null = null;
