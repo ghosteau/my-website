@@ -20,7 +20,7 @@ npm run dev
 
 Open **http://localhost:3000**.
 
-> **Node version:** Built and tested on Node 20+. Check yours with `node --version`.
+> **Node version:** Built and tested on Node.js 24.22.1+ (24.x; pinned in `.nvmrc`). Check yours with `node --version`.
 
 ---
 
@@ -48,13 +48,26 @@ app/
     page.tsx              # /resume — full CV, bilingual, browser-printable
   blog/
     page.tsx              # /blog — post index
-    generative-ai/
-      page.tsx            # /blog/generative-ai — essay: generative AI & deep learning
+    posts.ts              # Essay index: slug, dates, titles, blurbs (EN + FR)
+    essay-layout.tsx      # Shared essay page chrome + newsletter block
+    [slug]/page.tsx       # /blog/<slug> — renders content/essays/<slug>.mdx
+  feed.xml/route.ts       # /feed.xml — RSS 2.0, generated from posts.ts at build time
+  watch/
+    page.tsx              # /watch — video essays & tutorials ("coming soon" until a channel exists)
   photos/
     page.tsx              # /photos — photo journal (swipeable moment carousel)
   components/
     sprites.tsx           # All pixel-art: flags, ghost, game sprites, Manny avatar
     lang.tsx              # useLang() hook + EN/FR toggle pill component
+    disclosure.tsx        # Animated expand/collapse rows (experience, details, player)
+    newsletter.tsx        # Signup block; reads `newsletter` from content.ts
+
+content/
+  essays/
+    *.mdx                 # Essay bodies, written in Markdown
+    index.tsx             # slug → essay registry
+
+mdx-components.tsx        # Components available in every essay: <EssayNote>, <YouTube>
 
 public/
   photos/
@@ -228,9 +241,42 @@ Sections (in order):
 Full bilingual CV. Reads experience, projects, and courses from `content.ts` (same data as home page). Links to the real PDF at `public/resume.pdf` (Download PDF button in the nav and header).
 
 ### `/blog`
-Post index. Each post lives at its own route (e.g. `app/blog/generative-ai/page.tsx`)
-and gets a card on the index with tags, date, and a blurb. Post content is in English
-with an `EN` tag; the surrounding UI stays bilingual.
+The notebook index. Essays are Markdown (MDX) files; the page chrome, the
+listing, the homepage "From the notebook" rows, and the RSS feed all come from
+`app/blog/posts.ts`. An essay keeps the language it was written in, while the
+interface around it follows the EN/FR toggle.
+
+#### Publishing an essay
+
+1. Write `content/essays/<slug>.mdx`. Plain Markdown works: paragraphs, `*italics*`,
+   `[links](https://…)` (external links open in a new tab), `## headings`, lists,
+   `> quotes`, code blocks. Two extra components are available without imports:
+   ```mdx
+   <EssayNote>Sources, or the context the essay was written in.</EssayNote>
+   <YouTube id="VIDEO_ID" title="What the video is" />
+   ```
+   Use `&nbsp;` for French non-breaking spaces (`54&nbsp;%`, `«&nbsp;…&nbsp;»`).
+   Avoid bare `{`, `}` and `<` in prose — MDX reads them as code.
+2. Register it in `content/essays/index.tsx` (one import + one line).
+3. Add its entry at the top of `app/blog/posts.ts`: `slug`, ISO `published` date,
+   display dates, `postLang`, tags, and EN/FR title, subtitle, and blurb.
+
+It then appears at `/blog/<slug>`, on `/blog`, on the homepage, and in `/feed.xml`,
+with its own page title, description, and canonical URL.
+
+### Newsletter
+`newsletter` in `app/content.ts` controls the signup block at the end of every
+essay, on `/blog`, and on `/watch`. While `provider` is `null` it says the
+newsletter is coming and links the RSS feed. To launch, set
+`{ provider: "substack", handle: "<name>" }` (links to the Substack subscribe page)
+or `{ provider: "buttondown", handle: "<name>" }` (renders an inline email form,
+tagged `en` or `fr` by the reader's language). Either service can import
+`https://mannymcgrail.com/feed.xml` to send new essays automatically.
+
+### `/watch`
+Placeholder for video essays and tutorials. Set `youtubeChannel` in
+`app/content.ts` to the channel URL to show a link; embed individual videos in
+essays with `<YouTube>`.
 
 ### `/photos`
 Photo journal built around "moments" — a moment is a set of photos sharing one
@@ -277,4 +323,23 @@ Open a PR from `develop → main` on GitHub when a batch of changes is ready.
 
 - [ ] Add an OG image (`public/og.png`) for richer social previews — currently only text metadata is set
 - [ ] Add photo of myself so people can see what I look like without going to LinkedIn
-- [ ] Make a way to subscribe to an emailing list for blogs and moments, potentially even create way to subscribe to different tags
+- [x] Newsletter: Substack at [fantomee.substack.com](https://fantomee.substack.com), wired up via `newsletter` in `app/content.ts`
+- [ ] In Substack settings, import `https://mannymcgrail.com/feed.xml` (or cross-post new essays) once the site is deployed
+- [ ] Launch the YouTube channel and set `youtubeChannel` in `app/content.ts`
+
+
+## Node runtime security baseline
+
+Use Node 24.22.2 from `.nvmrc`. Node 24.22.1 is the minimum supported patch in this project; CI reads the same pin. Installs reject unsupported runtimes, and npm dev/build/start check the running interpreter. Direct invocations of Next bypass the npm lifecycle checks.
+
+CVE-2026-111497 affects the Brotli decoder in Node itself. Updating Next.js or the lockfile does not patch a running Node process. See the [official advisory](https://nodejs.org/en/blog/vulnerability/october-2026-security-releases) and [fixed Node 24 release](https://nodejs.org/en/blog/release/v24.22.1/).
+
+### Existing DigitalOcean service
+
+1. Identify the application process, process manager, installation method, and actual executable (`readlink -f /proc/<PID>/exe` on Linux). Record the service configuration and current deployment for recovery.
+2. Install a supported patched Node runtime using that installation method. For nvm-managed deployments, use `nvm install` and `nvm use` in the checkout; system packages need the distributor’s security advisory. Containers require a patched base image and rebuild.
+3. Ensure the service or PM2 configuration uses the new binary. Run `npm ci`, `npm run test:runtime`, and `npm run build` with that binary.
+4. Restart the actual application through its existing process manager. Do not guess a systemd service name or restart unrelated apps.
+5. Inspect the new PID, its executable, and that executable’s `--version`; check application logs, the home page, an article, photos, and local image optimization. A new shell reporting a patched Node version does not establish that an old service process was restarted.
+
+The droplet runtime and restart must be verified separately; repository version pins are not proof that production is patched. Do not strip `Content-Encoding` while forwarding compressed bytes as a substitute for updating the decoder.

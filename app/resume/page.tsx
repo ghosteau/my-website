@@ -8,7 +8,7 @@ import { courses, experience, projects } from "../content";
 const copy = {
   en: {
     kicker: "résumé / curriculum vitae",
-    title: "Engineer, builder, research-minded generalist.",
+    title: "Emmanuel McGrail",
     summary:
       "Data Science and Computer Science student at the University of Pittsburgh, pursuing a French minor and graduating in Spring 2027. Two summers engineering at BNY, production data work with Pitt Athletics, and undergraduate AI research—with a focus on machine learning, systems, and high-performance computing.",
     download: "Download PDF",
@@ -23,6 +23,7 @@ const copy = {
         name: "University of Pittsburgh",
         degree: "B.S. Data Science · B.S. Computer Science · Minor in French",
         meta: "Pittsburgh, PA · GPA 3.76 · Spring 2027",
+        note: "Planning an M.S. in Computer Science or Data Science, starting Fall 2027.",
       },
       {
         name: "ENSEA",
@@ -36,7 +37,7 @@ const copy = {
   },
   fr: {
     kicker: "CV / parcours",
-    title: "Ingénieur, créateur et généraliste tourné vers la recherche.",
+    title: "Emmanuel McGrail",
     summary:
       "Étudiant en science des données et informatique à l’Université de Pittsburgh, avec une mineure en français et un diplôme prévu au printemps 2027. Deux étés en ingénierie chez BNY, des systèmes de données en production pour Pitt Athletics et une expérience de recherche de premier cycle en IA—avec un intérêt marqué pour l’apprentissage automatique, les systèmes et le calcul haute performance.",
     download: "Télécharger le PDF",
@@ -51,6 +52,7 @@ const copy = {
         name: "Université de Pittsburgh",
         degree: "Licence en science des données · Licence en informatique · Mineure en français",
         meta: "Pittsburgh, PA · Moyenne 3,76 · Printemps 2027",
+        note: "Master envisagé en informatique ou en science des données, à partir de l’automne 2027.",
       },
       {
         name: "ENSEA",
@@ -74,10 +76,10 @@ function ResumeSection({
   children: React.ReactNode;
 }) {
   return (
-    <section className="border-t border-white/[0.09] py-10 md:grid md:grid-cols-[11rem_1fr] md:gap-10 md:py-12">
+    <section className="border-t border-ink/[0.09] py-10 md:grid md:grid-cols-[11rem_1fr] md:gap-10 md:py-12">
       <div className="mb-7 md:mb-0">
         <p className="project-index">{index}</p>
-        <h2 className="mt-3 text-sm font-medium text-white/74">{title}</h2>
+        <h2 className="mt-3 text-sm font-medium text-ink/74">{title}</h2>
       </div>
       <div>{children}</div>
     </section>
@@ -90,17 +92,17 @@ export default function Resume() {
   const selectedProjects = [projects[1], projects[2], projects[0], projects[5]];
 
   return (
-    <main className="site-canvas text-white">
+    <main className="site-canvas text-ink">
       <div className="site-noise" aria-hidden />
       <SiteNav />
 
-      <article className="content-rail page-enter relative z-10 pb-24 pt-32 md:pt-40">
+      <article className="content-rail page-enter relative z-10 pb-24 pt-14 md:pt-16">
         <header className="pb-12 md:pb-16">
           <p className="eyebrow">{c.kicker}</p>
           <div className="mt-6 grid gap-8 md:grid-cols-[1fr_.65fr] md:items-end">
             <div>
               <h1 className="editorial-title max-w-4xl text-5xl leading-[0.98] md:text-7xl">{c.title}</h1>
-              <p className="mt-7 max-w-3xl text-sm leading-7 text-white/58 md:text-base">{c.summary}</p>
+              <p className="mt-7 max-w-3xl text-sm leading-7 text-ink/75 md:text-base">{c.summary}</p>
             </div>
             <div className="flex flex-wrap gap-2 md:justify-end">
               <a href="/resume.pdf" download className="button-primary">{c.download} <span aria-hidden>↓</span></a>
@@ -108,12 +110,12 @@ export default function Resume() {
             </div>
           </div>
 
-          <div className="mt-10 flex flex-wrap gap-2 border-t border-white/[0.08] pt-6">
+          <div className="mt-10 flex flex-wrap gap-2 border-t border-ink/[0.08] pt-6">
             <a
               href="https://github.com/ghosteau"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-white/12 px-3 py-2 font-mono text-[10px] text-white/58 transition-colors hover:text-white"
+              className="resume-social"
             >
               <GitHubMark className="h-3.5 w-3.5" /> GitHub ↗
             </a>
@@ -121,7 +123,7 @@ export default function Resume() {
               href="https://www.linkedin.com/in/manny-mcgrail/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-sky-400/20 px-3 py-2 font-mono text-[10px] text-sky-300/75 transition-colors hover:text-sky-200"
+              className="resume-social"
             >
               <LinkedInMark className="h-3.5 w-3.5" /> LinkedIn ↗
             </a>
@@ -129,9 +131,17 @@ export default function Resume() {
               href="https://huggingface.co/ghosteau"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-yellow-400/20 px-3 py-2 font-mono text-[10px] text-yellow-300/80 transition-colors hover:text-yellow-200"
+              className="resume-social"
             >
-              <span aria-hidden>🤗</span> Hugging Face ↗
+              Hugging Face ↗
+            </a>
+            <a
+              href="https://fantomee.substack.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="resume-social"
+            >
+              Substack ↗
             </a>
           </div>
         </header>
@@ -141,14 +151,14 @@ export default function Resume() {
             {experience.map((item) => (
               <div key={item.org + item.period}>
                 <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between sm:gap-5">
-                  <h3 className="editorial-title text-2xl text-white/92">{item[lang].role}</h3>
-                  <span className="font-mono text-[10px] tracking-wide text-turq-200/62">{item.period}</span>
+                  <h3 className="editorial-title text-2xl text-ink/92">{item[lang].role}</h3>
+                  <span className="font-mono text-xs text-teal-800">{item.period}</span>
                 </div>
-                <p className="mt-1 text-sm text-white/42">{item.org}</p>
+                <p className="mt-1 text-sm text-ink/75">{item.org}</p>
                 <ul className="mt-4 space-y-2.5">
                   {item[lang].bullets.map((bullet) => (
-                    <li key={bullet} className="flex gap-3 text-sm leading-6 text-white/56">
-                      <span className="mt-3 h-px w-3 shrink-0 bg-turq-300/45" />
+                    <li key={bullet} className="flex gap-3 text-sm leading-6 text-ink/75">
+                      <span className="mt-3 h-px w-3 shrink-0 bg-ink/30" />
                       {bullet}
                     </li>
                   ))}
@@ -161,14 +171,15 @@ export default function Resume() {
         <ResumeSection index="02" title={c.projects}>
           <div className="grid gap-4">
             {selectedProjects.map((project) => (
-              <article key={project.name} className="rounded-xl border border-white/[0.08] bg-white/[0.018] p-5">
+              <article key={project.name} className="border-t border-ink/15 py-6">
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
-                  <a href={project.href} target="_blank" rel="noopener noreferrer" className="font-mono text-sm text-turq-100/85 hover:text-turq-100">
+                  <a href={project.href} target="_blank" rel="noopener noreferrer" className="text-base font-medium text-ink underline decoration-ink/20 underline-offset-4 transition-colors hover:text-teal-800 hover:decoration-teal-800">
                     {project.name} ↗
                   </a>
-                  <span className="font-mono text-[9px] tracking-wide text-white/35">{project.tech}</span>
+                  {project.dates && <span className="font-mono text-xs text-teal-800">{project.dates[lang]}</span>}
                 </div>
-                <p className="mt-3 text-sm leading-6 text-white/55">{project[lang]}</p>
+                <p className="mt-1 font-mono text-xs text-ink/60">{project.tech}</p>
+                <p className="mt-3 text-sm leading-6 text-ink/75">{project[lang]}</p>
                 {project.links && (
                   <div className="mt-4 flex flex-wrap gap-4">
                     {project.links.map((link) => (
@@ -186,10 +197,11 @@ export default function Resume() {
         <ResumeSection index="03" title={c.education}>
           <div className="grid gap-4 sm:grid-cols-2">
             {c.schools.map((school) => (
-              <article key={school.name} className="surface rounded-xl p-6">
+              <article key={school.name} className="border-t border-ink/15 py-6">
                 <h3 className="editorial-title text-2xl">{school.name}</h3>
-                <p className="mt-3 text-sm leading-6 text-white/62">{school.degree}</p>
-                <p className="mt-3 font-mono text-[10px] leading-relaxed tracking-wide text-turq-200/55">{school.meta}</p>
+                <p className="mt-3 text-sm leading-6 text-ink/75">{school.degree}</p>
+                <p className="mt-3 font-mono text-xs leading-relaxed text-teal-800">{school.meta}</p>
+                {"note" in school && <p className="mt-3 text-sm leading-6 text-ink/75">{school.note}</p>}
               </article>
             ))}
           </div>
@@ -202,11 +214,11 @@ export default function Resume() {
         </ResumeSection>
 
         <ResumeSection index="05" title={c.toolkit}>
-          <p className="font-mono text-xs leading-7 text-white/58">{c.skills}</p>
+          <p className="font-mono text-xs leading-7 text-ink/75">{c.skills}</p>
         </ResumeSection>
 
         <ResumeSection index="06" title={c.recognition}>
-          <p className="text-sm leading-7 text-white/58">{c.awards}</p>
+          <p className="text-sm leading-7 text-ink/75">{c.awards}</p>
         </ResumeSection>
       </article>
     </main>

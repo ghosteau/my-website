@@ -33,6 +33,9 @@ export const metadata: Metadata = {
     "ENSEA",
   ],
   authors: [{ name: "Emmanuel McGrail" }],
+  alternates: {
+    types: { "application/rss+xml": [{ url: "/feed.xml", title: "Manny McGrail — Notebook" }] },
+  },
   openGraph: {
     title: "Manny McGrail — AI · Math · Systems",
     description: OG_DESCRIPTION,
