@@ -776,6 +776,10 @@ a:focus-visible,button:focus-visible,summary:focus-visible { outline:2px solid #
  .notebook-page .writing-entry h2 { font-size:24px; }
 }
 
+/* ── Arrow icons (app/components/arrow.tsx) ── sized like a glyph of the
+   surrounding text, so existing font-size rules keep working. */
+.arrow-icon { display:inline-block; width:.85em; height:.85em; vertical-align:-.08em; flex:none; overflow:visible; }
+
 /* ── Image frames ── a hairline edge so photos sit on the white page instead
    of bleeding into it. Square corners, to match the rest of the layout. */
 :root { --frame: #d3dbdd; }
