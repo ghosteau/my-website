@@ -1,5 +1,6 @@
 "use client";
 
+import { Arrow } from "../components/arrow";
 import { useLang } from "../components/lang";
 import { SiteNav } from "../components/nav";
 import { Newsletter } from "../components/newsletter";
@@ -52,7 +53,7 @@ export default function Watch() {
           <span>{c.status}</span>
           <p>{c.statusBody}</p>
           {youtubeChannel && (
-            <a href={youtubeChannel} target="_blank" rel="noopener noreferrer">{c.channel} <span aria-hidden>↗</span></a>
+            <a href={youtubeChannel} target="_blank" rel="noopener noreferrer">{c.channel} <Arrow /></a>
           )}
         </div>
 

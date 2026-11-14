@@ -1,5 +1,6 @@
 import type { MDXComponents } from "mdx/types";
 import type { ComponentPropsWithoutRef, ReactNode } from "react";
+import { Arrow } from "./app/components/arrow";
 
 /* Components every essay can use without importing anything.
    Markdown elements are styled by `.essay-prose` in globals.css; this file
@@ -7,11 +8,14 @@ import type { ComponentPropsWithoutRef, ReactNode } from "react";
    blocks: <EssayNote> for the closing source/context line, and <YouTube>
    for embedding a video once the channel exists. */
 
+// External links get a new tab and a drawn arrow, so essays never need a
+// typed "↗" (which phones render as a color emoji).
 function Anchor({ href = "", children, ...props }: ComponentPropsWithoutRef<"a">) {
   const external = /^https?:\/\//.test(href);
   return (
     <a href={href} {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})} {...props}>
       {children}
+      {external && <>{" "}<Arrow /></>}
     </a>
   );
 }

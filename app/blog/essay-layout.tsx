@@ -2,14 +2,15 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { Arrow } from "../components/arrow";
 import { useLang } from "../components/lang";
 import { SiteNav } from "../components/nav";
 import { Newsletter } from "../components/newsletter";
 import type { Post } from "./posts";
 
 const chrome = {
-  en: { back: "← Notebook", kicker: "Essay", writtenIn: { en: "Written in English", fr: "Written in French" } },
-  fr: { back: "← Carnet", kicker: "Essai", writtenIn: { en: "Écrit en anglais", fr: "Écrit en français" } },
+  en: { back: "Notebook", kicker: "Essay", writtenIn: { en: "Written in English", fr: "Written in French" } },
+  fr: { back: "Carnet", kicker: "Essai", writtenIn: { en: "Écrit en anglais", fr: "Écrit en français" } },
 };
 
 /** Page chrome around an MDX essay body. The interface follows the reader's
@@ -24,7 +25,7 @@ export function EssayLayout({ post, children }: { post: Post; children: ReactNod
       <SiteNav />
 
       <article lang={post.postLang} className="essay page-enter">
-        <Link href="/blog" className="essay-back" lang={lang}>{c.back}</Link>
+        <Link href="/blog" className="essay-back" lang={lang}><Arrow dir="left" /> {c.back}</Link>
         <header className="essay-header">
           <p className="journal-meta" lang={lang}>
             {c.kicker}
