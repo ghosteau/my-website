@@ -249,7 +249,8 @@ interface around it follows the EN/FR toggle.
 #### Publishing an essay
 
 1. Write `content/essays/<slug>.mdx`. Plain Markdown works: paragraphs, `*italics*`,
-   `[links](https://…)` (external links open in a new tab), `## headings`, lists,
+   `[links](https://…)` (external links open in a new tab and get an arrow icon
+   automatically, so don't type `↗` — phones render it as an emoji), `## headings`, lists,
    `> quotes`, code blocks. Two extra components are available without imports:
    ```mdx
    <EssayNote>Sources, or the context the essay was written in.</EssayNote>

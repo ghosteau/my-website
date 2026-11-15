@@ -1,5 +1,6 @@
 "use client";
 
+import { Arrow } from "../components/arrow";
 import { useLang } from "../components/lang";
 import { SiteNav } from "../components/nav";
 import { GitHubMark, LinkedInMark } from "../components/sprites";
@@ -105,8 +106,8 @@ export default function Resume() {
               <p className="mt-7 max-w-3xl text-sm leading-7 text-ink/75 md:text-base">{c.summary}</p>
             </div>
             <div className="flex flex-wrap gap-2 md:justify-end">
-              <a href="/resume.pdf" download className="button-primary">{c.download} <span aria-hidden>↓</span></a>
-              <a href="mailto:mcgrailmanny@gmail.com" className="button-secondary">Email <span aria-hidden>↗</span></a>
+              <a href="/resume.pdf" download className="button-primary">{c.download} <Arrow dir="down" /></a>
+              <a href="mailto:mcgrailmanny@gmail.com" className="button-secondary">Email <Arrow /></a>
             </div>
           </div>
 
@@ -117,7 +118,7 @@ export default function Resume() {
               rel="noopener noreferrer"
               className="resume-social"
             >
-              <GitHubMark className="h-3.5 w-3.5" /> GitHub ↗
+              <GitHubMark className="h-3.5 w-3.5" /> GitHub <Arrow />
             </a>
             <a
               href="https://www.linkedin.com/in/manny-mcgrail/"
@@ -125,7 +126,7 @@ export default function Resume() {
               rel="noopener noreferrer"
               className="resume-social"
             >
-              <LinkedInMark className="h-3.5 w-3.5" /> LinkedIn ↗
+              <LinkedInMark className="h-3.5 w-3.5" /> LinkedIn <Arrow />
             </a>
             <a
               href="https://huggingface.co/ghosteau"
@@ -133,7 +134,7 @@ export default function Resume() {
               rel="noopener noreferrer"
               className="resume-social"
             >
-              Hugging Face ↗
+              Hugging Face <Arrow />
             </a>
             <a
               href="https://fantomee.substack.com"
@@ -141,7 +142,7 @@ export default function Resume() {
               rel="noopener noreferrer"
               className="resume-social"
             >
-              Substack ↗
+              Substack <Arrow />
             </a>
           </div>
         </header>
@@ -174,7 +175,7 @@ export default function Resume() {
               <article key={project.name} className="border-t border-ink/15 py-6">
                 <div className="flex flex-wrap items-baseline justify-between gap-3">
                   <a href={project.href} target="_blank" rel="noopener noreferrer" className="text-base font-medium text-ink underline decoration-ink/20 underline-offset-4 transition-colors hover:text-teal-800 hover:decoration-teal-800">
-                    {project.name} ↗
+                    {project.name} <Arrow />
                   </a>
                   {project.dates && <span className="font-mono text-xs text-teal-800">{project.dates[lang]}</span>}
                 </div>
@@ -184,7 +185,7 @@ export default function Resume() {
                   <div className="mt-4 flex flex-wrap gap-4">
                     {project.links.map((link) => (
                       <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="link-arrow">
-                        {link.label} ↗
+                        {link.label} <Arrow />
                       </a>
                     ))}
                   </div>

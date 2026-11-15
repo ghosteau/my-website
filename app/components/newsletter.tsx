@@ -1,3 +1,4 @@
+import { Arrow } from "./arrow";
 import type { Lang } from "./lang";
 import { newsletter } from "../content";
 
@@ -28,7 +29,7 @@ const copy = {
 export function Newsletter({ lang }: { lang: Lang }) {
   const c = copy[lang];
   const { provider, handle } = newsletter;
-  const rss = <a href="/feed.xml" className="newsletter-rss">{c.rss} <span aria-hidden>↗</span></a>;
+  const rss = <a href="/feed.xml" className="newsletter-rss">{c.rss} <Arrow /></a>;
 
   return (
     <section className="newsletter" aria-labelledby="newsletter-title">
@@ -60,7 +61,7 @@ export function Newsletter({ lang }: { lang: Lang }) {
         <div className="newsletter-body">
           <p>{c.live}</p>
           <a className="newsletter-button" href={`https://${handle}.substack.com/subscribe`} target="_blank" rel="noopener noreferrer">
-            {c.substack} <span aria-hidden>↗</span>
+            {c.substack} <Arrow />
           </a>
           {rss}
         </div>

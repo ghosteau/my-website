@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { Arrow } from "../components/arrow";
 import { useLang, type Lang } from "../components/lang";
 import { SiteNav } from "../components/nav";
 
@@ -315,7 +316,7 @@ function MomentViewer({
                 aria-label="Previous photo"
                 className="absolute left-2 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-ink/15 bg-[#040b14]/72 text-lg text-ink/85 opacity-100 backdrop-blur-md transition-all enabled:hover:border-turq-300/50 enabled:hover:text-teal-800 disabled:hidden sm:left-4 sm:h-11 sm:w-11 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
               >
-                ←
+                <Arrow dir="left" />
               </button>
               <button
                 type="button"
@@ -326,7 +327,7 @@ function MomentViewer({
                 aria-label="Next photo"
                 className="absolute right-2 top-1/2 z-20 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-ink/15 bg-[#040b14]/72 text-lg text-ink/85 opacity-100 backdrop-blur-md transition-all enabled:hover:border-turq-300/50 enabled:hover:text-teal-800 disabled:hidden sm:right-4 sm:h-11 sm:w-11 md:opacity-0 md:group-hover:opacity-100 md:group-focus-within:opacity-100"
               >
-                →
+                <Arrow dir="right" />
               </button>
             </>
           )}
